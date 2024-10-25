@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/pages/Home";
 import About from "../components/pages/About";
 import Contact from "../components/pages/Contact";
-import PaginaOficialTransito from "../components/pages/PaginaOficialTransito";
+import PaginaOficialTransito from "../components/pages/UsuarioOficialTransito/index.jsx";
+import CrearMulta from "../components/pages/UsuarioOficialTransito/CrearMulta.jsx";
 
 export const MainRouter = () => {
   return (
@@ -12,9 +13,10 @@ export const MainRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-          </Routes>
-
-          <PaginaOficialTransito></PaginaOficialTransito>
+      </Routes>
+        <CrearMulta></CrearMulta> 
+        {/* <PaginaOficialTransito></PaginaOficialTransito> */}
+       
     </BrowserRouter>
   );
 };

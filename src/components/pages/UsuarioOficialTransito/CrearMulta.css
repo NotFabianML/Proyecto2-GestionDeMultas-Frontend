@@ -1,0 +1,76 @@
+.crear-multa {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #dadada;
+    
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.crear-multa h1 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    color: white;
+    margin-bottom: 4px;
+}
+
+.formulario-multa {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #181D23;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+button {
+    display: flex;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

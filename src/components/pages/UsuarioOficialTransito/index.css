@@ -4,8 +4,10 @@
 }
 
     .pagina-transito h1 {
-        color: #0056b3;
         font-size: 36px;
+        text-align: left;
+        margin-left: 2%;
+        margin-bottom: 50px;
     }
 
 .botones button {
