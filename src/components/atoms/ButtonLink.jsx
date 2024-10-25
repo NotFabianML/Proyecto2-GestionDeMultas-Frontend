@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { colors } from "../../styles/theme";
 
 const ButtonLink = ({
   variant = "primary",
@@ -12,7 +13,7 @@ const ButtonLink = ({
   const getButtonStyle = (variant, size) => {
     let baseStyle = {
       textDecoration: "none",
-      padding: "12px 30px", // Ajuste del padding vertical para mayor semejanza
+      padding: "12px 30px",
       borderRadius: "50px",
       fontWeight: "bold",
       cursor: "pointer",
@@ -23,28 +24,28 @@ const ButtonLink = ({
     // Variantes de color
     switch (variant) {
       case "primary":
-        baseStyle.backgroundColor = "#181D23"; // Fondo oscuro
-        baseStyle.color = "#F2B624"; // Texto amarillo
+        baseStyle.backgroundColor = colors.primary;
+        baseStyle.color = colors.secondary;
         baseStyle.border = "none";
         break;
       case "secondary":
-        baseStyle.backgroundColor = "#F2B624"; // Fondo amarillo
-        baseStyle.color = "#181D23"; // Texto oscuro
+        baseStyle.backgroundColor = colors.secondary;
+        baseStyle.color = colors.primary;
         baseStyle.border = "none";
         break;
       case "alternative":
-        baseStyle.backgroundColor = "#18AEBF"; // Fondo amarillo
-        baseStyle.color = "#FFFFFF"; // Texto oscuro
+        baseStyle.backgroundColor = colors.alternative;
+        baseStyle.color = "#FFFFFF";
         baseStyle.border = "none";
         break;
       case "outline":
         baseStyle.backgroundColor = "transparent";
-        baseStyle.color = "#181D23"; // Texto oscuro
-        baseStyle.border = "1px solid #181D23"; // Borde oscuro
+        baseStyle.color = colors.primary;
+        baseStyle.border = `1px solid ${colors.primary}`;
         break;
       default:
-        baseStyle.backgroundColor = "#181D23"; // Default: Primary
-        baseStyle.color = "#F2B624";
+        baseStyle.backgroundColor = colors.primary;
+        baseStyle.color = colors.secondary;
         baseStyle.border = "none";
     }
 

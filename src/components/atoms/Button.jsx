@@ -1,4 +1,5 @@
 import React from "react";
+import { colors } from "../../styles/theme";
 
 const Button = ({
   variant = "primary",
@@ -23,28 +24,28 @@ const Button = ({
 
     switch (variant) {
       case "primary":
-        baseStyle.backgroundColor = "#181D23"; // Fondo oscuro
-        baseStyle.color = "#F2B624"; // Texto amarillo
+        baseStyle.backgroundColor = colors.primary;
+        baseStyle.color = colors.secondary;
         baseStyle.border = "none";
         break;
       case "secondary":
-        baseStyle.backgroundColor = "#F2B624"; // Fondo amarillo
-        baseStyle.color = "#181D23"; // Texto oscuro
+        baseStyle.backgroundColor = colors.secondary;
+        baseStyle.color = colors.primary;
         baseStyle.border = "none";
         break;
       case "alternative":
-        baseStyle.backgroundColor = "#18AEBF"; // Fondo cian
-        baseStyle.color = "#FFFFFF"; // Texto blanco
+        baseStyle.backgroundColor = colors.alternative;
+        baseStyle.color = "#FFFFFF";
         baseStyle.border = "none";
         break;
       case "outline":
         baseStyle.backgroundColor = "transparent";
-        baseStyle.color = "#181D23"; // Texto oscuro
-        baseStyle.border = "1px solid #181D23"; // Borde oscuro
+        baseStyle.color = colors.primary; // Texto oscuro
+        baseStyle.border = `1px solid ${colors.primary}`;
         break;
       default:
-        baseStyle.backgroundColor = "#181D23"; // Default: Primary
-        baseStyle.color = "#F2B624";
+        baseStyle.backgroundColor = colors.primary;
+        baseStyle.color = colors.secondary;
         baseStyle.border = "none";
     }
 

@@ -1,6 +1,6 @@
-import "./App.css";
+import "./styles/App.css";
 import { UserContextProvider } from "./contexts/UserContext";
-import { Perfil } from "./components/organism/Perfil";
+// import { Perfil } from "./components/organism/Perfil";
 import { MainRouter } from "./routes";
 
 function App() {
