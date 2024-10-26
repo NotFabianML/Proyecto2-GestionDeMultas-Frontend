@@ -23,10 +23,10 @@ const OficialNavbar = () => {
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/about">Crear Multa</Link>
+          <Link to="/Crear-Multa">Crear Multa</Link>
         </li>
         <li>
-          <Link to="/about">Gestionar Multas</Link>
+          <Link to="/Gestion-Multas">Gestionar Multas</Link>
         </li>
         <li>
           <Link to="/about">Ver Perfil</Link>
