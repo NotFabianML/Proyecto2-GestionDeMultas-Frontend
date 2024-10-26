@@ -1,5 +1,7 @@
 import React from 'react';
-import './CrearMulta.css'; // Importamos el archivo de estilos
+import './CrearMulta.css';
+import Button from '../../atoms/Button.jsx';
+import Dropdown from '../../molecules/Dropdown.jsx';
 
 const CrearMulta = () => {
     return (
@@ -10,23 +12,24 @@ const CrearMulta = () => {
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="cedula">Cédula del infractor:</label>
-                        <input type="text" id="cedula" name="cedula" />
+                        <input type="text" id="cedula" name="cedula" placeholder="0-0000-0000"/>
                     </div>
                     <div className="input-group">
                         <label htmlFor="placa">Número de placa:</label>
-                        <input type="text" id="placa" name="placa" />
+                        <input type="text" id="placa" name="placa" placeholder="ABC123"/>
                     </div>
                 </div>
 
                 {/* Segunda fila: Latitud y Altitud */}
+                <p>Lugar de los hechos</p>
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="latitud">Latitud:</label>
-                        <input type="text" id="latitud" name="latitud" />
+                        <input type="text" id="latitud" name="latitud" placeholder="0.000000"/>
                     </div>
                     <div className="input-group">
                         <label htmlFor="altitud">Altitud:</label>
-                        <input type="text" id="altitud" name="altitud" />
+                        <input type="text" id="altitud" name="altitud" placeholder="0.000000"/>
                     </div>
                 </div>
 
@@ -34,19 +37,21 @@ const CrearMulta = () => {
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="hora">Hora:</label>
-                        <input type="text" id="hora" name="hora" />
+                        <input type="text" id="hora" name="hora" placeholder="HH:MM"/>
                     </div>
                     <div className="input-group">
                         <label htmlFor="fecha">Fecha:</label>
-                        <input type="text" id="fecha" name="fecha" />
+                        <input type="text" id="fecha" name="fecha"/>
                     </div>
                 </div>
 
                 {/* Cuarta fila: Infracción cometida */}
                 <div className="fila">
+                    
                     <div className="input-group">
+                       
                         <label htmlFor="infraccion">Infracción cometida:</label>
-                        <input type="text" id="infraccion" name="infraccion" />
+                        <Dropdown id="infraccion" name="infraccion" ></Dropdown>
                     </div>
                 </div>
 
@@ -59,8 +64,9 @@ const CrearMulta = () => {
                 </div>
 
                 {/* Botón de Crear Multa */}
+                
                 <div className="fila">
-                    <button type="submit">Crear Multa</button>
+                    <Button variant= "secondary" size="medium" text="Crear multa"></Button>
                 </div>
             </form>
         </div>

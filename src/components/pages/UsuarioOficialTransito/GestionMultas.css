@@ -1,17 +1,36 @@
-.crear-multa {
+.gestionar-multa {
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     background-color: #dadada;
-    
 }
 
-* {
-    box-sizing: border-box;
+.pantalla-dividida {
+    display: flex;
+    gap: 20px;
+    width: 100%;
 }
 
-.crear-multa h1 {
+.columna-izquierda  {
+    flex: 0.5
+}
+
+.columna-izquierda .input-group {
+    width: 100%;
+    color:#181D23
+}
+
+.columna-izquierda label {
+    color:#181D23;
+    margin: 10px;
+}
+
+.columna-derecha {
+    flex: 1;
+}
+
+.gestionar-multa h1 {
     text-align: left;
     margin-bottom: 20px;
 }
@@ -32,9 +51,6 @@ p {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
     background-color: #181D23;
     border-radius: 20px;
     padding: 50px;
@@ -63,21 +79,4 @@ input, textarea {
 textarea {
     height: 100px;
     resize: none;
-}
-
-button {
-    display: flex;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 auto;
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
