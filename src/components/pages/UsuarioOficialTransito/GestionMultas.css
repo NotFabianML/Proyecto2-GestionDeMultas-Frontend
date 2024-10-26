@@ -1,0 +1,82 @@
+.gestionar-multa {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #dadada;
+}
+
+.pantalla-dividida {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.columna-izquierda  {
+    flex: 0.5
+}
+
+.columna-izquierda .input-group {
+    width: 100%;
+    color:#181D23
+}
+
+.columna-izquierda label {
+    color:#181D23;
+    margin: 10px;
+}
+
+.columna-derecha {
+    flex: 1;
+}
+
+.gestionar-multa h1 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+label {
+    color: white;
+    margin-bottom: 4px;
+}
+
+p {
+    color: white;
+    margin: 0px;
+    font-size: larger;
+    text-align: left;
+}
+
+.formulario-multa {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    background-color: #181D23;
+    border-radius: 20px;
+    padding: 50px;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}

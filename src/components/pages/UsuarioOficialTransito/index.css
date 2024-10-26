@@ -1,0 +1,27 @@
+.pagina-transito {
+    background-color: #dadada;
+}
+
+
+.pagina-transito h1 {
+    color: #181D23;
+    font-size: 36px;
+    text-align: left;
+    margin-left: 2%;
+    margin-bottom: 50px;
+}
+
+.pagina-transito p {
+    display: block;
+    color: #181D23;
+    text-align: center;
+    margin: 50px;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    flex-direction: row; 
+    margin: 10%;
+    gap: 30px; 
+}
