@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonLink from "../atoms/ButtonLink";
+/*import ButtonLink from "../atoms/ButtonLink";
 import Button from "../atoms/Button";
 import {
   InvitadoNavbar,
@@ -8,9 +8,15 @@ import {
   JuezNavbar,
   OficialNavbar,
   Navbar,
-} from "../layouts/Navbar";
+} from "../layouts/Navbar";*/
 
-const Home = () => {
+const HomeAdmin = () => {
+  return <div>Opciones de Aministrador</div>;
+};
+
+export default HomeAdmin;
+
+/*const HomeAdmin = () => {
   const handleClick = () => {
     alert("Boton clickeado");
   };
@@ -40,4 +46,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home;*/
