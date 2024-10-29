@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonLink from "../atoms/ButtonLink";
+/*import ButtonLink from "../atoms/ButtonLink";
 import Button from "../atoms/Button";
 import {
   InvitadoNavbar,
@@ -7,17 +7,20 @@ import {
   AdminNavbar,
   JuezNavbar,
   OficialNavbar,
-} from "../layouts/Navbar";
+  Navbar,
+} from "../layouts/Navbar";*/
 
-const Home = () => {
+const HomeAdmin = () => {
+  return <div>Opciones de Aministrador</div>;
+};
+
+export default HomeAdmin;
+
+/*const HomeAdmin = () => {
   const handleClick = () => {
     alert("Boton clickeado");
   };
-/*
 
---------------> Meter aqui CSS y JavaScript
-
-*/
   return (
     <div>
       <header>
@@ -28,7 +31,7 @@ const Home = () => {
         <OficialNavbar />
       </header>
 
-      <ButtonLink variant="primary" text="Iniciar Sesion" to="/Usuario" />
+      <ButtonLink variant="primary" text="Iniciar Sesion" to="/" />
       <ButtonLink variant="secondary" text="Consulta de Multas" to="/about" />
       <ButtonLink variant="alternative" text="Registrate aqui" to="/contact" />
       <ButtonLink variant="outline" text="Iniciar Sesion" to="/" />
@@ -43,4 +46,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home;*/
