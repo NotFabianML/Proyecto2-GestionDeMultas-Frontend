@@ -23,7 +23,7 @@ const JuezNavbar = () => {
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/about">Disputas Asignadas</Link>
+          <Link to="/Disputas-Juez">Disputas Asignadas</Link>
         </li>
         <li>
           <Link to="/about">Ver Perfil</Link>
