@@ -10,6 +10,13 @@ import GestionMultas from "../components/pages/UsuarioOficialTransito/GestionMul
 import PaginaJuez from "../components/pages/UsuarioJuez/index.jsx";
 import DisputasJuez from "../components/pages/UsuarioJuez/DisputasJuez.jsx";
 import ResolverDisputa from "../components/pages/UsuarioJuez/ResolverDisputa.jsx";
+import Infraccion from "../components/pages/UsuarioAdmin/CatalogoInfracciones/infraccion.jsx";
+import MultasTabla from "../components/pages/UsuarioAdmin/Estad. Multas/multasTabla.jsx";
+import ListaUsuarios from "../components/pages/UsuarioAdmin/GestionUsuarios/listaUsuarios.jsx";
+import Roles from "../components/pages/UsuarioAdmin/GestionRoles/roles.jsx";
+import AdministrarPerfil from "../components/pages/UsuarioAdmin/GestionUsuarios/administarPerfil.jsx";
+import RegistrarUsuarioAdmin from "../components/pages/UsuarioAdmin/GestionUsuarios/registrarUsuarioAdmin.jsx";
+import MultasGrafico from "../components/pages/UsuarioAdmin/Estad. Multas/multasGrafico.jsx";
 
 
 export const MainRouter = () => {
@@ -26,6 +33,13 @@ export const MainRouter = () => {
         <Route path="/Disputas-Juez" element={<DisputasJuez />} />
         <Route path="/Resolver-Disputa" element={<ResolverDisputa />} />
         <Route path="/InicioAdmin" element={<InicioAdmin />} />
+        <Route path="/Infraccion" element={<Infraccion />} />
+        <Route path="/MultasTabla" element={<MultasTabla />} />
+        <Route path="/ListaUsuarios" element={<ListaUsuarios />} />
+        <Route path="/Roles" element={<Roles />} />
+        <Route path="/AdministrarPerfil" element={<AdministrarPerfil />} />
+        <Route path="/RegistrarUsuarioAdmin" element={<RegistrarUsuarioAdmin />} />
+        <Route path="/MultasGrafico" element={<MultasGrafico />} />
       </Routes>
     </BrowserRouter>
   );

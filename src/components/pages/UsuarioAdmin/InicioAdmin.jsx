@@ -1,9 +1,8 @@
 import React from "react";
-import ButtonLink from "../atoms/ButtonLink";
-import Button from "../atoms/Button";
-import {
-  AdminNavbar,
-} from "../layouts/Navbar";
+import ButtonLink from "../../atoms/ButtonLink";
+import Button from "../../atoms/Button";
+import { AdminNavbar } from "../../layouts/Navbar";
+import Footer from "../../layouts/Footer";
 
 const InicioAdmin = () => {
   const handleClick = () => {
@@ -16,17 +15,16 @@ const InicioAdmin = () => {
         <AdminNavbar />
       </header>
 
-      <ButtonLink variant="primary" text="Iniciar Sesion" to="/" />
-      <ButtonLink variant="secondary" text="Consulta de Multas" to="/about" />
-      <ButtonLink variant="alternative" text="Registrate aqui" to="/contact" />
-      <ButtonLink variant="outline" text="Iniciar Sesion" to="/" />
-
-      <Button variant="primary" text="Boton 1" onClick={handleClick} />
-      <Button variant="secondary" text="Boton 2" onClick={handleClick} />
-      <Button variant="alternative" text="Boton 3" onClick={handleClick} />
-      <Button variant="outline" text="Boton 4" onClick={handleClick} />
-
-      <Button />
+      <h1>Opciones de Administrador</h1>
+      <div className="BotonesAdmin">
+      <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/ListaUsuarios" />
+      <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/Roles" />
+      <ButtonLink variant="secondary" text="Gestionar Catalogo de Infracciones" to="/Infraccion" />
+      <ButtonLink variant="secondary" text="Estadisticas de Multas" to="/MultasTabla" />
+      </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
