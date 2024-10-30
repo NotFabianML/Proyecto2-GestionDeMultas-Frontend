@@ -13,21 +13,23 @@ const ResolverDisputa = () => {
                 <JuezNavbar />
             </header>
 
-            <h1>Resolver Disputa</h1>
-            <FormularioMulta  mostrarBotones={false} />
-           
-         
-            <div class="resolucion">
-                <h2>Resolución</h2>
-                <label>Comentario de resolución</label>
-                <textarea id="descripcion" name="descripcion" placeholder="Máximo 255 caracteres" maxLength="255"></textarea>
+            <body>
+                <h1>Resolver Disputa</h1>
+                <FormularioMulta  mostrarBotones={false} />
+            
+            
+                <div class="resolucion">
+                    <h2>Resolución</h2>
+                    <label>Comentario de resolución</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Máximo 255 caracteres" maxLength="255"></textarea>
 
-                <div className="botones">
-                    <Button variant="secondary" size="medium" text="Anular multa" />
-                    <Button variant="secondary" size="medium" text="Mantener multa" />
+                    <div className="botones">
+                        <Button variant="secondary" size="medium" text="Anular multa" />
+                        <Button variant="secondary" size="medium" text="Mantener multa" />
+                    </div>
                 </div>
-            </div>
-
+            </body>
+            
             <footer>
                 <Footer />
             </footer>
