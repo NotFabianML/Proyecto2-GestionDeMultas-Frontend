@@ -3,6 +3,7 @@
     flex-direction: column;
     background-color: #dadada;
     min-height: 100vh;
+    padding-bottom: 40px;
     
 }
 
@@ -33,6 +34,7 @@ h2 {
     max-width: 600px;
     margin: 20px auto;
     margin-bottom: 50px;
+    margin-top: 40px;
 }
 
 .resolucion .botones {

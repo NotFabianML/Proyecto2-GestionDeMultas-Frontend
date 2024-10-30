@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/pages/Home";
 import About from "../components/pages/About";
-import HomeAdmin from "../components/pages/UsuarioAdmin/HomeAdmin.jsx";
+import HomeAdmin from "../components/pages/UsuarioAdmin/homeAdmin.jsx";
 import Contact from "../components/pages/Contact";
 import PaginaOficialTransito from "../components/pages/UsuarioOficialTransito/index.jsx";
 import CrearMulta from "../components/pages/UsuarioOficialTransito/CrearMulta.jsx";

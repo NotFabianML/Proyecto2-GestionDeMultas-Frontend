@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 100px); /* Ajusta según el espacio del header y footer */
 }
 
 .formulario-multa h1{
@@ -33,6 +32,12 @@ label {
     display: flex;
     justify-content: space-between;
     gap: 30px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
 .input-group {
