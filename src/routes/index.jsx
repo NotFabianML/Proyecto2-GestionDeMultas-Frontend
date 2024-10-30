@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/pages/Home";
 import About from "../components/pages/About";
-import HomeAdmin from "../components/pages/UsuarioAdmin/HomeAdmin.jsx";
+import InicioAdmin from "../components/pages/UsuarioAdmin/InicioAdmin.jsx";
 import Contact from "../components/pages/Contact";
 import PaginaOficialTransito from "../components/pages/UsuarioOficialTransito/index.jsx";
 import CrearMulta from "../components/pages/UsuarioOficialTransito/CrearMulta.jsx";
@@ -25,7 +25,7 @@ export const MainRouter = () => {
         <Route path="/Pagina-Juez" element={<PaginaJuez />} />
         <Route path="/Disputas-Juez" element={<DisputasJuez />} />
         <Route path="/Resolver-Disputa" element={<ResolverDisputa />} />
-        <Route path="/HomeAdmin" element={<HomeAdmin />} />
+        <Route path="/InicioAdmin" element={<InicioAdmin />} />
       </Routes>
     </BrowserRouter>
   );
