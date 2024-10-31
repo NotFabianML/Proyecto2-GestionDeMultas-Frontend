@@ -7,14 +7,17 @@ import {
   AdminNavbar,
   JuezNavbar,
   OficialNavbar,
-  Navbar,
 } from "../layouts/Navbar";
 
 const Home = () => {
   const handleClick = () => {
     alert("Boton clickeado");
   };
+/*
 
+--------------> Meter aqui CSS y JavaScript
+
+*/
   return (
     <div>
       <header>
@@ -25,7 +28,7 @@ const Home = () => {
         <OficialNavbar />
       </header>
 
-      <ButtonLink variant="primary" text="Iniciar Sesion" to="/" />
+      <ButtonLink variant="primary" text="Iniciar Sesion" to="/Usuario" />
       <ButtonLink variant="secondary" text="Consulta de Multas" to="/about" />
       <ButtonLink variant="alternative" text="Registrate aqui" to="/contact" />
       <ButtonLink variant="outline" text="Iniciar Sesion" to="/" />

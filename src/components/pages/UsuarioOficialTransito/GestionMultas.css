@@ -1,23 +1,24 @@
 .gestionar-multa {
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     background-color: #dadada;
+    min-height: 100vh;
 }
 
 .pantalla-dividida {
     display: flex;
+    justify-content: space-between; 
     gap: 20px;
-    width: 100%;
+    margin-left: 4%;
 }
 
 .columna-izquierda  {
-    flex: 0.5
+    width: 30%;
+    float: left;
 }
 
 .columna-izquierda .input-group {
-    width: 100%;
+    width: 90%;
     color:#181D23
 }
 
@@ -27,56 +28,18 @@
 }
 
 .columna-derecha {
-    flex: 1;
+    width: 100%;
+
 }
 
 .gestionar-multa h1 {
+    color: #181D23;
     text-align: left;
-    margin-bottom: 20px;
+    margin: 30px;
 }
 
-label {
-    color: white;
-    margin-bottom: 4px;
-}
 
-p {
-    color: white;
-    margin: 0px;
-    font-size: larger;
-    text-align: left;
-}
-
-.formulario-multa {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    background-color: #181D23;
-    border-radius: 20px;
-    padding: 50px;
-}
-
-.fila {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-}
-
-.input-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-input, textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 100%;
-}
-
-textarea {
-    height: 100px;
-    resize: none;
+footer {
+    margin-top: auto;
+    width: 100%; /* Asegura que el footer ocupe todo el ancho */
 }
