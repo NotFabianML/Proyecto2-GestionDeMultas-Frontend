@@ -15,7 +15,6 @@ const ListaUsuarios = () => {
         { fotoPerfil: 'URL', userName: 'Santiago', id: '1', estado: 'Activo', correo: 'santiago@example.com', rol: 'Administrador' },
         { fotoPerfil: 'URL', userName: 'Felipe', id: '2', estado: 'Activo', correo: 'felipe@example.com', rol: 'Juez' },
         { fotoPerfil: 'URL', userName: 'Tomaz', id: '3', estado: 'Inactivo', correo: 'tomaz@example.com', rol: 'UsuarioNormal' },
-        // 20 usuarios adicionales
         { fotoPerfil: 'URL', userName: 'Usuario4', id: '4', estado: 'Activo', correo: 'usuario4@example.com', rol: 'Oficial' },
         { fotoPerfil: 'URL', userName: 'Usuario5', id: '5', estado: 'Inactivo', correo: 'usuario5@example.com', rol: 'Administrador' },
         { fotoPerfil: 'URL', userName: 'Usuario6', id: '6', estado: 'Activo', correo: 'usuario6@example.com', rol: 'Juez' },
