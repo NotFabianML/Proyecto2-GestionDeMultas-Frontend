@@ -17,17 +17,17 @@ const InvitadoNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/home">Consulta Publica</Link>
+          <Link to="/Consulta-Publica">Consulta Publica</Link>
         </li>
         <li>
-          <Link to="/about">Mapa de Calor</Link>
+          <Link to="/Mapa-Calor">Mapa de Calor</Link>
         </li>
       </ul>
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="outline" text="Registrarse" to="/registro" />
-        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/inicio-sesion" />
+        <ButtonLink variant="outline" text="Registrarse" to="/Registro-Usuario" />
+        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/Inicio-Sesion" />
       </div>
     </nav>
   );
