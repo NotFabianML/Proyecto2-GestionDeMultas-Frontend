@@ -1,5 +1,3 @@
-// src/components/atoms/FiltroInput.jsx
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@fortawesome/fontawesome-free/css/all.css';

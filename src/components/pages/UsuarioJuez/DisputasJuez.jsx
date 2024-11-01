@@ -20,6 +20,16 @@ const Disputas = () => {
         { id: '9101', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
         { id: '1213', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
         { id: '1415', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
+        { id: '1234', vehiculo: 'ABC123', fecha: '03/02/2024', estado: 'Pendiente' },
+        { id: '5678', vehiculo: 'DEF456', fecha: '04/03/2024', estado: 'Pendiente declaración de oficial' },
+        { id: '9101', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
+        { id: '1213', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
+        { id: '1415', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
+        { id: '1234', vehiculo: 'ABC123', fecha: '03/02/2024', estado: 'Pendiente' },
+        { id: '5678', vehiculo: 'DEF456', fecha: '04/03/2024', estado: 'Pendiente declaración de oficial' },
+        { id: '9101', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
+        { id: '1213', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
+        { id: '1415', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
 
         // Agrega más datos según sea necesario
     ];
