@@ -9,7 +9,7 @@ const AdminNavbar = () => {
     <nav className="navbar">
       {/* Logo */}
       <div className="navbar-logo">
-        <Link to="/HomeAdmin">
+        <Link to="/InicioAdmin">
           <img src={Logo} alt="Logo" />
         </Link>
       </div>

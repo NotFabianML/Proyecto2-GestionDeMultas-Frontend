@@ -29,7 +29,7 @@ const Navbar = () => {
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="alternative" text="Registrarse" to="/Registro-Usuario" />
+        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/Inicio-Sesion" />
       </div>
     </nav>
   );

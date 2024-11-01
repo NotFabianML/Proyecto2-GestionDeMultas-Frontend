@@ -1,0 +1,81 @@
+body {
+    background-color: #EAEAEA;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.consulta-publica {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, footer {
+    width: 100%;
+}
+
+.contenido {
+    flex: 1;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.consulta-publica h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.consulta-publica p {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.input-placa {
+    width: 150px; 
+    margin-right: 10px; 
+    border-radius: 30px;
+    text-align: center;
+}
+
+.boton-consulta {
+    margin-top: 15px;
+    padding: 1px 5px;
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    background-color: #181D23;
+    color: #F2B624;
+    border: none;
+    border-radius: 50px; 
+    cursor: pointer;
+}
+
+.boton-consulta:hover {
+    background-color: #555555;
+}
+
+.tabla-multas {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tabla-multas th,
+.tabla-multas td {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    text-align: center;
+}
+
+.tabla-multas th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}

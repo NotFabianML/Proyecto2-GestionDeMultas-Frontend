@@ -4,7 +4,7 @@ import Logo from "../../../assets/Nextek-logo.svg";
 import ButtonLink from "../../atoms/ButtonLink";
 import './index.css';
 
-const Navbar = () => {
+const InvitadoNavbar = () => {
   return (
     <nav className="navbar">
       {/* Logo */}
@@ -16,11 +16,8 @@ const Navbar = () => {
 
       {/* Links */}
       <ul className="navbar-links">
-      <li>
-          <Link to="/Pagina-Inicio">Inicio</Link>
-        </li>
         <li>
-          <Link to="/Consulta-Publica">Consulta Multas</Link>
+          <Link to="/Pagina-Inicio">Inicio</Link>
         </li>
         <li>
           <Link to="/Mapa-Calor">Mapa de Calor</Link>
@@ -29,10 +26,11 @@ const Navbar = () => {
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="alternative" text="Registrarse" to="/Registro-Usuario" />
+        <ButtonLink variant="outline" text="Registrarse" to="/Registro-Usuario" />
+        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/Inicio-Sesion" />
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default InvitadoNavbar;
