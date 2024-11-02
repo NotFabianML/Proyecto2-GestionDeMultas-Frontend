@@ -1,0 +1,66 @@
+/* ListaUsuarios.css */
+
+.pagina-registro {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    width: 100%;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  h1 {
+    text-align: left;
+    margin-left: 20px;
+  }
+  
+  .filtro-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .lista-usuarios table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .lista-usuarios th,
+  .lista-usuarios td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .lista-usuarios th {
+    background-color: #f2f2f2;
+  }
+  
+  .lista-usuarios tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .lista-usuarios tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .botones {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  button,
+  .ButtonLink {
+    margin: 0 5px;
+  }
+  
+  footer {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    }

@@ -5,6 +5,7 @@ import Paginador from "../../../layouts/Paginador";
 import '@fortawesome/fontawesome-free/css/all.css';
 import ButtonLink from "../../../atoms/ButtonLink";
 import Footer from "../../../layouts/Footer";
+import './listaUsuarios.css';
 
 const ListaUsuarios = () => {
     const [filtro, setFiltro] = useState('');
@@ -99,7 +100,9 @@ const ListaUsuarios = () => {
                     totalPaginas={totalPaginas}
                 />
                 <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
+                <div className="boton-registrar-usuario">
                 <ButtonLink variant="alternative" text="Registrate Usuario Nuevo" to="/RegistrarUsuarioAdmin" />
+                </div>
             </main>
             <footer>
                 <Footer />

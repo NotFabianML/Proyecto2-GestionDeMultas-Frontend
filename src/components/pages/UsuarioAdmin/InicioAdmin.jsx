@@ -3,6 +3,7 @@ import ButtonLink from "../../atoms/ButtonLink";
 import Button from "../../atoms/Button";
 import { AdminNavbar } from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
+import "./InicioAdmin.css";
 
 const InicioAdmin = () => {
   const handleClick = () => {
