@@ -1,5 +1,5 @@
 import React from 'react';
-import './Paginador.css'; // Importa el CSS específico para el paginador
+import './Paginador.css';
 
 const Paginador = ({ totalPaginas, paginaActual, cambiarPagina }) => {
   return (

@@ -13,12 +13,12 @@ const ResolverDisputa = () => {
                 <JuezNavbar />
             </header>
 
-            <body>
+            <div>
                 <h1>Resolver Disputa</h1>
                 <FormularioMulta  mostrarBotones={false} />
             
             
-                <div class="resolucion">
+                <div className="resolucion">
                     <h2>Resolución</h2>
                     <label>Comentario de resolución</label>
                     <textarea id="descripcion" name="descripcion" placeholder="Máximo 255 caracteres" maxLength="255"></textarea>
@@ -28,7 +28,7 @@ const ResolverDisputa = () => {
                         <Button variant="secondary" size="medium" text="Mantener multa" />
                     </div>
                 </div>
-            </body>
+            </div>
             
             <footer>
                 <Footer />

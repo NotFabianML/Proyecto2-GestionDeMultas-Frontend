@@ -25,22 +25,30 @@ const CalendarioFecha = () => {
             backgroundColor: 'white',
             cursor: 'pointer',
         },
+        
     };
 
     return (
         <div>
-            <DatePicker
-                selected={fechaSeleccionada}
-                onChange={manejarFecha}
-                dateFormat="dd-MM-yyyy"
-                placeholderText="Selecciona una fecha" 
-                style={estilos.datePicker}
-                popperPlacement="bottom" 
-                locale={es} 
-                className="date-picker" 
-            />
-            {fechaSeleccionada && <p>Fecha seleccionada: {formatoFecha(fechaSeleccionada)}</p>}
-        </div>
+        <style>
+            {`
+                .date-picker::placeholder {
+                    color: black; /* Cambia este color al que prefieras */
+                }
+            `}
+        </style>
+        <DatePicker
+            selected={fechaSeleccionada}
+            onChange={manejarFecha}
+            dateFormat="dd-MM-yyyy"
+            placeholderText="Selecciona una fecha"
+            style={estilos.datePicker}
+            popperPlacement="bottom"
+            locale={es}
+            className="date-picker"
+        />
+        {fechaSeleccionada && <p>Fecha seleccionada: {formatoFecha(fechaSeleccionada)}</p>}
+    </div>
     );
 };
 

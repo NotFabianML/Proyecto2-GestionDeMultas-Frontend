@@ -17,13 +17,13 @@ const UsuarioNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/home">Consulta Publica</Link>
+          <Link to="/Consulta-Publica">Consulta Publica</Link>
         </li>
         <li>
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/about">Multas</Link>
+          <Link to="/MultasTabla">Multas</Link>
         </li>
         <li>
           <Link to="/about">Disputas</Link>
@@ -32,7 +32,7 @@ const UsuarioNavbar = () => {
           <Link to="/about">Vehiculos</Link>
         </li>
         <li>
-          <Link to="/about">Ver Perfil</Link>
+          <Link to="/AdministrarPerfil">Ver Perfil</Link>
         </li>
       </ul>
 

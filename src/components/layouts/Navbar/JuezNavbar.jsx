@@ -17,7 +17,7 @@ const JuezNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/home">Consulta Publica</Link>
+          <Link to="/Consulta-Publica">Consulta Publica</Link>
         </li>
         <li>
           <Link to="/about">Mapa de Calor</Link>
@@ -26,7 +26,7 @@ const JuezNavbar = () => {
           <Link to="/Disputas-Juez">Disputas Asignadas</Link>
         </li>
         <li>
-          <Link to="/about">Ver Perfil</Link>
+          <Link to="/AdministrarPerfil">Ver Perfil</Link>
         </li>
       </ul>
 
