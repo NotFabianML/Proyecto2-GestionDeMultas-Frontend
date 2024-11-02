@@ -17,22 +17,22 @@ const AdminNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/home">Consulta Publica</Link>
+          <Link to="/Consulta-Publica">Consulta Publica</Link>
         </li>
         <li>
-          <Link to="/about">Mapa de Calor</Link>
+          <Link to="/Mapa-Calor">Mapa de Calor</Link>
         </li>
         <li>
           <Link to="/about">Usuarios</Link>
         </li>
         <li>
-          <Link to="/about">Roles y Permisos</Link>
+          <Link to="/Roles">Roles y Permisos</Link>
         </li>
         <li>
-          <Link to="/about">Catalogo de Infracciones</Link>
+          <Link to="/Infraccion">Catalogo de Infracciones</Link>
         </li>
         <li>
-          <Link to="/about">Estadistica de Multas</Link>
+          <Link to="/MultasTabla">Estadistica de Multas</Link>
         </li>
       </ul>
 

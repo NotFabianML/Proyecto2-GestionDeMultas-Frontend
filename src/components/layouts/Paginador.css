@@ -7,14 +7,20 @@
 .paginador button {
     margin: 0 5px;
     padding: 5px 10px;
-    background-color: #fff; /* Fondo del botón inactivo */
-    color: #181D23; /* Color del texto */
-    border: 1px solid #181D23; /* Borde del botón */
+    width: auto; 
+    min-width: 40px; 
+    max-width: 80px; 
+    background-color: #fff; 
+    color: #181D23;
+    border: 1px solid #181D23;
     border-radius: 4px;
     cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .paginador button.active {
-    background-color: #181D23; /* Fondo del botón activo */
-    color: #fff; /* Color del texto activo */
+    background-color: #181D23;
+    color: #fff; 
 }
