@@ -23,10 +23,10 @@ const UsuarioNavbar = () => {
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/MultasTabla">Multas</Link>
+          <Link to="/Mis-Multas">Multas</Link>
         </li>
         <li>
-          <Link to="/about">Disputas</Link>
+          <Link to="/Mis-Disputas">Disputas</Link>
         </li>
         <li>
           <Link to="/about">Vehiculos</Link>

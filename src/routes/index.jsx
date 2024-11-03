@@ -24,6 +24,7 @@ import RegistroUsuario from "../components/pages/RegistroUsuario/RegistroUsuario
 import PaginaInicio from "../components/pages/PaginaInicio/PaginaInicio.jsx";
 import ConsultaPublica from "../components/pages/ConsultaPublica/ConsultaPublica.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
+import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
 
 
 
@@ -54,6 +55,8 @@ export const MainRouter = () => {
         <Route path="/Registro-Usuario" element={<RegistroUsuario />} />
         <Route path="/Consulta-Publica" element={<ConsultaPublica />} />
         <Route path="/Mis-Multas" element={<MisMultas />} />
+        <Route path="/Mis-Disputas" element={<MisDisputas />} />
+
         
       </Routes>
     </BrowserRouter>
