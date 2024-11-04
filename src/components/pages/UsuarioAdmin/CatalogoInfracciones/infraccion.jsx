@@ -6,6 +6,7 @@ import Footer from "../../../layouts/Footer";
 import FiltroInput from "../../../layouts/FiltroInput";
 import Paginador from "../../../layouts/Paginador";
 import ButtonLink from "../../../atoms/ButtonLink";
+import "./infraccion.css";
 
 const infraccionesIniciales = [
   { id: '1', infraccion: 'Exceso de velocidad', articulo: 'A-1', monto: '500.00', descripcion: 'Conducir a una velocidad mayor a la permitida' },  

@@ -1,0 +1,61 @@
+/* ListaInfracciones.css */
+
+.pagina-infracciones {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    width: 100%;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .filtro-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .lista-infracciones {
+    padding: 20px;
+  }
+  
+  .lista-infracciones table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .lista-infracciones th,
+  .lista-infracciones td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #B8860B; /* Línea de separación más oscura */
+  }
+  
+  
+  .lista-infracciones tbody tr:hover {
+    background-color: #F5F5F5; /* Color de fondo al pasar el cursor */
+  }
+  
+  button,
+  .ButtonLink {
+    margin: 0 3rem; /* Opciones separadas 3 rem entre ellas */
+  }
+  
+  footer {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+  }
+  
