@@ -14,7 +14,7 @@ export const getUsuarioById = async (id) => {
 
 // Obtener usuario por cédula
 export const getUsuarioPorCedula = async (cedula) => {
-  const response = await axiosInstance.get(`/usuarios/cedula/${cedula}`);
+  const response = await axiosInstance.get(`/Usuarios/cedula/${cedula}`);
   return response.data;
 };
 

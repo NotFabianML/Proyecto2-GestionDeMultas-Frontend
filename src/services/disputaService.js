@@ -14,7 +14,7 @@ export const getDisputaById = async (id) => {
 
 // Obtener disputas por usuario
 export const getDisputasPorUsuario = async (usuarioId) => {
-  const response = await axiosInstance.get(`/disputas/${usuarioId}/obtener-disputas`);
+  const response = await axiosInstance.get(`/Disputas/${usuarioId}/disputas-por-usuario`);
   return response.data;
 };
 

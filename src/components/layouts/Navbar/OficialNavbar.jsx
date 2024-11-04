@@ -17,7 +17,7 @@ const OficialNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/home">Consulta Publica</Link>
+          <Link to="/Consulta-Publica">Consulta Publica</Link>
         </li>
         <li>
           <Link to="/about">Mapa de Calor</Link>
@@ -29,7 +29,7 @@ const OficialNavbar = () => {
           <Link to="/Gestion-Multas">Gestionar Multas</Link>
         </li>
         <li>
-          <Link to="/about">Ver Perfil</Link>
+          <Link to="/AdministrarPerfil">Ver Perfil</Link>
         </li>
       </ul>
 

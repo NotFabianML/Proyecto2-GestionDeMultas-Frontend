@@ -10,8 +10,13 @@
     margin: 10px;
 }
 
+.formulario-multa h2{
+    color: white;
+    text-align: center;
+    margin: 0px;
+}
 
-label {
+.formulario-container .formulario-multa label {
     color: white;
     margin-bottom: 4px;
 }
@@ -34,7 +39,7 @@ label {
     gap: 30px;
 }
 
-.error {
+.formulario-container .formulario-multa .error {
     color: red;
     font-size: 14px;
     margin-top: 4px;
@@ -54,7 +59,7 @@ input, textarea {
     width: 100%;
 }
 
-p {
+.formulario-multa p {
     color: white;
     margin: 0px;
     font-size: larger;

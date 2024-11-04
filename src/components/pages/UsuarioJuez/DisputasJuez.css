@@ -1,13 +1,14 @@
 
 
-.filtro-container {
+.disputas-juez .filtro-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     width: 90%;
 }
 
-.filtro-container input {
+
+.disputas-juez .filtro-container input {
     max-width: 200px;
 }
 
@@ -18,7 +19,8 @@
     cursor: pointer;
 }
 
-.filtro-container i{
+
+.disputas-juez .filtro-container i{
     width: 50px;
 }
 
