@@ -33,7 +33,7 @@ export const MainRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/Pagina-Oficial" element={<PaginaOficialTransito />} />
@@ -50,7 +50,7 @@ export const MainRouter = () => {
         <Route path="/AdministrarPerfil" element={<AdministrarPerfil />} />
         <Route path="/RegistrarUsuarioAdmin" element={<RegistrarUsuarioAdmin />} />
         <Route path="/MultasGrafico" element={<MultasGrafico />} />
-        <Route path="/Pagina-Inicio" element={<PaginaInicio />} />
+        <Route path="/" element={<PaginaInicio />} />
         <Route path="/Password-Recovery" element={<PasswordRecovery />} />
         <Route path="/Inicio-Sesion" element={<InicioSesion />} />
         <Route path="/Registro-Usuario" element={<RegistroUsuario />} />

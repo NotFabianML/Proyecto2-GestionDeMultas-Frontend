@@ -1,10 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Logo from "../../../assets/Nextek-logo.svg";
-import ButtonLink from "../../atoms/ButtonLink";
-import './index.css';
+import "./index.css";
+import Button from "../../atoms/Button";
 
 const JuezNavbar = () => {
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    Navigate("/"); // Redirige a la página de inicio de sesión o de bienvenida
+  };
+
   return (
     <nav className="navbar">
       {/* Logo */}
@@ -32,7 +37,7 @@ const JuezNavbar = () => {
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="alternative" text="Cerrar Sesion" to="/" />
+        <Button variant="alternative" text="Cerrar Sesion" onClick={handleLogout} />
       </div>
     </nav>
   );

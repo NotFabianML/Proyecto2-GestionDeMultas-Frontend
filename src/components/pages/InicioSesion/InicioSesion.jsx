@@ -26,20 +26,20 @@ const InicioSesion = () => {
 
         // Redirige según el rol del usuario
         switch (userRole) {
-            case "Admin":
+            case "Administrador":
                 navigate("/InicioAdmin");
                 break;
-            case "OficialTransito":
+            case "Oficial de Tránsito":
                 navigate("/Pagina-Oficial");
                 break;
-            case "Juez":
+            case "Juez de Tránsito":
                 navigate("/Pagina-Juez");
                 break;
-            case "Usuario":
+            case "Usuario Final":
                 navigate("/Pagina-Usuario");
                 break;
             default:
-                navigate("/InicioAdmin");
+                console.log("Rol no reconocido");
         }
       } catch (err) {
         // Muestra el mensaje de error en caso de fallo
