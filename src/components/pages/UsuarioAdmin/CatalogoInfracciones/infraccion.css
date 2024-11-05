@@ -1,18 +1,16 @@
 /* ListaInfracciones.css */
 
 .pagina-infracciones {
-    display: flex;
+
     flex-direction: column;
     min-height: 100vh;
   }
   
-  header {
-    width: 100%;
-  }
+
   
   main {
     flex: 1;
-    padding: 20px;
+
   }
   
   h1 {
@@ -31,7 +29,7 @@
   }
   
   .lista-infracciones table {
-    width: 100%;
+
     border-collapse: collapse;
     margin: 0 auto;
   }
@@ -54,7 +52,7 @@
   }
   
   footer {
-    width: 100%;
+
     text-align: center;
     margin-top: auto;
   }
