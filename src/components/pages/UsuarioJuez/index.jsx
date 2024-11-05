@@ -1,12 +1,12 @@
 import React from 'react';
-import './index.css';
+import '../../../styles/index.css';
 import ButtonLink from '../../atoms/ButtonLink.jsx';
 import JuezNavbar from '../../layouts/Navbar/JuezNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 
 const PaginaJuez = () => {
     return (
-        <div className="pagina-juez">
+        <div className="indexUsuarios">
             <header>
                 <JuezNavbar />
             </header>

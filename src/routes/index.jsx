@@ -17,14 +17,15 @@ import Roles from "../components/pages/UsuarioAdmin/GestionRoles/roles.jsx";
 import AdministrarPerfil from "../components/pages/UsuarioAdmin/GestionUsuarios/administarPerfil.jsx";
 import RegistrarUsuarioAdmin from "../components/pages/UsuarioAdmin/GestionUsuarios/registrarUsuarioAdmin.jsx";
 import MultasGrafico from "../components/pages/UsuarioAdmin/Estad. Multas/multasGrafico.jsx";
-
 import PasswordRecovery from "../components/pages/PasswordRecovery/PasswordRecovery.jsx";
 import InicioSesion from "../components/pages/InicioSesion/InicioSesion.jsx";
 import RegistroUsuario from "../components/pages/RegistroUsuario/RegistroUsuario.jsx";
 import PaginaInicio from "../components/pages/PaginaInicio/PaginaInicio.jsx";
 import ConsultaPublica from "../components/pages/ConsultaPublica/ConsultaPublica.jsx";
+import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
 import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
+import MisVehiculos from "../components/pages/UsuarioFinal/MisVehiculos.jsx";
 
 
 
@@ -54,8 +55,11 @@ export const MainRouter = () => {
         <Route path="/Inicio-Sesion" element={<InicioSesion />} />
         <Route path="/Registro-Usuario" element={<RegistroUsuario />} />
         <Route path="/Consulta-Publica" element={<ConsultaPublica />} />
+        <Route path="/Pagina-Usuario" element={<PaginaUsuarioFinal />} />
         <Route path="/Mis-Multas" element={<MisMultas />} />
         <Route path="/Mis-Disputas" element={<MisDisputas />} />
+        <Route path="/Mis-Vehiculos" element={<MisVehiculos />} />
+
 
         
       </Routes>

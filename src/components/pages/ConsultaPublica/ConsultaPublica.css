@@ -14,7 +14,7 @@ header, footer {
     width: 100%;
 }
 
-.contenido {
+.consulta-publica .contenido {
     flex: 1;
     max-width: 1000px;
     margin: auto;
@@ -24,39 +24,40 @@ header, footer {
 
 .consulta-publica h2 {
     font-size: 24px;
+    margin-top: 10%;
     font-weight: bold;
 }
 
 .consulta-publica p {
-    margin-top: 10px;
+    margin-top: 10%;
+    margin-bottom: 5%;
     font-size: 16px;
 }
 
-.input-placa {
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.consulta-publica .input-placa {
+    margin-bottom: 20px;
     width: 150px; 
-    margin-right: 10px; 
     border-radius: 30px;
     text-align: center;
 }
 
-.boton-consulta {
-    margin-top: 15px;
-    padding: 1px 5px;
-    font-size: 16px;
-    width: 100px;
-    text-align: center;
-    background-color: #181D23;
-    color: #F2B624;
-    border: none;
-    border-radius: 50px; 
+.btnConsultaMulta {
+    padding: 10px;
+    width: 200px; 
     cursor: pointer;
 }
 
-.boton-consulta:hover {
+.consulta-publica .btnConsultaMultata:hover {
     background-color: #555555;
 }
 
-.tabla-multas {
+.consulta-publica  .tabla-multas {
     margin-top: 20px;
     width: 80%;
     max-width: 500px;
@@ -64,18 +65,17 @@ header, footer {
     margin-right: auto;
     border-collapse: collapse;
     background-color: #ffffff;
-    border-radius: 10px;
     overflow: hidden;
 }
 
-.tabla-multas th,
-.tabla-multas td {
+.consulta-publica .tabla-multas th,
+.consulta-publica .tabla-multas td {
     padding: 10px;
     border: 1px solid #dddddd;
     text-align: center;
 }
 
-.tabla-multas th {
+.consulta-publica .tabla-multas th {
     background-color: #f2f2f2;
     font-weight: bold;
 }

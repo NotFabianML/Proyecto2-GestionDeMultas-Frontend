@@ -1,12 +1,12 @@
 import React from 'react';
-import './index.css';
+import '../../../styles/index.css';
 import ButtonLink from '../../atoms/ButtonLink.jsx';
 import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 
 const PaginaOficialTransito = () => {
     return (
-        <div className="pagina-transito">
+        <div className="indexUsuarios">
             <header>
                 <OficialNavbar />
             </header>
