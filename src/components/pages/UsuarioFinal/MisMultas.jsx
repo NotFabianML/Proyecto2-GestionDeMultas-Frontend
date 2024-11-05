@@ -3,35 +3,33 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
+import { getMultaByUsuarioId } from '../../../services/multaServices';
+import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
     const [error, setError] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupContent, setPopupContent] = useState({ type: '', title: '', message: '' });
+    const usuarioId = "17E97F21-4302-4FB1-B140-180E880A0C61"; //*********Id quemado - Hacerlo dinámico*************
     const [disputeData, setDisputeData] = useState({
         idMulta: '',
-        fecha: '',
-        vehiculo: '',
-        monto: '',
+        fechaHora: '',
+        numeroPlaca: '',
+        montoTotal: 0,
         motivo: '',
+        montoMora: 0
     });
 
     useEffect(() => {
-        fetch('https://localhost:7185/api/multas')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Error en la respuesta: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then((multas) => {
-                setMultas(multas);
-            })
-            .catch((error) => {
-                setError(error.message);
-            });
-    }, []);
+        getMultaByUsuarioId(usuarioId)
+        .then((data) => {
+            setMultas(data);
+        })
+        .catch((error) => {
+            setError(`Error: ${error.message}`);
+        });
+    }, [usuarioId]);
 
     function openPopup(type) {
         setPopupContent({
@@ -47,6 +45,7 @@ const MisMultas = () => {
 
     function handleChange(event) {
         const { name, value } = event.target;
+        console.log(value)
         setDisputeData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -56,7 +55,7 @@ const MisMultas = () => {
     function handleSubmit(event) {
         event.preventDefault();
         console.log('Datos enviados:', disputeData);
-        closePopup(); // Cierra el popup tras el envío
+        closePopup(); // Close the popup after submission
     }
 
     const DisputePopup = () => (
@@ -80,9 +79,9 @@ const MisMultas = () => {
                         <label>
                             Fecha:
                             <input
-                                type="date"
+                                type="text"
                                 name="fecha"
-                                value={disputeData.fecha}
+                                value={isoToDateFormatter(disputeData.fechaHora)}
                                 onChange={handleChange}
                                 readOnly
                                 required
@@ -95,7 +94,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="vehiculo"
-                                value={disputeData.vehiculo}
+                                value={disputeData.numeroPlaca}
                                 onChange={handleChange}
                                 readOnly
                                 required
@@ -104,9 +103,9 @@ const MisMultas = () => {
                         <label>
                             Monto (Colones):
                             <input
-                                type="number"
+                                type="text"
                                 name="monto"
-                                value={disputeData.monto}
+                                value={"₡ " + disputeData.montoTotal}
                                 onChange={handleChange}
                                 readOnly
                                 required
@@ -138,21 +137,21 @@ const MisMultas = () => {
     const PaymentPopup = () => (
         <div className="popup">
             <div className="popup-content">
-                <div><span className="close" onClick={closePopup}>&times;</span></div>
+                <span className="close" onClick={closePopup}>&times;</span>
                 <h2>{popupContent.title}</h2>
                 <form>
                     <div className="form-row">
                         <label>
                             ID Multa:
-                            <input type="text" name="idMulta" readOnly required />
+                            <input type="text" name="idMulta" value={disputeData.idMulta} readOnly required />
                         </label>
                         <label>
                             Fecha:
-                            <input type="date" name="fecha" readOnly required />
+                            <input type="text" name="fechaHora"  value={isoToDateFormatter(disputeData.fechaHora)} readOnly required />
                         </label>
                         <label>
                             Vehículo:
-                            <input type="text" name="vehiculo" readOnly required />
+                            <input type="text" name="numeroPlaca" value={disputeData.numeroPlaca} readOnly required />
                         </label>
                     </div>
                     <table className="payment-summary">
@@ -163,15 +162,15 @@ const MisMultas = () => {
                             </tr>
                             <tr>
                                 <td>Monto Multas</td>
-                                <td>94,340 colones</td>
+                                <td>{"₡ "} {disputeData.montoTotal}</td>
                             </tr>
                             <tr>
                                 <td>Monto Mora</td>
-                                <td>0,00 colones</td>
+                                <td>{"₡ "} {(disputeData?.montoMora || 0)}</td>
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>94,340 colones</td>
+                                <td> {"₡ "}{disputeData.montoTotal + (disputeData?.montoMora || 0)}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -195,20 +194,20 @@ const MisMultas = () => {
                     <div key={multa.id} className="card">
                         <div className="infoMulta">
                             <p><strong>ID Multa:</strong> {multa.idMulta}</p>
-                            <p><strong>Vehículo:</strong> {multa.vehiculoId}</p>
-                            <p><strong>Fecha:</strong> {multa.fechaHora}</p>
-                            <p><strong>Monto:</strong> {multa.monto}</p>
+                            <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
+                            <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
+                            <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
                         </div>
 
                         <div className="button-container">
                             <Button 
-                                onClick={() => openPopup('dispute')} 
+                                onClick={() => {openPopup('dispute'); setDisputeData(multa);}}
                                 variant="outline" 
                                 size="small" 
                                 text="Abrir Disputa" 
                             />
                             <Button 
-                                onClick={() => openPopup('payment')} 
+                                onClick={() => {openPopup('payment'); setDisputeData(multa);}} 
                                 variant="primary" 
                                 size="small" 
                                 text="Pagar Multa" 

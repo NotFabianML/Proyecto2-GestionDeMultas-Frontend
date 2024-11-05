@@ -8,7 +8,7 @@ export const getMultas = async () => {
 
 // Obtener multa por ID
 export const getMultaById = async (id) => {
-  const response = await axiosInstance.get(`/multas/${id}`);
+  const response = await axiosInstance.get(`/Multas/${id}`);
   return response.data;
 };
 
@@ -20,7 +20,7 @@ export const getMultasPorEstado = async (estado) => {
 
 // Obtener multas por número de placa
 export const getMultasPorPlaca = async (numeroPlaca) => {
-  const response = await axiosInstance.get(`/multas/${numeroPlaca}`);
+  const response = await axiosInstance.get(`/Multas/placa/${numeroPlaca}`);
   return response.data;
 };
 
@@ -44,4 +44,10 @@ export const updateMulta = async (id, multaData) => {
 // Cambiar estado de la multa
 export const cambiarEstadoMulta = async (id, estado) => {
   await axiosInstance.post(`/multas/${id}/cambiar-estado/${estado}`);
+};
+
+// Obtener multa por Usuario ID
+export const getMultaByUsuarioId = async (usuarioId) => {
+  const response = await axiosInstance.get(`/Multas/usuario/id/${usuarioId}`);
+  return response.data;
 };

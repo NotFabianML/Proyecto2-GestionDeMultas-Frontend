@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ConsultaPublica.css';
 import Button from '../../atoms/Button.jsx';
 import InvitadoNavbarDos from '../../layouts/Navbar/InvitadoNavbarDos.jsx';
 import Footer from '../../layouts/Footer.jsx';
+import { getMultasPorPlaca } from '../../../services/multaServices.js';
 
 const ConsultaPublica = () => {
     const [mostrarTabla, setMostrarTabla] = useState(false);
     const [placa, setPlaca] = useState('');
+    const [multas, setMultas] = useState([]);
+    const [error, setError] = useState(null);
+
+    
+    useEffect(() => {
+        getMultasPorPlaca(placa)
+        .then((data) => {
+            setMultas(data);
+        })
+        .catch((error) => {
+            setError(`Error: ${error.message}`);
+        });
+    }, [mostrarTabla]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,6 +28,7 @@ const ConsultaPublica = () => {
         if (placa.length === 6 && regex.test(placa)) {
             setMostrarTabla(true);
         } else {
+            setMostrarTabla(false);
             alert("La placa debe tener 6 caracteres y no puede contener caracteres especiales.");
         }
     };
