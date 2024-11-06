@@ -1,4 +1,4 @@
-ltro-container {
+.filtro-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -69,61 +69,3 @@ background-color: #b0e0b0; /* Fondo más oscuro para hover */
 button.variant-danger:hover, .Button.variant-danger:hover {
 background-color: #e0b0b0; /* Fondo más oscuro para hover */
 }
-
-
-.pagina-infracciones {
-
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-
-  
-  main {
-    flex: 1;
-
-  }
-  
-  h1 {
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  .filtro-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .lista-infracciones {
-    padding: 20px;
-  }
-  
-  .lista-infracciones table {
-
-    border-collapse: collapse;
-    margin: 0 auto;
-  }
-  
-  .lista-infracciones th,
-  .lista-infracciones td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #B8860B; /* Línea de separación más oscura */
-  }
-  
-  
-  .lista-infracciones tbody tr:hover {
-    background-color: #F5F5F5; /* Color de fondo al pasar el cursor */
-  }
-  
-  button,
-  .ButtonLink {
-    margin: 0 3rem; /* Opciones separadas 3 rem entre ellas */
-  }
-  
-  footer {
-
-    text-align: center;
-    margin-top: auto;
-  }

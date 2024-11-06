@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
@@ -8,7 +10,6 @@ import Paginador from "../../../layouts/Paginador";
 import ButtonLink from "../../../atoms/ButtonLink";
 import "./infraccion.css";
 import { createInfraccion, getInfracciones, updateInfraccion } from "../../../../services/infraccionService";
-
 
 // const infraccionesIniciales = [
 //   { id: '1', titulo: 'Exceso de velocidad', articulo: 'A-1', monto: '500.00', descripcion: 'Conducir a una velocidad mayor a la permitida' },  
@@ -213,3 +214,4 @@ const Infracciones = () => {
 }
 
 export default Infracciones;
+
