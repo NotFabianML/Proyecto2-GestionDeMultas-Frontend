@@ -1,13 +1,15 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Nextek-logo.svg";
 import "./index.css";
 import Button from "../../atoms/Button";
 
 const JuezNavbar = () => {
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    Navigate("/"); // Redirige a la página de inicio de sesión o de bienvenida
+    navigate("/"); // Redirige a la página de inicio de sesión o de bienvenida
   };
 
   return (
