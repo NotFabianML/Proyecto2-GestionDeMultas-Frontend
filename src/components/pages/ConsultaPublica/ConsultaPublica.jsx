@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ConsultaPublica.css';
 import Button from '../../atoms/Button.jsx';
 import InvitadoNavbarDos from '../../layouts/Navbar/InvitadoNavbarDos.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import { getMultasPorPlaca } from '../../../services/multaServices.js';
+import { isoToDateFormatter } from '../../../utils/dateUtils.js';
 
 const ConsultaPublica = () => {
     const [mostrarTabla, setMostrarTabla] = useState(false);
@@ -11,22 +12,35 @@ const ConsultaPublica = () => {
     const [multas, setMultas] = useState([]);
     const [error, setError] = useState(null);
 
-    
-    useEffect(() => {
-        getMultasPorPlaca(placa)
-        .then((data) => {
-            setMultas(data);
-        })
-        .catch((error) => {
-            setError(`Error: ${error.message}`);
-        });
-    }, [mostrarTabla]);
+    // Función para traducir el estado de la multa
+    const traducirEstado = (estado) => {
+        switch (estado) {
+            case 1:
+                return "Pendiente";
+            case 2:
+                return "En Disputa";
+            case 3:
+                return "Pagada";
+            default:
+                return "Desconocido";
+        }
+    };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const regex = /^[a-zA-Z0-9]*$/;
+        
         if (placa.length === 6 && regex.test(placa)) {
-            setMostrarTabla(true);
+            try {
+                const data = await getMultasPorPlaca(placa);
+                setMultas(data);
+                setError(null);
+                setMostrarTabla(true);
+            } catch (error) {
+                setError(`Error: ${error.response?.data || error.message}`);
+                setMultas([]);
+                setMostrarTabla(false);
+            }
         } else {
             setMostrarTabla(false);
             alert("La placa debe tener 6 caracteres y no puede contener caracteres especiales.");
@@ -52,36 +66,32 @@ const ConsultaPublica = () => {
                         placeholder="000000"
                         className="input-placa"
                     />
-                    <Button id="btnConsultaMulta" className="btnConsultaMulta" variant= "primary" size="medium" text="Consultar Multas" />
+                    <Button id="btnConsultaMulta" className="btnConsultaMulta" variant="primary" size="medium" text="Consultar Multas" />
                 </form>
 
-                {mostrarTabla && (
+                {error && <p className="error-message">{error}</p>}
+
+                {mostrarTabla && multas.length > 0 && (
                     <table className="tabla-multas">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
                                 <th>Estado</th>
-                                <th>Tipo de Infracción</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>01/01/2023</td>
-                                <td>Cancelada</td>
-                                <td>Particular</td>
-                            </tr>
-                            <tr>
-                                <td>05/02/2023</td>
-                                <td>Pendiente</td>
-                                <td>Particular</td>
-                            </tr>
-                            <tr>
-                                <td>15/03/2023</td>
-                                <td>Pagada</td>
-                                <td>Comercial</td>
-                            </tr>
+                            {multas.map((multa, index) => (
+                                <tr key={index}>
+                                    <td>{isoToDateFormatter(multa.fechaHora)}</td>
+                                    <td>{traducirEstado(multa.estado)}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
+                )}
+                
+                {mostrarTabla && multas.length === 0 && !error && (
+                    <p>No se encontraron multas para la placa ingresada.</p>
                 )}
             </div>
 

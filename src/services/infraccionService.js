@@ -2,7 +2,7 @@ import axiosInstance from './axiosInstance';
 
 // Obtener todas las infracciones
 export const getInfracciones = async () => {
-  const response = await axiosInstance.get('/infracciones');
+  const response = await axiosInstance.get('/Infracciones');
   return response.data;
 };
 
@@ -14,13 +14,13 @@ export const getInfraccionById = async (id) => {
 
 // Crear nueva infracción
 export const createInfraccion = async (infraccionData) => {
-  const response = await axiosInstance.post('/infracciones', infraccionData);
+  const response = await axiosInstance.post('/Infracciones', infraccionData);
   return response.data;
 };
 
 // Actualizar infracción por ID
 export const updateInfraccion = async (id, infraccionData) => {
-  await axiosInstance.put(`/infracciones/${id}`, infraccionData);
+  await axiosInstance.put(`/Infracciones/${id}`, infraccionData);
 };
 
 // Asignar infracción a una multa

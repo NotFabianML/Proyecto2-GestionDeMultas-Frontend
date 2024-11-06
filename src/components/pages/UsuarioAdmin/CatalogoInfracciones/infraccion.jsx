@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import Button from "../../../atoms/Button";
@@ -7,39 +7,53 @@ import FiltroInput from "../../../layouts/FiltroInput";
 import Paginador from "../../../layouts/Paginador";
 import ButtonLink from "../../../atoms/ButtonLink";
 import "./infraccion.css";
+import { createInfraccion, getInfracciones, updateInfraccion } from "../../../../services/infraccionService";
 
-const infraccionesIniciales = [
-  { id: '1', infraccion: 'Exceso de velocidad', articulo: 'A-1', monto: '500.00', descripcion: 'Conducir a una velocidad mayor a la permitida' },  
-  { id: '2', infraccion: 'Conducir sin licencia', articulo: 'A-2', monto: '1000.00', descripcion: 'Conducir un vehículo sin tener la licencia correspondiente' },
-  { id: '3', infraccion: 'Estacionamiento indebido', articulo: 'A-3', monto: '200.00', descripcion: 'Estacionar en lugares prohibidos' },
-  { id: '4', infraccion: 'Pasar en rojo', articulo: 'A-4', monto: '500.00', descripcion: 'Pasar un semáforo en rojo' },
-  { id: '5', infraccion: 'Conducir en estado de ebriedad', articulo: 'A-5', monto: '1000.00', descripcion: 'Conducir un vehículo bajo los efectos del alcohol' },
-  // Puedes agregar más infracciones aquí
-];
+
+// const infraccionesIniciales = [
+//   { id: '1', titulo: 'Exceso de velocidad', articulo: 'A-1', monto: '500.00', descripcion: 'Conducir a una velocidad mayor a la permitida' },  
+//   { id: '2', titulo: 'Conducir sin licencia', articulo: 'A-2', monto: '1000.00', descripcion: 'Conducir un vehículo sin tener la licencia correspondiente' },
+//   { id: '3', titulo: 'Estacionamiento indebido', articulo: 'A-3', monto: '200.00', descripcion: 'Estacionar en lugares prohibidos' },
+//   { id: '4', titulo: 'Pasar en rojo', articulo: 'A-4', monto: '500.00', descripcion: 'Pasar un semáforo en rojo' },
+//   { id: '5', titulo: 'Conducir en estado de ebriedad', articulo: 'A-5', monto: '1000.00', descripcion: 'Conducir un vehículo bajo los efectos del alcohol' },
+//   // Puedes agregar más infracciones aquí
+// ];
 
 const Infracciones = () => {
   const [filtro, setFiltro] = useState('');
   const [paginaActual, setPaginaActual] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [infraccionSeleccionada, setInfraccionSeleccionada] = useState(null);
+  const [infraccionesIniciales, setInfracciones] = useState([]);
+  const [error, setError] = useState(null);
   const [nuevaInfraccion, setNuevaInfraccion] = useState({
-    id: '',
-    infraccion: '',
+    idInfraccion: '',
+    titulo: '',
     articulo: '',
     monto: '',
     descripcion: ''
   });
   const elementosPorPagina = 10;
+ 
+  useEffect(() => {
+    getInfracciones()
+    .then((data) => {
+        setInfracciones(data);
+    })
+    .catch((error) => {
+        setError(`Error: ${error.message}`);
+    });
+}, [!modalIsOpen]);
 
-  const infraccionesFiltradas = infraccionesIniciales.filter(infraccion =>
-    infraccion.infraccion.toLowerCase().includes(filtro.toLowerCase()) ||
-    infraccion.id.toString().includes(filtro)
+  const infraccionesFiltradas = infraccionesIniciales?.filter(infraccion =>
+    infraccion.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
+    infraccion.idInfraccion.toString().includes(filtro)
   );
 
   const indiceUltimoElemento = paginaActual * elementosPorPagina;
   const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
-  const InfraccionesActuales = infraccionesFiltradas.slice(indicePrimerElemento, indiceUltimoElemento);
-  const totalPaginas = Math.ceil(infraccionesFiltradas.length / elementosPorPagina);
+  const InfraccionesActuales = infraccionesFiltradas?.slice(indicePrimerElemento, indiceUltimoElemento);
+  const totalPaginas = Math.ceil(infraccionesFiltradas?.length / elementosPorPagina);
 
   const cambiarPagina = (numeroPagina) => {
     setPaginaActual(numeroPagina);
@@ -51,7 +65,7 @@ const Infracciones = () => {
       setNuevaInfraccion(infraccion);
     } else {
       setInfraccionSeleccionada(null);
-      setNuevaInfraccion({ id: '', infraccion: '', articulo: '', monto: '', descripcion: '' });
+      setNuevaInfraccion({ idInfraccion: '', titulo: '', articulo: '', monto: '', descripcion: '' });
     }
     setModalIsOpen(true);
   };
@@ -69,21 +83,23 @@ const Infracciones = () => {
   const handleGuardarInfraccion = () => {
     if (infraccionSeleccionada) {
       // Editar infracción existente
-      const infraccionesActualizadas = infraccionesIniciales.map(infraccion =>
-        infraccion.id === infraccionSeleccionada.id ? nuevaInfraccion : infraccion
-      );
-      infraccionesIniciales = infraccionesActualizadas;
+      console.log(nuevaInfraccion);
+      updateInfraccion(nuevaInfraccion.idInfraccion, nuevaInfraccion).then((result) => {
+        setNuevaInfraccion({ ...nuevaInfraccion });
+      });
     } else {
       // Crear nueva infracción
-      const nuevoID = (infraccionesIniciales.length + 1).toString();
-      infraccionesIniciales.push({ ...nuevaInfraccion, id: nuevoID });
+      const { idInfraccion, ...infraccionSinId } = nuevaInfraccion;
+      createInfraccion(infraccionSinId).then((result) => {
+        setNuevaInfraccion({ ...nuevaInfraccion });
+      });
     }
     cerrarModal();
   };
 
   const handleEliminarInfraccion = () => {
-    const infraccionesActualizadas = infraccionesIniciales.filter(infraccion =>
-      infraccion.id !== infraccionSeleccionada.id
+    const infraccionesActualizadas = infraccionesIniciales?.filter(infraccion =>
+      infraccion.idInfraccion !== infraccionSeleccionada.idInfraccion
     );
     infraccionesIniciales = infraccionesActualizadas;
     cerrarModal();
@@ -112,9 +128,9 @@ const Infracciones = () => {
               </tr>
             </thead>
             <tbody>
-              {InfraccionesActuales.map((infraccion) => (
-                <tr key={infraccion.id}>
-                  <td>{infraccion.infraccion}</td>
+              {InfraccionesActuales?.map((infraccion) => (
+                <tr key={infraccion.idInfraccion}>
+                  <td>{infraccion.titulo}</td>
                   <td>
                     <Button variant="primary" text="Editar Infracción" onClick={() => abrirModal(infraccion)} />
                   </td>
@@ -125,7 +141,7 @@ const Infracciones = () => {
         </div>
         <Paginador
           elementosPorPagina={elementosPorPagina}
-          totalElementos={infraccionesFiltradas.length}
+          totalElementos={infraccionesFiltradas?.length}
           cambiarPagina={cambiarPagina}
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
@@ -151,8 +167,8 @@ const Infracciones = () => {
             <label>Nombre de la Infracción:</label>
             <input
               type="text"
-              name="infraccion"
-              value={nuevaInfraccion.infraccion}
+              name="titulo"
+              value={nuevaInfraccion.titulo}
               onChange={handleChange}
             />
           </div>
