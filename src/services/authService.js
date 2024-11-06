@@ -1,17 +1,31 @@
 import axiosInstance from './axiosInstance';
+import { InvalidTokenError, jwtDecode } from 'jwt-decode';
 
 // Login: realiza la autenticación y guarda el token en localStorage
 export const login = async (userData) => {
   try {
-    const response = await axiosInstance.post('/auth/login', userData);
+    const response = await axiosInstance.post('/Auth/Login', userData);
     const { token } = response.data;
 
-    // Almacena el token en localStorage
+    // Almacena el token en localStorageF
     localStorage.setItem('authToken', token);
 
     return response.data;
   } catch (error) {
     throw new Error('Error al iniciar sesión');
+  }
+};
+
+export const getUserRole = () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) return null;
+
+  try {
+    const decodedToken = jwtDecode(token);
+    return decodedToken.role; // Extrae el rol desde el token decodificado
+  } catch (error) {
+    console.error('Error al decodificar el token:', error);
+    return null;
   }
 };
 
