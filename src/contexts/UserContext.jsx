@@ -1,41 +1,48 @@
-import { createContext, memo, useContext, useState } from "react";
-// Paso 1: Crear el contexto con los valores iniciales
+import { createContext, useContext, useState, useCallback } from "react";
+
+// Paso 1: Crear el contexto
 const UserContext = createContext({
   userId: "",
   token: "",
+  role: "",
   setUserId: () => {},
   setToken: () => {},
-  tickets: [],
-  setTickets: () => {},
+  setRole: () => {},
+  logout: () => {},
 });
+
 // Paso 2: Crear el provider
-export const UserContextProvider = memo(({ children }) => {
-  // Paso 3: Crear los estados y funciones que modificarán el contexto
+export const UserContextProvider = ({ children }) => {
+  // Estados para userId, token y role
   const [userId, setUserId] = useState("");
   const [token, setToken] = useState("");
-  const [tickets, setTickets] = useState("");
+  const [role, setRole] = useState("");
 
-  // Paso 4: Crear el objeto que va a ser la prop de contexto
-  const contextValue = memo(
-    () => ({
-      userId,
-      token,
-      setUserId,
-      setToken,
-      tickets,
-      setTickets,
-    }),
-    // Paso 5: Agregar las dependencias del objeto
-    [userId, token, tickets]
-  );
+  // Función para cerrar sesión y limpiar el contexto
+  const logout = useCallback(() => {
+    setUserId("");
+    setToken("");
+    setRole("");
+    localStorage.removeItem("authToken");
+  }, []);
+
+  // Configuración del valor del contexto
+  const contextValue = {
+    userId,
+    token,
+    role,
+    setUserId,
+    setToken,
+    setRole,
+    logout,
+  };
 
   return (
-    // Paso 6: Retornar el provider con el valor del contexto y sus hijos
     <UserContext.Provider value={contextValue}>
       {children}
     </UserContext.Provider>
   );
-});
+};
 
-// Paso 7: Crear un hook para consumir el contexto
+// Hook para consumir el contexto
 export const useUserContext = () => useContext(UserContext);
