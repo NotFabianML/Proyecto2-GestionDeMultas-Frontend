@@ -30,9 +30,9 @@ const ListaUsuarios = () => {
             });
     }, [modalIsOpen]); // Re-cargar la lista de usuarios si se abre el modal
 
-    const usuariosFiltrados = usuarios?.filter(usuario =>
-        usuario.userName.toLowerCase().includes(filtro.toLowerCase()) ||
-        usuario.id.toString().includes(filtro)
+    const usuariosFiltrados = usuarios.filter(usuario =>
+        (usuario.userName && usuario.userName.toLowerCase().includes(filtro.toLowerCase())) || 
+        (usuario.id && usuario.id.toString().includes(filtro))
     );
 
     const indiceUltimoElemento = paginaActual * elementosPorPagina;

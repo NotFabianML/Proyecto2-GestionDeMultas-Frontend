@@ -37,9 +37,14 @@ export const logout = () => {
 // Registrar usuario: crea un nuevo usuario en la base de datos
 export const register = async (newUser) => {
   try {
-    const response = await axiosInstance.post('/auth/register', newUser);
+    const response = await axiosInstance.post('/Auth/Register', newUser, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
     return response.data;
   } catch (error) {
+    console.error('Error al registrar usuario:', error);
     throw new Error('Error al registrar usuario');
   }
 };
