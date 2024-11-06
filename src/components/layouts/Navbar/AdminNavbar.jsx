@@ -3,20 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Nextek-logo.svg";
 import './index.css';
 import Button from "../../atoms/Button";
+import { useUserContext } from "../../../contexts/UserContext";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
+  const { logout } = useUserContext();
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate('/'); // Redirige a la página de inicio de sesión o de bienvenida
+    logout();
+    navigate("/");
   };
 
   return (
     <nav className="navbar">
       {/* Logo */}
       <div className="navbar-logo">
-        <Link to="/InicioAdmin">
+        <Link to="/inicio-admin">
           <img src={Logo} alt="Logo" />
         </Link>
       </div>
@@ -24,22 +26,22 @@ const AdminNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/Consulta-Publica">Consulta Publica</Link>
+          <Link to="/consulta-publica">Consulta Publica</Link>
         </li>
         <li>
-          <Link to="/Mapa-Calor">Mapa de Calor</Link>
+          <Link to="/mapa-calor">Mapa de Calor</Link>
         </li>
         <li>
           <Link to="/about">Usuarios</Link>
         </li>
         <li>
-          <Link to="/Roles">Roles y Permisos</Link>
+          <Link to="/roles">Roles y Permisos</Link>
         </li>
         <li>
-          <Link to="/Infraccion">Catalogo de Infracciones</Link>
+          <Link to="/infraccion">Catalogo de Infracciones</Link>
         </li>
         <li>
-          <Link to="/MultasTabla">Estadistica de Multas</Link>
+          <Link to="/multas-tabla">Estadistica de Multas</Link>
         </li>
       </ul>
 

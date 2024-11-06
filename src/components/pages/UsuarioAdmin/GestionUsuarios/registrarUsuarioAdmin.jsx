@@ -64,7 +64,7 @@ const RegistrarUsuarioAdmin = () => {
             return;
         }
         console.log('Formulario enviado:', { nombre, apellido1, apellido2, correo, placa, password, cedulaTexto });
-        navigate('/ListaUsuarios');
+        navigate('/lista-usuarios');
     };
 
     return (

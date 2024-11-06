@@ -20,14 +20,14 @@ const InvitadoNavbar = () => {
           <Link to="/Pagina-Inicio">Inicio</Link>
         </li>
         <li>
-          <Link to="/Consulta-Publica">Consulta Pública</Link>
+          <Link to="/consulta-publica">Consulta Pública</Link>
         </li>
       </ul>
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="outline" text="Registrarse" to="/Registro-Usuario" />
-        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/Inicio-Sesion" />
+        <ButtonLink variant="outline" text="Registrarse" to="/registro-usuario" />
+        <ButtonLink variant="alternative" text="Iniciar Sesión" to="/inicio-sesion" />
       </div>
     </nav>
   );

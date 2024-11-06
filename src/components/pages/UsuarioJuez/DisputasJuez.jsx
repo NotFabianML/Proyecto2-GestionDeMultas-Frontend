@@ -94,7 +94,7 @@ const Disputas = () => {
                                     <td>{disputa.fecha}</td>
                                     <td>{disputa.estado}</td>
                                     <td className="buttonLink">
-                                        <ButtonLink to="/Resolver-Disputa"
+                                        <ButtonLink to="/resolver-disputa"
                                             variant="secondary" 
                                             size="medium" 
                                             text="Resolver disputa" 

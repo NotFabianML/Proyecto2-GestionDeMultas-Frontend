@@ -17,8 +17,8 @@ const PaginaOficialTransito = () => {
             <div className="botones">
                 
                 <br />
-                <ButtonLink to="/Crear-Multa" id="btnCrearMulta" className="btnCrearMulta" variant= "primary" size="medium" text="Crear Multa"/>
-                <ButtonLink to="/Gestion-Multas" id="btnGestionarMultas" className="btnGestionarMultas" variant= "primary" size="medium" text="Gestionar Multas"/>
+                <ButtonLink to="/crear-multa" id="btnCrearMulta" className="btnCrearMulta" variant= "primary" size="medium" text="Crear Multa"/>
+                <ButtonLink to="/gestion-multas" id="btnGestionarMultas" className="btnGestionarMultas" variant= "primary" size="medium" text="Gestionar Multas"/>
             </div>
 
             <footer>

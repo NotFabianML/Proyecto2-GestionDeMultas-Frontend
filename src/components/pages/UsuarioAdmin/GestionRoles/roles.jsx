@@ -105,7 +105,7 @@ const cambiarPagina = (numeroPagina) => {
                     paginaActual={paginaActual}
                     totalPaginas={totalPaginas}
                 />
-                <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
+                <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
                 <Button variant="alternative" text="Crear Rol" onClick={abrirModal} />
         
         <Modal

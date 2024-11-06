@@ -147,7 +147,7 @@ const Infracciones = () => {
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
         />
-        <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
+        <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
         <Button variant="alternative" text="Crear Infracción" onClick={() => abrirModal(null)} />
         
         <Modal

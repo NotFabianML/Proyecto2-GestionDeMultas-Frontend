@@ -121,7 +121,7 @@ const ListaUsuarios = () => {
                     paginaActual={paginaActual}
                     totalPaginas={totalPaginas}
                 />
-                <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
+                <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
                 <ButtonLink variant="alternative" text="Crear Usuario" onClick={() => abrirModal(null)} />
 
                 <Modal

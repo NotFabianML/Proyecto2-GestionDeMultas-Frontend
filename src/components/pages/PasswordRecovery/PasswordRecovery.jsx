@@ -12,7 +12,7 @@ const PasswordRecovery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/Password-Recovery', {
+            const response = await fetch('http://localhost:5000/api/password-recovery', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

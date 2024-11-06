@@ -3,7 +3,7 @@ import './index.css';
 import ButtonLink from '../../atoms/ButtonLink.jsx';
 import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
-import InicioSesion from './Inicio-Sesion.jsx';
+import InicioSesion from './inicio-sesion.jsx';
 
 const Index = () => {
     return (

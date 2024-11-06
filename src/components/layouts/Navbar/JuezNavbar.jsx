@@ -1,15 +1,17 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Nextek-logo.svg";
 import "./index.css";
 import Button from "../../atoms/Button";
+import { useUserContext } from "../../../contexts/UserContext";
 
 const JuezNavbar = () => {
   const navigate = useNavigate();
+  const { logout } = useUserContext();
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/"); // Redirige a la página de inicio de sesión o de bienvenida
+    logout();
+    navigate("/");
   };
 
   return (
@@ -24,16 +26,16 @@ const JuezNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/Consulta-Publica">Consulta Publica</Link>
+          <Link to="/consulta-publica">Consulta Publica</Link>
         </li>
         <li>
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/Disputas-Juez">Disputas Asignadas</Link>
+          <Link to="/disputas-juez">Disputas Asignadas</Link>
         </li>
         <li>
-          <Link to="/AdministrarPerfil">Ver Perfil</Link>
+          <Link to="/administrar-perfil">Ver Perfil</Link>
         </li>
       </ul>
 

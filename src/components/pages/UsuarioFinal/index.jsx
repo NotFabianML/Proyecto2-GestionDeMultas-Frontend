@@ -19,8 +19,8 @@ const PaginaUsuarioFinal = () => {
             <div className="botones">
                 
                 <br />
-                <ButtonLink to="/Mis-Vehiculos" id="btnMisVehiculos" className="btnMisVehiculos" variant= "primary" size="medium" text="Ver mis vehículos"/>
-                <ButtonLink to="/Mis-Multas" id="btnMisMultas" className="btnMisMultas" variant= "primary" size="medium" text="Ver mis multas"/>
+                <ButtonLink to="/mis-vehiculos" id="btnMisVehiculos" className="btnMisVehiculos" variant= "primary" size="medium" text="Ver mis vehículos"/>
+                <ButtonLink to="/mis-multas" id="btnMisMultas" className="btnMisMultas" variant= "primary" size="medium" text="Ver mis multas"/>
             </div>
 
             <footer>

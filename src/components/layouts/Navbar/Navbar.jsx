@@ -20,16 +20,16 @@ const Navbar = () => {
           <Link to="/Pagina-Inicio">Inicio</Link>
         </li>
         <li>
-          <Link to="/Consulta-Publica">Consulta Multas</Link>
+          <Link to="/consulta-publica">Consulta Multas</Link>
         </li>
         <li>
-          <Link to="/Mapa-Calor">Mapa de Calor</Link>
+          <Link to="/mapa-calor">Mapa de Calor</Link>
         </li>
       </ul>
 
       {/* Botones */}
       <div className="navbar-actions">
-        <ButtonLink variant="alternative" text="Registrarse" to="/Registro-Usuario" />
+        <ButtonLink variant="alternative" text="Registrarse" to="/registro-usuario" />
       </div>
     </nav>
   );

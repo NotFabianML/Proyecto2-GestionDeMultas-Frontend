@@ -101,8 +101,8 @@ const MultasTabla = () => {
                     cambiarPagina={cambiarPagina}
                 />
             </div>
-            <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
-            <ButtonLink variant="secondary" text="Visualizar Grafico" to="/MultasGrafico" />
+            <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
+            <ButtonLink variant="secondary" text="Visualizar Grafico" to="/multas-grafico" />
         </main>
         <footer>
             <Footer />

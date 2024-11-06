@@ -70,7 +70,7 @@ const AdministrarPerfil = () => {
           </div>
           <Button variant="alternative" text="Guardar Cambios" onClick={handleClick} />
         </div>
-        <ButtonLink variant="outline" text="Regresar" to="/ListaUsuarios" />
+        <ButtonLink variant="outline" text="Regresar" to="/lista-usuarios" />
       </main>
       <footer>
         <Footer />

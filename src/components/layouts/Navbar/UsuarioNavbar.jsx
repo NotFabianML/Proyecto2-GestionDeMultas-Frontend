@@ -3,13 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Nextek-logo.svg";
 import './index.css';
 import Button from "../../atoms/Button";
+import { useUserContext } from "../../../contexts/UserContext";
 
 const UsuarioNavbar = () => {
   const navigate = useNavigate();
+  const { logout } = useUserContext();
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate('/'); // Redirige a la página de inicio de sesión o de bienvenida
+    logout();
+    navigate("/");
   };
   
   return (
@@ -24,22 +26,22 @@ const UsuarioNavbar = () => {
       {/* Links */}
       <ul className="navbar-links">
         <li>
-          <Link to="/Consulta-Publica">Consulta Publica</Link>
+          <Link to="/consulta-publica">Consulta Publica</Link>
         </li>
         <li>
           <Link to="/about">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/Mis-Multas">Multas</Link>
+          <Link to="/mis-multas">Multas</Link>
         </li>
         <li>
-          <Link to="/Mis-Disputas">Disputas</Link>
+          <Link to="/mis-disputas">Disputas</Link>
         </li>
         <li>
           <Link to="/about">Vehiculos</Link>
         </li>
         <li>
-          <Link to="/AdministrarPerfil">Ver Perfil</Link>
+          <Link to="/administrar-perfil">Ver Perfil</Link>
         </li>
       </ul>
 

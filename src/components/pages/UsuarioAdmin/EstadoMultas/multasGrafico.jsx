@@ -6,8 +6,8 @@ const MultasGrafico = () => {
     <div>
       <h1>multasGrafico</h1>
 
-      <ButtonLink variant="outline" text="Regresar" to="/InicioAdmin" />
-      <ButtonLink variant="secondary" text="Visualizar Tabla" to="/MultasTabla" />
+      <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
+      <ButtonLink variant="secondary" text="Visualizar Tabla" to="/multas-tabla" />
     </div>
   );
 }

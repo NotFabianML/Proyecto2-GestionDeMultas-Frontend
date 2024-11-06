@@ -2,7 +2,7 @@ import React from "react";
 import ButtonLink from "../atoms/ButtonLink";
 import Button from "../atoms/Button";
 import { useState } from "react";
-import {getUsuarioPorCedula} from "../../services/usuarioService";
+import { getUsuarioPorCedula } from "../../services/usuarioService";
 import {
   InvitadoNavbar,
   UsuarioNavbar,
@@ -16,20 +16,20 @@ const Home = () => {
   const handleClick = () => {
     alert("Boton clickeado");
   };
-/*
+  /*
 
 --------------> Meter aqui CSS y JavaScript
 
 */
 
-const [cedula, setCedula] = useState("");
+  const [cedula, setCedula] = useState("");
   const [usuario, setUsuario] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSearch = async () => {
     try {
       setError(null); // Limpiar el mensaje de error previo
-      setCedula("518860349")
+      setCedula("518860349");
       const userData = await getUsuarioPorCedula("618860349");
       setUsuario(userData);
       console.log(usuario);
