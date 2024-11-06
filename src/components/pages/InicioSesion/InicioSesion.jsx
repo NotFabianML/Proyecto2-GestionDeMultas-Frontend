@@ -18,28 +18,29 @@ const InicioSesion = () => {
     } else {
       try {
         const userData = {
-            Email: correo,
-            Password: contrasena
-        }
+          Email: correo,
+          Password: contrasena,
+        };
         await login(userData);
         const userRole = getUserRole(); // Obtén el rol después de iniciar sesión
+        console.log("userrole: " + userRole);
 
         // Redirige según el rol del usuario
         switch (userRole) {
-            case "Administrador":
-                navigate("/InicioAdmin");
-                break;
-            case "Oficial de Tránsito":
-                navigate("/Pagina-Oficial");
-                break;
-            case "Juez de Tránsito":
-                navigate("/Pagina-Juez");
-                break;
-            case "Usuario Final":
-                navigate("/Pagina-Usuario");
-                break;
-            default:
-                console.log("Rol no reconocido");
+          case "Administrador":
+            navigate("/InicioAdmin");
+            break;
+          case "Oficial de Tránsito":
+            navigate("/Pagina-Oficial");
+            break;
+          case "Juez de Tránsito":
+            navigate("/Pagina-Juez");
+            break;
+          case "Usuario Final":
+            navigate("/Pagina-Usuario");
+            break;
+          default:
+            console.log("Rol no reconocido");
         }
       } catch (err) {
         // Muestra el mensaje de error en caso de fallo

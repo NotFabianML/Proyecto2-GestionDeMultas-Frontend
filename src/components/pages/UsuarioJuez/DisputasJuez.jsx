@@ -16,25 +16,6 @@ const Disputas = () => {
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
 
-    //Datos de disputa (quemados) - esto tiene que venir de la base de datos
-    // const disputasQuemadas = [
-    //     { id: '1', vehiculo: 'ABC123', fecha: '03/02/2024', estado: 'Pendiente' },
-    //     { id: '2', vehiculo: 'DEF456', fecha: '04/03/2024', estado: 'Pendiente declaración de oficial' },
-    //     { id: '3', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
-    //     { id: '4', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
-    //     { id: '5', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
-    //     { id: '6', vehiculo: 'ABC123', fecha: '03/02/2024', estado: 'Pendiente' },
-    //     { id: '7', vehiculo: 'DEF456', fecha: '04/03/2024', estado: 'Pendiente declaración de oficial' },
-    //     { id: '8', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
-    //     { id: '9', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
-    //     { id: '10', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
-    //     { id: '11', vehiculo: 'ABC123', fecha: '03/02/2024', estado: 'Pendiente' },
-    //     { id: '12', vehiculo: 'DEF456', fecha: '04/03/2024', estado: 'Pendiente declaración de oficial' },
-    //     { id: '13', vehiculo: 'GHI789', fecha: '05/04/2024', estado: 'Pendiente' },
-    //     { id: '14', vehiculo: 'JKL012', fecha: '06/05/2024', estado: 'Resuelto' },
-    //     { id: '15', vehiculo: 'MNO345', fecha: '07/06/2024', estado: 'Pendiente declaración de oficial' },
-
-    // ];
 
 
     useEffect(() => {

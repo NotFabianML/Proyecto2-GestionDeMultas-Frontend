@@ -22,7 +22,7 @@ export const getUserRole = () => {
 
   try {
     const decodedToken = jwtDecode(token);
-    return decodedToken.role; // Esto devuelve el rol del usuario
+    return decodedToken.role; // Extrae el rol desde el token decodificado
   } catch (error) {
     console.error('Error al decodificar el token:', error);
     return null;

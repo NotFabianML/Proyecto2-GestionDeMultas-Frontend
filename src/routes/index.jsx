@@ -26,6 +26,7 @@ import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
 import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
 import MisVehiculos from "../components/pages/UsuarioFinal/MisVehiculos.jsx";
+import MapaCalor from "../components/pages/MapaCalor/MapaCalor.jsx";
 
 
 
@@ -59,6 +60,7 @@ export const MainRouter = () => {
         <Route path="/Mis-Multas" element={<MisMultas />} />
         <Route path="/Mis-Disputas" element={<MisDisputas />} />
         <Route path="/Mis-Vehiculos" element={<MisVehiculos />} />
+        <Route path="/Mapa-Calor" element={<MapaCalor />} />
 
 
         
