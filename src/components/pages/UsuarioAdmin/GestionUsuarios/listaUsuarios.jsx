@@ -18,20 +18,25 @@ const ListaUsuarios = () => {
     useEffect(() => {
         const fetchUsuarios = async () => {
             try {
-                const usuariosData = await getUsuarios(); // Llamada al servicio
-                setUsuarios(usuariosData);
+                const usuariosData = await getUsuarios();
+                // Validamos que los usuariosData sean un array
+                if (Array.isArray(usuariosData)) {
+                    setUsuarios(usuariosData);
+                } else {
+                    console.error("Los datos de usuarios no son un arreglo válido", usuariosData);
+                }
             } catch (error) {
                 console.error("Error al obtener usuarios:", error);
             }
         };
-
+    
         fetchUsuarios();
-    }, []); // Este efecto solo se ejecutará una vez cuando el componente se monte
+    }, []);
 
     // Filtrado de usuarios
     const usuariosFiltrados = usuarios.filter(usuario =>
-        usuario.userName.toLowerCase().includes(filtro.toLowerCase()) ||
-        usuario.id.toString().includes(filtro)
+        (usuario.userName && usuario.userName.toLowerCase().includes(filtro.toLowerCase())) || 
+        (usuario.id && usuario.id.toString().includes(filtro))
     );
 
     // Calcular los índices de la página actual
