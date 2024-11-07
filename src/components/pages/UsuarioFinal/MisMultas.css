@@ -4,6 +4,11 @@
     flex-direction: column;
 }
 
+.container p{
+    font-size: medium;
+    text-align: center;
+}
+
 .container h1 {
     margin-top: 3%;
     text-align: center;
@@ -19,6 +24,11 @@
     gap: 16px;
     column-gap: clamp(16px, 5vw, 32px);
     margin: 3%;
+}
+
+.grid-container p {
+    text-align: center;
+    font-size: medium;
 }
 
 .card {

@@ -4,6 +4,7 @@ import Button from "../../../atoms/Button";
 import Footer from "../../../layouts/Footer";
 import ButtonLink from "../../../atoms/ButtonLink";
 import './administrarPerfil.css';
+import axios from "axios"; // Asegúrate de instalar axios con `npm install axios`
 
 const AdministrarPerfil = () => {
   const usuario = {
@@ -22,10 +23,35 @@ const AdministrarPerfil = () => {
   const [correo, setCorreo] = useState(usuario.correo);
   const [numeroPlaca, setNumeroPlaca] = useState(usuario.numeroPlaca);
   const [rol, setRol] = useState(usuario.rol);
+  const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para la foto de perfil
 
-  const handleClick = () => {
-    alert(`Nombre: ${nombre}, Apellidos: ${apellidos}, Correo: ${correo}, Número de Placa: ${numeroPlaca}, Rol: ${rol}`);
-    // Aquí puedes añadir la lógica para guardar los cambios en la base de datos
+  const handleImageChange = (e) => {
+    setFotoPerfil(e.target.files[0]); // Guardar el archivo seleccionado en el estado
+  };
+
+  const handleClick = async () => {
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("apellidos", apellidos);
+    formData.append("correo", correo);
+    formData.append("numeroPlaca", numeroPlaca);
+    formData.append("rol", rol);
+
+    if (fotoPerfil) {
+      formData.append("fotoPerfil", fotoPerfil); // Agregar la imagen solo si fue seleccionada
+    }
+    
+    try {
+      await axios.post("/api/guardarPerfil", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Perfil actualizado exitosamente");
+    } catch (error) {
+      console.error("Error al guardar el perfil", error);
+      alert("Hubo un error al guardar el perfil");
+    }
   };
 
   return (
@@ -36,7 +62,8 @@ const AdministrarPerfil = () => {
       <main>
         <h1>Editar Perfil</h1>
         <div className="perfil-container">
-          <img src={usuario.fotoPerfil} alt={`${usuario.userName}'s profile`} width="100" height="100" />
+          <img src={usuario.fotoPerfil} alt={` Perfil de ${usuario.userName}`} width="100" height="100" />
+          <input type="file" accept="image/*" onChange={handleImageChange} /> {/* Input para subir imagen */}
         </div>
         <div className="perfil-info">
           <div className="columna-izquierda">

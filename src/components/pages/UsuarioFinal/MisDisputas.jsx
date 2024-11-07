@@ -7,10 +7,9 @@ import { getDisputasPorUsuario } from '../../../services/disputaService';
 const MisDisputas = () => {
     const [disputas, setDisputas] = useState([]);
     const [error, setError] = useState(null);
-    const usuarioId = "544E9B7E-668A-4031-9D24-058D1239C138"; //Id quemado - Hacerlo dinámico
+    const usuarioId = "FFE4FA87-AFD3-4CFF-999D-061EEA8A2157"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
-        // Llamada al endpoint para obtener disputas por usuario
         getDisputasPorUsuario(usuarioId)
             .then((data) => {
                 setDisputas(data);
@@ -28,8 +27,8 @@ const MisDisputas = () => {
 
             <div className="grid-container">
                 {error ? (
-                    <p className="error-message">{error}</p>
-                ) : (
+                    <p className="error-message">* No se encontraron disputas para el usuario especificado</p>
+                ) : disputas.length > 0 ? (
                     disputas.map((disputa) => (
                         <div key={disputa.idDisputa} className="card">
                             <div className="infoDisputa">
@@ -43,8 +42,11 @@ const MisDisputas = () => {
                             </div>
                         </div>
                     ))
+                ) : (
+                    <p className="no-disputas-message">El usuario no tiene disputas abiertas.</p>
                 )}
             </div>
+
 
             <Footer />
         </div>
