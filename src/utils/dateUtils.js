@@ -12,3 +12,15 @@ export const isoToDateFormatter = (isoDate) => {
 
     return `${day}/${month}/${year} ${formattedHours}:${minutes} ${ampm}`;
 };
+
+export const getDateFromISO = (isoString) => {
+    const date = new Date(isoString);
+    return date.toISOString().split('T')[0];
+  }
+
+export const getTimeFromISO = (isoString) => {
+    const date = new Date(isoString);
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+}

@@ -21,19 +21,33 @@ const MisMultas = () => {
         montoMora: 0
     });
 
+       //Solo para pruebas
+       const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
+       useEffect(() => {
+           getMultaByUsuarioId(usuarioId)
+               .then((data) => {
+                   setMultas(data);
+               })
+               .catch((error) => {
+                   setError(`Error: ${error.message}`);
+               });
+       }, [usuarioId]);
+
+
+
     // Desestructurar funciones de UserContext
-    const { UserId } = useUserContext();
+    //const { UserId } = useUserContext();
 
+    // useEffect(() => {
+    //     getMultaByUsuarioId(UserId)
+    //     .then((data) => {
+    //         setMultas(data);
+    //     })
+    //     .catch((error) => {
+    //         setError(`Error: ${error.message}`);
+    //     });
+    // }, [UserId]);
 
-    useEffect(() => {
-        getMultaByUsuarioId(UserId)
-        .then((data) => {
-            setMultas(data);
-        })
-        .catch((error) => {
-            setError(`Error: ${error.message}`);
-        });
-    }, [UserId]);
 
     function openPopup(type) {
         setPopupContent({

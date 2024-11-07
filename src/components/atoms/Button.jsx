@@ -43,6 +43,11 @@ const Button = ({
         baseStyle.color = colors.primary; // Texto oscuro
         baseStyle.border = `1px solid ${colors.primary}`;
         break;
+      case "lightGrey":
+        baseStyle.backgroundColor = colors.background;
+        baseStyle.color = colors.text; // Color de texto oscuro
+        baseStyle.border = "none";
+        break;
       default:
         baseStyle.backgroundColor = colors.primary;
         baseStyle.color = colors.secondary;

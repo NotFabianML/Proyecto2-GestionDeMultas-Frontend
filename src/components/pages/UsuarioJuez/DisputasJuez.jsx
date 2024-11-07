@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './DisputasJuez.css';
 import JuezNavbar from '../../layouts/Navbar/JuezNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
@@ -9,6 +10,7 @@ import Paginador from '../../layouts/Paginador.jsx';
 import { getDisputasPorUsuario } from '../../../services/disputaService.js';
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';
+import Button from '../../atoms/Button.jsx';
 
 const Disputas = () => {
     const [disputas, setDisputas] = useState([]);
@@ -16,6 +18,8 @@ const Disputas = () => {
     const [filtro, setFiltro] = useState('');
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
+    const navigate = useNavigate();
+
 
     const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
 
@@ -28,6 +32,11 @@ const Disputas = () => {
                 setError(`Error: ${error.message}`);
             });
     }, [usuarioId]);
+
+    const handleDispute = (disputa) => {
+        navigate(`/resolver-disputa`, { state: { motivo: disputa.motivoReclamo, idMulta: disputa.multaId  } });
+    };
+
 
     const disputasFiltradas = disputas.filter(disputa =>
         Object.values(disputa).some(value =>
@@ -83,10 +92,12 @@ const Disputas = () => {
                                         <td>{isoToDateFormatter(disputa.fechaCreacion)}</td>
                                         <td>{disputa.estado}</td>
                                         <td className="buttonLink">
-                                            <ButtonLink to="/resolver-disputa"
+                                            <Button 
+                                               // to={ `/resolver-disputa/${disputa.multaId}` }
                                                 variant="secondary" 
                                                 size="medium" 
                                                 text="Resolver disputa" 
+                                                onClick={() => handleDispute(disputa)}
                                             />
                                         </td>
                                     </tr>
