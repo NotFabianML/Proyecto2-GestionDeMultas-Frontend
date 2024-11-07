@@ -8,6 +8,7 @@ const RegistroUsuario = () => {
     const [nombre, setNombre] = useState('');
     const [apellido1, setApellido1] = useState('');
     const [apellido2, setApellido2] = useState('');
+    const [telefono, setTelefono] = useState('');
     const [correo, setCorreo] = useState('');
     const [placa, setPlaca] = useState('');
     const [password, setPassword] = useState('');
@@ -86,24 +87,25 @@ const RegistroUsuario = () => {
                                 <input type="text" id="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Nombre" />
                             </div>
                             <div className="input-group">
-                                <label htmlFor="apellido1">Apellido 1</label>
-                                <input type="text" id="apellido1" value={apellido1} onChange={(e) => setApellido1(e.target.value)} placeholder="Apellido" />
+                                <label htmlFor="telefono">Teléfono</label>
+                                <input type="text" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Teléfono" />
                             </div>
                         </div>
                         <div className="fila-inputs">
-                            <div className="input-group">
-                                <label htmlFor="apellido2">Apellido 2</label>
-                                <input type="text" id="apellido2" value={apellido2} onChange={(e) => setApellido2(e.target.value)} placeholder="Apellido" />
+                        <div className="input-group">
+                                <label htmlFor="apellido1">Apellido 1</label>
+                                <input type="text" id="apellido1" value={apellido1} onChange={(e) => setApellido1(e.target.value)} placeholder="Apellido" />
                             </div>
+                            
                             <div className="input-group">
                                 <label htmlFor="correo">Correo</label>
                                 <input type="email" id="correo" value={correo} onChange={(e) => setCorreo(e.target.value)} placeholder="example@email.com" />
                             </div>
                         </div>
                         <div className="fila-inputs">
-                            <div className="input-group">
-                                <label htmlFor="placa">Número de placa</label>
-                                <input type="text" id="placa" value={placa} onChange={(e) => setPlaca(e.target.value)} placeholder="000000" />
+                        <div className="input-group">
+                                <label htmlFor="apellido2">Apellido 2</label>
+                                <input type="text" id="apellido2" value={apellido2} onChange={(e) => setApellido2(e.target.value)} placeholder="Apellido" />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="password">Contraseña</label>

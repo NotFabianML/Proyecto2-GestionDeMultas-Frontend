@@ -34,6 +34,7 @@ body {
 .texto-izquierda h1, .texto-izquierda p, .lista-registro li {
     font-weight: lighter;
     text-align: left;
+    margin-left: 0;
 }
 
 .texto-izquierda h1 {
