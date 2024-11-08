@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../components/pages/Home.jsx";
 
 import PaginaInicio from "../components/pages/PaginaInicio/PaginaInicio.jsx";
 import AdministrarPerfil from "../components/pages/UsuarioAdmin/GestionUsuarios/administarPerfil.jsx";
@@ -35,6 +36,7 @@ export const MainRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/home" element={<Home />} />
         {/* Usuario invitado */}
         <Route path="/" element={<PaginaInicio />} />
         <Route path="/administrar-perfil" element={<AdministrarPerfil />} />

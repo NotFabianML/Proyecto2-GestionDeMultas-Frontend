@@ -44,13 +44,13 @@ export const deleteRolDeUsuario = async (usuarioId, rolId) => {
   await axiosInstance.delete(`/roles/${usuarioId}/eliminar-rol/${rolId}`);
 };
 
-// Inicializar roles
+// Inicializar roles en el sistema
 export const inicializarRoles = async () => {
   const response = await axiosInstance.post('/roles/inicializar');
   return response.data;
 };
 
-// Inicializar roles para usuarios
+// Inicializar asignaciones de roles a usuarios
 export const inicializarRolesParaUsuarios = async () => {
   const response = await axiosInstance.post('/roles/inicializarRoles');
   return response.data;

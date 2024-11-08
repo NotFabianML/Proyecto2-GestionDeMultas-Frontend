@@ -14,7 +14,13 @@ export const getDisputaById = async (id) => {
 
 // Obtener disputas por usuario
 export const getDisputasPorUsuario = async (usuarioId) => {
-  const response = await axiosInstance.get(`/Disputas/${usuarioId}/disputas-por-usuario`);
+  const response = await axiosInstance.get(`/disputas/${usuarioId}/disputas-por-usuario`);
+  return response.data;
+};
+
+// Obtener multas asignadas a un juez específico
+export const getMultasAsignadasAJuez = async (juezId) => {
+  const response = await axiosInstance.get(`/disputas/juez/${juezId}/multas`);
   return response.data;
 };
 
@@ -37,4 +43,10 @@ export const cambiarEstadoDisputa = async (id, estado) => {
 // Eliminar disputa
 export const deleteDisputa = async (id) => {
   await axiosInstance.delete(`/disputas/${id}`);
+};
+
+// Inicializar disputas
+export const inicializarDisputas = async () => {
+  const response = await axiosInstance.post('/disputas/inicializar');
+  return response.data;
 };
