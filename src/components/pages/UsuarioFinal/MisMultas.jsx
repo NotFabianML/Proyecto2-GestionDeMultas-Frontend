@@ -5,13 +5,13 @@ import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
 import { getMultaByUsuarioId } from '../../../services/multaServices';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
+import { useUserContext } from '../../../contexts/UserContext.jsx';
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
     const [error, setError] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupContent, setPopupContent] = useState({ type: '', title: '', message: '' });
-    const usuarioId = "17E97F21-4302-4FB1-B140-180E880A0C61"; //*********Id quemado - Hacerlo dinámico*************
     const [disputeData, setDisputeData] = useState({
         idMulta: '',
         fechaHora: '',
@@ -21,15 +21,33 @@ const MisMultas = () => {
         montoMora: 0
     });
 
-    useEffect(() => {
-        getMultaByUsuarioId(usuarioId)
-        .then((data) => {
-            setMultas(data);
-        })
-        .catch((error) => {
-            setError(`Error: ${error.message}`);
-        });
-    }, [usuarioId]);
+       //Solo para pruebas
+       const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
+       useEffect(() => {
+           getMultaByUsuarioId(usuarioId)
+               .then((data) => {
+                   setMultas(data);
+               })
+               .catch((error) => {
+                   setError(`Error: ${error.message}`);
+               });
+       }, [usuarioId]);
+
+
+
+    // Desestructurar funciones de UserContext
+    //const { UserId } = useUserContext();
+
+    // useEffect(() => {
+    //     getMultaByUsuarioId(UserId)
+    //     .then((data) => {
+    //         setMultas(data);
+    //     })
+    //     .catch((error) => {
+    //         setError(`Error: ${error.message}`);
+    //     });
+    // }, [UserId]);
+
 
     function openPopup(type) {
         setPopupContent({

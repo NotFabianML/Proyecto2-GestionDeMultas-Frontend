@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './DisputasJuez.css';
 import JuezNavbar from '../../layouts/Navbar/JuezNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
@@ -6,52 +7,49 @@ import ButtonLink from '../../atoms/ButtonLink.jsx';
 import FiltroInput from '../../layouts/FiltroInput.jsx';
 import '@fortawesome/fontawesome-free/css/all.css';
 import Paginador from '../../layouts/Paginador.jsx';
+import { getDisputasPorUsuario } from '../../../services/disputaService.js';
+import { useUserContext } from '../../../contexts/UserContext.jsx';
+import { isoToDateFormatter } from '../../../utils/dateUtils.js';
+import Button from '../../atoms/Button.jsx';
 
 const Disputas = () => {
-    // Estados para filtros y paginación
-
-    const [disputas, setDisputas] = useState([]); 
-    const [error, setError] = useState(null); 
+    const [disputas, setDisputas] = useState([]);
+    const [error, setError] = useState(null);
     const [filtro, setFiltro] = useState('');
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
+    const navigate = useNavigate();
 
 
+    const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
-        // Llamada a la API
-        fetch('https://localhost:7185/api/disputas')
-          .then((response) => {
-            if (!response.ok) {  // Verifica si la respuesta es correcta
-              throw new Error(`Error en la respuesta: ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .then((disputas) => {
-            setDisputas(disputas);  // Guarda los datos en el estado
-          })
-          .catch((error) => {
-            setError(error.message);  // Guarda el error en el estado
-          });
-      }, []);
-    
+        getDisputasPorUsuario(usuarioId)
+            .then((data) => {
+                setDisputas(data);
+            })
+            .catch((error) => {
+                setError(`Error: ${error.message}`);
+            });
+    }, [usuarioId]);
 
-    // Filtrar disputas en base a los filtros
+    const handleDispute = (disputa) => {
+        navigate(`/resolver-disputa`, { state: { motivo: disputa.motivoReclamo, idMulta: disputa.multaId  } });
+    };
+
+
     const disputasFiltradas = disputas.filter(disputa =>
         Object.values(disputa).some(value =>
             value.toString().toLowerCase().includes(filtro.toLowerCase())
         )
     );
 
-    // Calcular los índices de la página actual
     const indiceUltimoElemento = paginaActual * elementosPorPagina;
     const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
     const disputasActuales = disputasFiltradas.slice(indicePrimerElemento, indiceUltimoElemento);
 
-    // Calcular el número total de páginas
     const totalPaginas = Math.ceil(disputasFiltradas.length / elementosPorPagina);
 
-    // Cambiar de página
     const cambiarPagina = (numeroPagina) => {
         setPaginaActual(numeroPagina);
     };
@@ -65,7 +63,6 @@ const Disputas = () => {
             <main>
                 <h1>Disputas asignadas</h1>
 
-                {/* Componentes de Filtro */}
                 <div className="filtro-container">
                     <FiltroInput 
                         placeholder="Filtrar" 
@@ -87,30 +84,42 @@ const Disputas = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {disputasActuales.map((disputa) => (
-                                <tr key={disputa.id}>
-                                    <td>{disputa.id}</td>
-                                    <td>{disputa.vehiculo}</td>
-                                    <td>{disputa.fecha}</td>
-                                    <td>{disputa.estado}</td>
-                                    <td className="buttonLink">
-                                        <ButtonLink to="/resolver-disputa"
-                                            variant="secondary" 
-                                            size="medium" 
-                                            text="Resolver disputa" 
-                                        />
+                            {disputasFiltradas.length > 0 ? (
+                                disputasActuales.map((disputa) => (
+                                    <tr key={disputa.id}>
+                                        <td>{disputa.idDisputa}</td>
+                                        <td>{disputa.vehiculo}</td>
+                                        <td>{isoToDateFormatter(disputa.fechaCreacion)}</td>
+                                        <td>{disputa.estado}</td>
+                                        <td className="buttonLink">
+                                            <Button 
+                                               // to={ `/resolver-disputa/${disputa.multaId}` }
+                                                variant="secondary" 
+                                                size="medium" 
+                                                text="Resolver disputa" 
+                                                onClick={() => handleDispute(disputa)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: 'center' }}>
+                                        El usuario no tiene disputas asignadas
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
 
-                <Paginador 
-                    totalPaginas={totalPaginas} 
-                    paginaActual={paginaActual} 
-                    cambiarPagina={cambiarPagina} 
-                />
+                {disputasFiltradas.length > 0 && (
+                    <Paginador 
+                        totalPaginas={totalPaginas} 
+                        paginaActual={paginaActual} 
+                        cambiarPagina={cambiarPagina} 
+                    />
+                )}
             </main>
 
             <footer>
