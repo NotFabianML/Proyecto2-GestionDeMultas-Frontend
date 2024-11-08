@@ -11,15 +11,6 @@ import ButtonLink from "../../../atoms/ButtonLink";
 import "./infraccion.css";
 import { createInfraccion, getInfracciones, updateInfraccion } from "../../../../services/infraccionService";
 
-// const infraccionesIniciales = [
-//   { id: '1', titulo: 'Exceso de velocidad', articulo: 'A-1', monto: '500.00', descripcion: 'Conducir a una velocidad mayor a la permitida' },  
-//   { id: '2', titulo: 'Conducir sin licencia', articulo: 'A-2', monto: '1000.00', descripcion: 'Conducir un vehículo sin tener la licencia correspondiente' },
-//   { id: '3', titulo: 'Estacionamiento indebido', articulo: 'A-3', monto: '200.00', descripcion: 'Estacionar en lugares prohibidos' },
-//   { id: '4', titulo: 'Pasar en rojo', articulo: 'A-4', monto: '500.00', descripcion: 'Pasar un semáforo en rojo' },
-//   { id: '5', titulo: 'Conducir en estado de ebriedad', articulo: 'A-5', monto: '1000.00', descripcion: 'Conducir un vehículo bajo los efectos del alcohol' },
-//   // Puedes agregar más infracciones aquí
-// ];
-
 const Infracciones = () => {
   const [filtro, setFiltro] = useState('');
   const [paginaActual, setPaginaActual] = useState(1);

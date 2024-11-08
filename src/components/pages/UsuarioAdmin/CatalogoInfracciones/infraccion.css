@@ -1,54 +1,56 @@
-.filtro-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
 
-.lista-infracciones {
-  padding: 20px;
-}
+  
+  .filtro-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .lista-infracciones {
+    padding: 20px;
+  }
+  
+  .lista-infracciones table {
 
-.lista-infracciones table {
-
-  border-collapse: collapse;
-  margin: 0 auto;
-}
-
-.lista-infracciones th,
-.lista-infracciones td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #B8860B; /* Línea de separación más oscura */
-}
-
-
-.lista-infracciones tbody tr:hover {
-  background-color: #F5F5F5; /* Color de fondo al pasar el cursor */
-}
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .lista-infracciones th,
+  .lista-infracciones td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #B8860B; /* Línea de separación más oscura */
+  }
+  
+  
+  .lista-infracciones tbody tr:hover {
+    background-color: #F5F5F5; /* Color de fondo al pasar el cursor */
+  }
 button, .Button {
-padding: 8px 16px; /* Espaciado interno para que el texto no quede pegado al borde */
-font-size: 1rem; /* Ajuste del tamaño de la fuente */
-text-align: center; /* Centra el texto dentro del botón */
-white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-border: 1px solid #ccc; /* Bordes suaves */
-border-radius: 4px; /* Bordes redondeados */
-cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-background-color: #f0f0f0; /* Color de fondo suave */
-transition: background-color 0.3s ease, transform 0.2s ease; /* Efectos de transición */
+  padding: 8px 16px; /* Espaciado interno para que el texto no quede pegado al borde */
+  font-size: 1rem; /* Ajuste del tamaño de la fuente */
+  text-align: center; /* Centra el texto dentro del botón */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  border: 1px solid #ccc; /* Bordes suaves */
+  border-radius: 4px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  background-color: #f0f0f0; /* Color de fondo suave */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Efectos de transición */
 }
 
 button:hover, .Button:hover {
-background-color: #e0e0e0; /* Color de fondo cuando se pasa el mouse */
-transform: scale(1.05); /* Ligero aumento de tamaño al pasar el mouse */
+  background-color: #e0e0e0; /* Color de fondo cuando se pasa el mouse */
+  transform: scale(1.05); /* Ligero aumento de tamaño al pasar el mouse */
 }
 
 button:active, .Button:active {
-transform: scale(0.98); /* Pequeño "presionado" cuando el botón es clickeado */
+  transform: scale(0.98); /* Pequeño "presionado" cuando el botón es clickeado */
 }
 
 button:disabled, .Button:disabled {
-background-color: #d0d0d0; /* Color de fondo cuando está deshabilitado */
-cursor: not-allowed; /* Cambia el cursor a uno de "no permitido" */
+  background-color: #d0d0d0; /* Color de fondo cuando está deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor a uno de "no permitido" */
 }
 
 /* Estilo para los botones específicos de tipo alternativa y peligro */
@@ -68,4 +70,19 @@ background-color: #b0e0b0; /* Fondo más oscuro para hover */
 
 button.variant-danger:hover, .Button.variant-danger:hover {
 background-color: #e0b0b0; /* Fondo más oscuro para hover */
+  background-color: #d0f0d0; /* Fondo verde suave para botones alternativos */
+  border-color: #90c090; /* Borde verde */
+}
+
+button.variant-danger, .Button.variant-danger {
+  background-color: #f0d0d0; /* Fondo rojo suave para botones de eliminación */
+  border-color: #c09090; /* Borde rojo */
+}
+
+button.variant-alternative:hover, .Button.variant-alternative:hover {
+  background-color: #b0e0b0; /* Fondo más oscuro para hover */
+}
+
+button.variant-danger:hover, .Button.variant-danger:hover {
+  background-color: #e0b0b0; /* Fondo más oscuro para hover */
 }
