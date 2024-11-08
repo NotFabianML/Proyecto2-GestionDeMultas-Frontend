@@ -1,40 +1,68 @@
 import axiosInstance from './axiosInstance';
 
-// Obtener todas las infracciones
-export const getInfracciones = async () => {
-  const response = await axiosInstance.get('/infracciones');
+// Obtener todos los permisos
+export const getPermisos = async () => {
+  const response = await axiosInstance.get('/permisos');
   return response.data;
 };
 
-// Obtener infracción por ID
-export const getInfraccionById = async (id) => {
-  const response = await axiosInstance.get(`/infracciones/${id}`);
+// Obtener un permiso por ID
+export const getPermisoById = async (id) => {
+  const response = await axiosInstance.get(`/permisos/${id}`);
   return response.data;
 };
 
-// Crear nueva infracción
-export const createInfraccion = async (infraccionData) => {
-  const response = await axiosInstance.post('/infracciones', infraccionData);
+// Obtener permisos asignados a un rol por ID del rol
+export const getPermisosPorRol = async (rolId) => {
+  const response = await axiosInstance.get(`/permisos/${rolId}/permisos-por-rol`);
   return response.data;
 };
 
-// Actualizar infracción por ID
-export const updateInfraccion = async (id, infraccionData) => {
-  await axiosInstance.put(`/infracciones/${id}`, infraccionData);
+// Obtener permisos asignados a un rol por nombre del rol
+export const getPermisosPorRolNombre = async (rolNombre) => {
+  const response = await axiosInstance.get(`/permisos/${rolNombre}/permisos-por-rol-nombre`);
+  return response.data;
 };
 
-// Asignar infracción a una multa
-export const asignarInfraccionAMulta = async (multaId, infraccionId) => {
-  await axiosInstance.post(`/infracciones/${multaId}/asignar-infracciones/${infraccionId}`);
+// Crear un nuevo permiso
+export const createPermiso = async (permisoData) => {
+  const response = await axiosInstance.post('/permisos', permisoData);
+  return response.data;
 };
 
-// Cambiar el estado de una infracción
-export const cambiarEstadoInfraccion = async (id, estado) => {
-  await axiosInstance.post(`/infracciones/${id}/estado/${estado}`);
+// Actualizar un permiso por ID
+export const updatePermiso = async (id, permisoData) => {
+  await axiosInstance.put(`/permisos/${id}`, permisoData);
 };
 
-// Inicializar infracciones
-export const inicializarInfracciones = async () => {
-  const response = await axiosInstance.post('/infracciones/inicializar');
+// Asignar un permiso a un rol
+export const asignarPermisoARol = async (rolId, permisoId) => {
+  await axiosInstance.post(`/permisos/${rolId}/asignar-permiso/${permisoId}`);
+};
+
+// Eliminar un permiso por ID
+export const deletePermiso = async (id) => {
+  await axiosInstance.delete(`/permisos/${id}`);
+};
+
+// Eliminar un permiso de un rol
+export const deletePermisoDeRol = async (rolId, permisoId) => {
+  await axiosInstance.delete(`/permisos/${rolId}/eliminar-permiso/${permisoId}`);
+};
+
+// Cambiar el estado de un permiso (1=Activo, 0=Inactivo)
+export const cambiarEstadoPermiso = async (id, estado) => {
+  await axiosInstance.put(`/permisos/${id}/cambiar-estado/${estado}`);
+};
+
+// Inicializar permisos en la base de datos
+export const inicializarPermisos = async () => {
+  const response = await axiosInstance.post('/permisos/inicializar');
+  return response.data;
+};
+
+// Inicializar permisos para roles
+export const inicializarPermisosParaRoles = async () => {
+  const response = await axiosInstance.post('/permisos/inicializarPermisos');
   return response.data;
 };

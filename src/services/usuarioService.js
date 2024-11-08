@@ -14,13 +14,19 @@ export const getUsuarioById = async (id) => {
 
 // Obtener usuario por cédula
 export const getUsuarioPorCedula = async (cedula) => {
-  const response = await axiosInstance.get(`/Usuarios/cedula/${cedula}`);
+  const response = await axiosInstance.get(`/usuarios/cedula/${cedula}`);
   return response.data;
 };
 
-// Obtener usuarios por rol
+// Obtener usuarios por rol ID
 export const getUsuariosPorRol = async (rolId) => {
   const response = await axiosInstance.get(`/usuarios/usuarios-por-rol/${rolId}`);
+  return response.data;
+};
+
+// Obtener usuarios por nombre de rol
+export const getUsuariosPorNombreRol = async (rolNombre) => {
+  const response = await axiosInstance.get(`/usuarios/usuarios-por-rol-nombre/${rolNombre}`);
   return response.data;
 };
 
