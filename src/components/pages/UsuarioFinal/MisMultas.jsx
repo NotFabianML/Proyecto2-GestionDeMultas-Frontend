@@ -3,7 +3,7 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
-import { getMultaByUsuarioId } from '../../../services/multaServices';
+import { getMultasPorUsuarioId } from '../../../services/multaServices';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
@@ -32,7 +32,7 @@ const MisMultas = () => {
        //Solo para pruebas
        const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
        useEffect(() => {
-           getMultaByUsuarioId(usuarioId)
+        getMultasPorUsuarioId(usuarioId)
                .then((data) => {
                    setMultas(data);
                })

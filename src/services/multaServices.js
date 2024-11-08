@@ -48,7 +48,7 @@ export const cambiarEstadoMulta = async (id, estado) => {
 
 // Obtener multas por ID de usuario final
 export const getMultasPorUsuarioId = async (usuarioId) => {
-  const response = await axiosInstance.get(`/multas/usuario/id/${usuarioId}`);
+  const response = await axiosInstance.get(`/Multas/usuario/id/${usuarioId}`);
   return response.data;
 };
 
