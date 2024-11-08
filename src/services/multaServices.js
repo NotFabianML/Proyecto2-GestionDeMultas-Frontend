@@ -32,7 +32,7 @@ export const getMultasPorInfraccion = async (infraccionId) => {
 
 // Crear una nueva multa
 export const createMulta = async (multaData) => {
-  const response = await axiosInstance.post('/multas', multaData);
+  const response = await axiosInstance.post('/Multas', multaData);
   return response.data;
 };
 

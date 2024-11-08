@@ -1,5 +1,5 @@
 import React from 'react';
-import './GestionMultas.css';
+import './StylesOficial.css';
 import Dropdown from '../../molecules/Dropdown.jsx';
 import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
@@ -7,7 +7,7 @@ import FormularioMulta from '../../organism/Formulario/FormularioMulta.jsx';
 
 const GestionMultas = () => {
     return (
-        <div className="gestionar-multa">
+        <div className="estilos-oficial">
             <header>
                 <OficialNavbar />
             </header>

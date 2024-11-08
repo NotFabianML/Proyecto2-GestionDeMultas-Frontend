@@ -21,7 +21,7 @@ const Disputas = () => {
     const navigate = useNavigate();
 
 
-    const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
+    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
         getDisputasPorUsuario(usuarioId)
@@ -88,7 +88,7 @@ const Disputas = () => {
                                 disputasActuales.map((disputa) => (
                                     <tr key={disputa.id}>
                                         <td>{disputa.idDisputa}</td>
-                                        <td>{disputa.vehiculo}</td>
+                                        <td>{disputa.numeroPlaca}</td>
                                         <td>{isoToDateFormatter(disputa.fechaCreacion)}</td>
                                         <td>{disputa.estado}</td>
                                         <td className="buttonLink">

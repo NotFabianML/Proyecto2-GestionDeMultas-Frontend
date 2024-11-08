@@ -20,7 +20,7 @@ export const getDisputasPorUsuario = async (usuarioId) => {
 
 // Crear nueva disputa
 export const createDisputa = async (disputaData) => {
-  const response = await axiosInstance.post('/disputas', disputaData);
+  const response = await axiosInstance.post('/Disputas', disputaData);
   return response.data;
 };
 

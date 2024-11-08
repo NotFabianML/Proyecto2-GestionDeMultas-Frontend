@@ -7,7 +7,7 @@ import { getDisputasPorUsuario } from '../../../services/disputaService';
 const MisDisputas = () => {
     const [disputas, setDisputas] = useState([]);
     const [error, setError] = useState(null);
-    const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
+    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
         getDisputasPorUsuario(usuarioId)

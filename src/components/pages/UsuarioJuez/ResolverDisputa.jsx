@@ -49,7 +49,7 @@ const ResolverDisputa = () => {
 
                     <div className="botones">
                         <Button variant="secondary" size="medium" text="Anular multa" />
-                        <Button variant="lightGrey" size="medium" text="Mantener multa" />
+                        <Button variant="alternative" size="medium" text="Mantener multa" />
                     </div>
                 </div>
             </div>

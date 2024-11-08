@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
@@ -6,23 +6,31 @@ import Button from '../../atoms/Button.jsx';
 import { getMultaByUsuarioId } from '../../../services/multaServices';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
+import { createDisputa } from '../../../services/disputaService';
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
     const [error, setError] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupContent, setPopupContent] = useState({ type: '', title: '', message: '' });
-    const [disputeData, setDisputeData] = useState({
+    const disputeDataRef = useRef({
+        multaId: '',
+        usuarioId: '',
+        motivoReclamo: '',
+        DeclaracionOficial: '',
+        ResolucionJuez: '',
+        estado: 1
+    });
+    const [multa, setDataMulta] = useState({
         idMulta: '',
         fechaHora: '',
         numeroPlaca: '',
         montoTotal: 0,
-        motivo: '',
         montoMora: 0
     });
 
        //Solo para pruebas
-       const usuarioId = "54877920-0860-4849-82da-f3686830e816"; // Id quemado - Hacerlo dinámico
+       const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
        useEffect(() => {
            getMultaByUsuarioId(usuarioId)
                .then((data) => {
@@ -37,6 +45,7 @@ const MisMultas = () => {
 
     // Desestructurar funciones de UserContext
     //const { UserId } = useUserContext();
+    const UserId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
 
     // useEffect(() => {
     //     getMultaByUsuarioId(UserId)
@@ -63,17 +72,22 @@ const MisMultas = () => {
 
     function handleChange(event) {
         const { name, value } = event.target;
-        console.log(value)
-        setDisputeData((prevData) => ({
-            ...prevData,
+        // Update the ref's current value
+        disputeDataRef.current = {
+            ...disputeDataRef.current,
             [name]: value,
-        }));
+            multaId: multa.idMulta,
+            usuarioId: UserId
+        };
     }
+
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log('Datos enviados:', disputeData);
-        closePopup(); // Close the popup after submission
+        console.log(disputeDataRef.current);
+        createDisputa(disputeDataRef.current).then(() => {
+            closePopup();
+        });
     }
 
     const DisputePopup = () => (
@@ -88,8 +102,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="idMulta"
-                                value={disputeData.idMulta}
-                                onChange={handleChange}
+                                value={multa.idMulta}
                                 readOnly
                                 required
                             />
@@ -99,8 +112,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="fecha"
-                                value={isoToDateFormatter(disputeData.fechaHora)}
-                                onChange={handleChange}
+                                value={isoToDateFormatter(multa.fechaHora)}
                                 readOnly
                                 required
                             />
@@ -112,8 +124,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="vehiculo"
-                                value={disputeData.numeroPlaca}
-                                onChange={handleChange}
+                                value={multa.numeroPlaca}
                                 readOnly
                                 required
                             />
@@ -123,8 +134,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="monto"
-                                value={"₡ " + disputeData.montoTotal}
-                                onChange={handleChange}
+                                value={"₡ " + multa.montoTotal}
                                 readOnly
                                 required
                                 min="0"
@@ -136,8 +146,7 @@ const MisMultas = () => {
                         <label>
                             Motivo:
                             <textarea
-                                name="motivo"
-                                value={disputeData.motivo}
+                                name="motivoReclamo"
                                 onChange={handleChange}
                                 placeholder="Escribe el motivo aquí"
                                 required
@@ -161,15 +170,15 @@ const MisMultas = () => {
                     <div className="form-row">
                         <label>
                             ID Multa:
-                            <input type="text" name="idMulta" value={disputeData.idMulta} readOnly required />
+                            <input type="text" name="idMulta" value={multa.idMulta} readOnly required />
                         </label>
                         <label>
                             Fecha:
-                            <input type="text" name="fechaHora"  value={isoToDateFormatter(disputeData.fechaHora)} readOnly required />
+                            <input type="text" name="fechaHora"  value={isoToDateFormatter(multa.fechaHora)} readOnly required />
                         </label>
                         <label>
                             Vehículo:
-                            <input type="text" name="numeroPlaca" value={disputeData.numeroPlaca} readOnly required />
+                            <input type="text" name="numeroPlaca" value={multa.numeroPlaca} readOnly required />
                         </label>
                     </div>
                     <table className="payment-summary">
@@ -180,15 +189,15 @@ const MisMultas = () => {
                             </tr>
                             <tr>
                                 <td>Monto Multas</td>
-                                <td>{"₡ "} {disputeData.montoTotal}</td>
+                                <td>{"₡ "} {multa.montoTotal}</td>
                             </tr>
                             <tr>
                                 <td>Monto Mora</td>
-                                <td>{"₡ "} {(disputeData?.montoMora || 0)}</td>
+                                <td>{"₡ "} {(multa?.montoMora || 0)}</td>
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td> {"₡ "}{disputeData.montoTotal + (disputeData?.montoMora || 0)}</td>
+                                <td> {"₡ "}{multa.montoTotal + (multa?.montoMora || 0)}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -219,13 +228,13 @@ const MisMultas = () => {
 
                         <div className="button-container">
                             <Button 
-                                onClick={() => {openPopup('dispute'); setDisputeData(multa);}}
+                                onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
                                 variant="outline" 
                                 size="small" 
                                 text="Abrir Disputa" 
                             />
                             <Button 
-                                onClick={() => {openPopup('payment'); setDisputeData(multa);}} 
+                                onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
                                 variant="primary" 
                                 size="small" 
                                 text="Pagar Multa" 
