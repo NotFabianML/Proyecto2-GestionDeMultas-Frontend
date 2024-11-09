@@ -106,7 +106,7 @@ const ListaUsuarios = () => {
                                     <td>{usuario.id}</td>
                                     <td>{usuario.estado}</td>
                                     <td>
-                                        <ButtonLink variant="primary" size="small" text="Editar" onClick={() => abrirModal(usuario)} />
+                                        <ButtonLink variant="primary" size="small" text="Editar" to="/administrar-perfil" />
                                         <ButtonLink variant="danger" size="small" text="Eliminar" onClick={() => abrirModal(usuario)} />
                                     </td>
                                 </tr>

@@ -60,6 +60,7 @@ export const MainRouter = () => {
         <Route path="/gestion-multas" element={<GestionMultas />} />
         <Route path="/multas-grafico" element={<MultasGrafico />} />
         <Route path="/infraccion" element={<Infraccion />} />
+        <Route path="/administrar-perfil" element={<AdministrarPerfil />} />
 
         {/* Oficial de Tránsito */}
         <Route path="/pagina-oficial" element={<PaginaOficialTransito />} />

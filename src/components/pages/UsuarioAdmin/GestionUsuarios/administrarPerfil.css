@@ -68,9 +68,42 @@
     text-align: center;
     margin-top: auto;
   }
+/* styles.css */
+.modal-content {
+  background-color: #181D23;
+  color: yellow;
+}
 
-  label{
-    color:black;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
+.modal-header, .modal-body, .modal-footer {
+  background-color: #181D23;
+}
+
+.modal-title {
+  color: yellow;
+}
+
+.btn-link {
+  color: yellow;
+}
+
+.btn-link:hover {
+  color: #FFD700; /* Un color ligeramente más claro para el hover */
+}
+
+.btn-secondary {
+  background-color: yellow;
+  border-color: yellow;
+  color: #181D23;
+}
+
+.btn-secondary:hover {
+  background-color: #FFD700; /* Un color ligeramente más claro para el hover */
+  border-color: #FFD700;
+}
+
+.role-selector{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #181D23;
+}

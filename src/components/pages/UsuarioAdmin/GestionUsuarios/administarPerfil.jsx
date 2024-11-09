@@ -24,6 +24,8 @@ const AdministrarPerfil = () => {
   const [numeroPlaca, setNumeroPlaca] = useState(usuario.numeroPlaca);
   const [rol, setRol] = useState(usuario.rol);
   const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para la foto de perfil
+  const [showModal, setShowModal] = useState(false);
+  const [roles] = useState(['Administrador', 'Oficial', 'Juez', 'Usuario Normal']);
 
   const handleImageChange = (e) => {
     setFotoPerfil(e.target.files[0]); // Guardar el archivo seleccionado en el estado
@@ -52,6 +54,11 @@ const AdministrarPerfil = () => {
       console.error("Error al guardar el perfil", error);
       alert("Hubo un error al guardar el perfil");
     }
+  };
+
+  const handleRoleSelect = (selectedRole) => {
+    setRol(selectedRole);
+    setShowModal(false);
   };
 
   return (
@@ -87,13 +94,19 @@ const AdministrarPerfil = () => {
           <div className="columna-derecha">
             <div>
               <label>Rol:</label>
-              <select value={rol} onChange={(e) => setRol(e.target.value)}>
-                <option value="Administrador">Administrador</option>
-                <option value="Oficial">Oficial</option>
-                <option value="Juez">Juez</option>
-                <option value="UsuarioNormal">Usuario Normal</option>
-              </select>
+              <div className="rol-selector">
+                <button onClick={() => setShowModal(true)}>{rol}</button>
+                {showModal && (
+                  <div className="rol-modal">
+                    {roles.map((role) => (
+                      <button key={role} onClick={() => handleRoleSelect(role)}>
+                        {role}
+                      </button>
+                    ))}
+                  </div>
+                )}
             </div>
+          </div>
           </div>
           <Button variant="alternative" text="Guardar Cambios" onClick={handleClick} />
         </div>

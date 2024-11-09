@@ -32,7 +32,7 @@ const AdminNavbar = () => {
           <Link to="/mapa-calor">Mapa de Calor</Link>
         </li>
         <li>
-          <Link to="/about">Usuarios</Link>
+          <Link to="/lista-usuarios">Usuarios</Link>
         </li>
         <li>
           <Link to="/roles">Roles y Permisos</Link>
