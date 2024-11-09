@@ -4,6 +4,7 @@ import Dropdown from '../../molecules/Dropdown.jsx';
 import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import FormularioMulta from '../../organism/Formulario/FormularioMulta.jsx';
+import Select from 'react-select';
 
 const GestionMultas = () => {
     return (
@@ -19,13 +20,13 @@ const GestionMultas = () => {
                     <div className="input-group">
                         <label htmlFor="numeroMulta">Número de multa:</label>
                         <Dropdown id="numeroMulta" name="numeroMulta" />
+
                     </div>
                 </div>
 
                 {/* Columna Derecha */}
                 <div className="columna-derecha">
                     <FormularioMulta  mostrarNumMulta={false} mostrarBotones={true} dosBotones={true} textoBotonPrimario='Guardar cambios' textoBotonSecundario='Eliminar multa'/>
-
                 </div>
  
             </div>

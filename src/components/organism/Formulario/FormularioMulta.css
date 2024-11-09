@@ -72,8 +72,16 @@ textarea {
     resize: none;
 }
 
-button {
+
+.fila-botones {
     display: flex;
+    justify-content: center; 
+    gap: 20px; 
+}
+
+
+.fila-botones button {
+    width: auto; 
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007BFF;
@@ -81,6 +89,4 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 0 auto;
-    margin-top: 20px;
 }

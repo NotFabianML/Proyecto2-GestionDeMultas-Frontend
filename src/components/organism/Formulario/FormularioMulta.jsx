@@ -106,6 +106,15 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
         const listaInfracciones = selected.map((infraccion) => ( infraccion.value ));
         setNuevaMulta((prev) => ({ ...prev, infracciones: listaInfracciones }));
     };
+
+    // Función para formatear el monto en colones
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('es-CR', {
+            style: 'currency',
+            currency: 'CRC',
+            maximumFractionDigits: 0
+        }).format(amount);
+    };
     
     return (
         <div className="formulario-container">
@@ -197,11 +206,13 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="montoTotal">Monto total:</label>
-                        <input type="number"
+                        <input
+                            type="text"
                             id="montoTotal"
-                            value={ soloLectura ?  multa?.montoTotal :  montoTotal }
+                            value={soloLectura ? formatCurrency(multa?.montoTotal) : formatCurrency(montoTotal)}
                             readOnly
                         />
+
                     </div>
                 </div>
 
@@ -220,7 +231,7 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
 
                 {/* Botones */}
                 {mostrarBotones && (
-                    <div className="fila">
+                    <div className="fila-botones">
                         <Button variant="secondary" size="medium" text={textoBotonPrimario} onClick={handlePrimaryClick} />
                         {dosBotones && (
                             <Button variant="secondary" size="medium" text={textoBotonSecundario} />
