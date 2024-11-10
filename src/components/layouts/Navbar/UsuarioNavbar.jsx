@@ -38,7 +38,7 @@ const UsuarioNavbar = () => {
           <Link to="/mis-disputas">Disputas</Link>
         </li>
         <li>
-          <Link to="/about">Vehiculos</Link>
+          <Link to="/mis-vehiculos">Vehiculos</Link>
         </li>
         <li>
           <Link to="/administrar-perfil">Ver Perfil</Link>
