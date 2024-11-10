@@ -31,6 +31,17 @@
     justify-content: center;
   }
   
+  .user-photo {
+    width: 150px; 
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .btn-foto {
+    margin: 10px 0;
+  }
+
   .perfil-info {
     display: flex;
     flex-direction: column;

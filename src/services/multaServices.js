@@ -63,3 +63,9 @@ export const inicializarMultas = async () => {
   const response = await axiosInstance.post('/multas/inicializar');
   return response.data;
 };
+
+// Obtener multas por ID de oficial
+export const getMultasPorOficialId = async (oficialId) => {
+  const response = await axiosInstance.get(`/Multas/oficial/${oficialId}`);
+  return response.data;
+};

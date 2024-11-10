@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import Button from "../../../atoms/Button";
 import Footer from "../../../layouts/Footer";
 import ButtonLink from "../../../atoms/ButtonLink";
 import './administrarPerfil.css';
-import axios from "axios"; // Asegúrate de instalar axios con `npm install axios`
+import axios from "axios";
+import { Cloudinary } from '@cloudinary/url-gen';
+
+import {AdvancedImage} from '@cloudinary/react';
+import {fill} from "@cloudinary/url-gen/actions/resize";
+
 
 const AdministrarPerfil = () => {
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'dekwvhxog'
+    }
+  });
+
   const usuario = {
-    fotoPerfil: 'URL',
+    fotoPerfil: '',
     userName: 'Santiago',
     apellidos: 'Pérez',
     id: '1',
@@ -23,7 +34,31 @@ const AdministrarPerfil = () => {
   const [correo, setCorreo] = useState(usuario.correo);
   const [numeroPlaca, setNumeroPlaca] = useState(usuario.numeroPlaca);
   const [rol, setRol] = useState(usuario.rol);
-  const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para la foto de perfil
+  const [fotoPerfil, setFotoPerfil] = useState(cld.image('user_iiwdqq').resize(fill().width(100).height(100)).toURL());
+
+  const handleImageUpload = (result) => {
+    if (result.event === 'success') {
+      setFotoPerfil(result.info.secure_url); // Guarda la URL de la imagen cargada
+    }
+  };
+
+
+
+
+  const openUploadWidget = () => {
+    window.cloudinary.openUploadWidget(
+      {
+        cloudName: 'dekwvhxog',
+        uploadPreset: 'preset_NexTek',
+        sources: ['local', 'url'], // Permite cargar imágenes desde el dispositivo o desde una URL
+      },
+      (error, result) => {
+        if (result && result.event === 'success') {
+          handleImageUpload(result);
+        }
+      }
+    );
+  };
 
   const handleImageChange = (e) => {
     setFotoPerfil(e.target.files[0]); // Guardar el archivo seleccionado en el estado
@@ -54,6 +89,25 @@ const AdministrarPerfil = () => {
     }
   };
 
+  useEffect(() => {
+    // Cargar el script de Cloudinary solo una vez
+    const script = document.createElement('script');
+    script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.onload = () => {
+      // Asegúrate de que la variable global cloudinary está disponible después de cargar el script
+      console.log('Cloudinary widget script cargado');
+    };
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);  // Limpiar el script cuando el componente se desmonte
+    };
+  }, []);
+  
+
+
   return (
     <div className="pagina-editar-perfil">
       <header>
@@ -61,10 +115,23 @@ const AdministrarPerfil = () => {
       </header>
       <main>
         <h1>Editar Perfil</h1>
+
         <div className="perfil-container">
-          <img src={usuario.fotoPerfil} alt={` Perfil de ${usuario.userName}`} width="100" height="100" />
-          <input type="file" accept="image/*" onChange={handleImageChange} /> {/* Input para subir imagen */}
+          
+          <img 
+            src={fotoPerfil} 
+            alt={`Perfil de ${nombre}`} 
+            width="100" 
+            height="100" 
+            id="user-photo" 
+            className="user-photo" 
+          />
+          
+          <Button id="btn-foto" className="btn-foto" variant="secondary" size="medium" text="Subir Foto" onClick={openUploadWidget} />
+
+
         </div>
+
         <div className="perfil-info">
           <div className="columna-izquierda">
             <div>
@@ -78,10 +145,6 @@ const AdministrarPerfil = () => {
             <div>
               <label>Correo:</label>
               <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
-            </div>
-            <div>
-              <label>Número de Placa del Vehículo:</label>
-              <input type="text" value={numeroPlaca} onChange={(e) => setNumeroPlaca(e.target.value)} />
             </div>
           </div>
           <div className="columna-derecha">
