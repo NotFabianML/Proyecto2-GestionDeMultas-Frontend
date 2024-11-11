@@ -32,9 +32,19 @@ export const getMultasPorInfraccion = async (infraccionId) => {
 
 // Crear una nueva multa
 export const createMulta = async (multaData) => {
-  const response = await axiosInstance.post('/Multas', multaData);
-  return response.data;
+  try {
+    const response = await axiosInstance.post('/Multas', multaData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear la multa:", error);
+    throw error;
+  }
 };
+
 
 // Actualizar una multa
 export const updateMulta = async (id, multaData) => {
@@ -56,6 +66,17 @@ export const getMultasPorUsuarioId = async (usuarioId) => {
 export const getMultasPorCedulaUsuario = async (cedula) => {
   const response = await axiosInstance.get(`/multas/usuario/cedula/${cedula}`);
   return response.data;
+};
+
+// Eliminar una multa por ID
+export const deleteMulta = async (multaId) => {
+  try {
+    const response = await axiosInstance.delete(`/Multas/${multaId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar la multa:", error);
+    throw error;
+  }
 };
 
 // Inicializar multas

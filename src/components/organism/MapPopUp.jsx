@@ -44,6 +44,7 @@ const MapPopup = ({ onClose, onMapClick, position }) => {
         fontSize: "20px",
         cursor: "pointer",
         color: "#333",
+        width: "30px",
     };
 
     // Estilos para el contenedor del mapa
@@ -59,6 +60,7 @@ const MapPopup = ({ onClose, onMapClick, position }) => {
         color: "#555",
         marginBottom: "10px",
         marginTop: "10px",
+        width: "70%",
     };
 
     return (
@@ -67,7 +69,7 @@ const MapPopup = ({ onClose, onMapClick, position }) => {
                 ✕
             </button>
             <p style={legendStyles}>
-                Seleccione la ubicación o haga clic en el mapa para marcar el lugar deseado.
+                Seleccione la ubicación y presione la x para cerrar el mapa.
             </p>
             <GoogleMap
                 mapContainerStyle={mapContainerStyles}
