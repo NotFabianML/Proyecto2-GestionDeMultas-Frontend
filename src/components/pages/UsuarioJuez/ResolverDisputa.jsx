@@ -32,7 +32,12 @@ const ResolverDisputa = () => {
 
             <div>
                 <h1>Resolver Disputa</h1>
-                <FormularioMulta mostrarBotones={false} soloLectura={true} multa={multa} />
+                <FormularioMulta 
+                    mostrarBotones={false} 
+                    soloLectura={true} 
+                    mostrarSeleccionUbicacion={false}
+                    multa={multa} 
+                />
 
                 <div className="resolucion">
                     <h2>Resolución</h2>
