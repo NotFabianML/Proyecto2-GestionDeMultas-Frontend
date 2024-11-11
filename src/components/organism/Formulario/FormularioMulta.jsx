@@ -7,6 +7,7 @@ import { getDateFromISO, getTimeFromISO } from '../../../utils/dateUtils.js';
 import Select from 'react-select';
 import { getInfracciones } from '../../../services/infraccionService.js';
 import { createMulta } from '../../../services/multaServices.js';
+import MapPopup from '../MapPopUp.jsx';
 
 const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBotones = true, textoBotonPrimario, textoBotonSecundario, soloLectura = false, multa }) => {
     const [cedulaError, setCedulaError] = useState('');
@@ -14,6 +15,9 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [montoTotal, setMontoTotal] = useState(0);
     const [infracciones, setInfracciones] = useState([]);
+    const [isMapOpen, setIsMapOpen] = useState(false);
+    const [position, setPosition] = useState({ lat: null, lng: null });
+
     const initialMultaState = {
         cedulaInfractor: '',
         numeroPlaca: '',
@@ -28,86 +32,47 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
     };
     const [nuevaMulta, setNuevaMulta] = useState(initialMultaState);
 
-    useEffect(() => {
-        if(!soloLectura){
-            getInfracciones().then((data) => {
-                setInfracciones(data);
-            });
-        }
-    }, [soloLectura]);
+    const handleMapClick = (e) => {
+        const lat = e.latLng.lat();
+        const lng = e.latLng.lng();
+        setPosition({ lat, lng });
+        setNuevaMulta((prev) => ({ ...prev, latitud: lat, longitud: lng }));
+    };
+
+    // useEffect(() => {
+    //     if(!soloLectura){
+    //         getInfracciones().then((data) => {
+    //             setInfracciones(data);
+    //         });
+    //     }
+    // }, [soloLectura]);
 
     const handleCedulaChange = (e) => {
         const value = e.target.value;
-        setNuevaMulta((prev) => ({ ...prev, cedulaInfractor: e.target.value }))
+        setNuevaMulta((prev) => ({ ...prev, cedulaInfractor: e.target.value }));
         const cedulaRegex = /^\d{1}\d{3}\d{5}$/;
-        if (!cedulaRegex.test(value)) {
-            setCedulaError('Ingrese un número de cédula válido');
-        } else {
-            setCedulaError('');
-        }
+        setCedulaError(!cedulaRegex.test(value) ? 'Ingrese un número de cédula válido' : '');
     };
 
     const handlePlacaChange = (e) => {
         const value = e.target.value;
-        setNuevaMulta((prev) => ({ ...prev, numeroPlaca: e.target.value }))
+        setNuevaMulta((prev) => ({ ...prev, numeroPlaca: e.target.value }));
         const placaRegex = /^[A-Za-z0-9]+$/;
-        if (!placaRegex.test(value)) {
-            setPlacaError('Ingrese un número de placa válido');
-        } else {
-            setPlacaError('');
-        }
-    };
-
-    const getListaInfracciones = () => {
-        if(soloLectura){
-            return multa?.infracciones?.map((infraccion) => ({
-                value: infraccion,
-                label: infraccion.titulo + " - monto: " + infraccion.monto
-            })) || [];
-        } else {
-            return infracciones.map((infraccion) => ({
-                value: infraccion,
-                label: infraccion.titulo + " - monto: " + infraccion.monto
-            }));
-        }
+        setPlacaError(!placaRegex.test(value) ? 'Ingrese un número de placa válido' : '');
     };
 
     const handleSelectChange = (selected) => {
         if(!soloLectura) {
             setSelectedOptions(selected || []);
-            setNuevaMulta((prev) => ({ ...prev, montoTotal: selected.reduce((acc, curr) => acc + curr.value.monto, 0)}))
             setMontoTotal(selected.reduce((acc, curr) => acc + curr.value.monto, 0));
-            getMultaInfracciones(selected);
+            setNuevaMulta((prev) => ({
+                ...prev,
+                infracciones: selected.map((infraccion) => infraccion.value),
+                montoTotal: selected.reduce((acc, curr) => acc + curr.value.monto, 0),
+            }));
         }
     };
 
-    const handlePrimaryClick =  async (e) => {
-        e.preventDefault();
-        if(soloLectura) {
-            // TODO agregar logica del boton primario del juez
-        } else {
-            try {
-                const data = await createMulta(nuevaMulta);
-                setNuevaMulta(initialMultaState);
-                setSelectedOptions([]);
-                setMontoTotal(0);
-            } catch (error) {
-                console.error("Error al crear la multa:", error.message || error);
-                if (error.response) {
-                    console.error("Error details:", error.response.data);
-                } else if (error.request) {
-                    console.error("No response received:", error.request);
-                }
-            }
-        }
-    };
-
-    const getMultaInfracciones = (selected) => {
-        const listaInfracciones = selected.map((infraccion) => ( infraccion.value ));
-        setNuevaMulta((prev) => ({ ...prev, infracciones: listaInfracciones }));
-    };
-
-    // Función para formatear el monto en colones
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('es-CR', {
             style: 'currency',
@@ -115,10 +80,10 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
             maximumFractionDigits: 0
         }).format(amount);
     };
-    
+
     return (
         <div className="formulario-container">
-            <form className="formulario-multa">
+            <form className="formulario-multa" onSubmit={(e) => e.preventDefault()}>
                 {mostrarNumMulta && (
                     <div><h2>{"Multa N°: " + multa?.idMulta} </h2></div>
                 )}
@@ -130,7 +95,7 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
                             type="text"
                             id="cedula"
                             name="cedula"
-                            value={soloLectura ? multa?.cedulaInfractor: nuevaMulta.cedulaInfractor}
+                            value={soloLectura ? multa?.cedulaInfractor : nuevaMulta.cedulaInfractor}
                             onChange={handleCedulaChange}
                             placeholder="0-0000-0000"
                             readOnly={soloLectura}
@@ -153,39 +118,30 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
                 </div>
 
                 <p>Lugar de los hechos</p>
-                <div className="fila">
-                    <div className="input-group">
-                        <label htmlFor="latitud">Latitud:</label>
-                        <input type="text"
-                            id="latitud"
-                            name="latitud"
-                            placeholder="0.000000"
-                            readOnly={soloLectura}
-                            value={multa?.latitud}
-                            //onChange={(e) => setNuevaMulta((prev) => ({ ...prev, latitud: e.target.value }))}
-                        />
+                <Button variant="primary" text="Seleccionar Ubicación" onClick={() => setIsMapOpen(true)} />
+                {position.lat && position.lng && (
+                    <div>
+                        <p>Latitud: {position.lat}</p>
+                        <p>Longitud: {position.lng}</p>
                     </div>
-                    <div className="input-group">
-                        <label htmlFor="altitud">Longitud:</label>
-                        <input type="text"
-                            id="altitud"
-                            name="altitud"
-                            placeholder="0.000000"
-                            readOnly={soloLectura}
-                            value={multa?.longitud}
-                            //onChange={(e) => setNuevaMulta((prev) => ({ ...prev, longitud: e.target.value }))}
-                        />
-                    </div>
-                </div>
+                )}
+
+                {isMapOpen && (
+                    <MapPopup
+                        onClose={() => setIsMapOpen(false)}
+                        onMapClick={handleMapClick}
+                        position={position}
+                    />
+                )}
 
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="hora">Hora:</label>
-                        <DropdownHora className="dropdownHora" id="hora" name="hora" disabled={soloLectura} hora={getTimeFromISO(multa?.fechaHora ? multa?.fechaHora : new Date() )} />
+                        <DropdownHora className="dropdownHora" id="hora" name="hora" disabled={soloLectura} hora={getTimeFromISO(multa?.fechaHora ? multa?.fechaHora : new Date())} />
                     </div>
                     <div className="input-group">
                         <label htmlFor="fecha">Fecha:</label>
-                        <CalendarioFecha className="fecha" id="fecha" name="fecha" disabled={soloLectura} fecha={getDateFromISO(multa?.fechaHora ? multa?.fechaHora : new Date() )} />
+                        <CalendarioFecha className="fecha" id="fecha" name="fecha" disabled={soloLectura} fecha={getDateFromISO(multa?.fechaHora ? multa?.fechaHora : new Date())} />
                     </div>
                 </div>
 
@@ -193,13 +149,16 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
                     <div className="input-group">
                         <label htmlFor="infraccion">Infracción cometida:</label>
                         <Select
-                            options={getListaInfracciones()}
+                            options={infracciones.map((infraccion) => ({
+                                value: infraccion,
+                                label: `${infraccion.titulo} - monto: ${infraccion.monto}`
+                            }))}
                             isMulti
-                            value={soloLectura ? getListaInfracciones() : selectedOptions}
+                            value={selectedOptions}
                             onChange={handleSelectChange}
                             placeholder="Seleccione una infracción"
+                            isDisabled={soloLectura}
                         />
-                        {/* <Dropdown id="infraccion" name="infraccion" disabled={soloLectura} options={soloLectura ? getListaInfracciones() : []} /> */}
                     </div>
                 </div>
 
@@ -209,30 +168,30 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
                         <input
                             type="text"
                             id="montoTotal"
-                            value={soloLectura ? formatCurrency(multa?.montoTotal) : formatCurrency(montoTotal)}
+                            value={formatCurrency(montoTotal)}
                             readOnly
                         />
-
                     </div>
                 </div>
 
                 <div className="fila">
                     <div className="input-group">
                         <label htmlFor="descripcion">Descripción de los hechos:</label>
-                        <textarea id="descripcion"
+                        <textarea
+                            id="descripcion"
                             name="descripcion"
                             placeholder="Máximo 255 caracteres"
-                            maxLength="255" readOnly={soloLectura}
-                            value={soloLectura ? multa?.comentario : nuevaMulta.comentario} 
+                            maxLength="255"
+                            readOnly={soloLectura}
+                            value={nuevaMulta.comentario}
                             onChange={(e) => setNuevaMulta((prev) => ({ ...prev, comentario: e.target.value }))}
                         ></textarea>
                     </div>
                 </div>
 
-                {/* Botones */}
                 {mostrarBotones && (
                     <div className="fila-botones">
-                        <Button variant="secondary" size="medium" text={textoBotonPrimario} onClick={handlePrimaryClick} />
+                        <Button variant="secondary" size="medium" text={textoBotonPrimario} onClick={(e) => e.preventDefault()} />
                         {dosBotones && (
                             <Button variant="secondary" size="medium" text={textoBotonSecundario} />
                         )}
