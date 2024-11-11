@@ -38,7 +38,7 @@ export const createMulta = async (multaData) => {
 
 // Actualizar una multa
 export const updateMulta = async (id, multaData) => {
-  await axiosInstance.put(`/multas/${id}`, multaData);
+  await axiosInstance.put(`/Multas/${id}`, multaData);
 };
 
 // Cambiar estado de la multa

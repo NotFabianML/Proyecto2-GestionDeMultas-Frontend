@@ -8,13 +8,13 @@ import Select from 'react-select';
 import { getInfracciones } from '../../../services/infraccionService.js';
 import { createMulta } from '../../../services/multaServices.js';
 
-const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBotones = true, textoBotonPrimario, textoBotonSecundario, soloLectura = false, multa }) => {
+const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBotones = true, textoBotonPrimario, textoBotonSecundario, soloLectura = false, multa, onGuardarCambios }) => {
     const [cedulaError, setCedulaError] = useState('');
     const [placaError, setPlacaError] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [montoTotal, setMontoTotal] = useState(0);
     const [infracciones, setInfracciones] = useState([]);
-    const initialMultaState = {
+    const initialMultaState = multa || {
         cedulaInfractor: '',
         numeroPlaca: '',
         latitud: 0,
@@ -29,12 +29,57 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
     const [nuevaMulta, setNuevaMulta] = useState(initialMultaState);
 
     useEffect(() => {
+        if (multa) {
+            setNuevaMulta(multa);
+            setSelectedOptions(multa.infracciones?.map((infraccion) => ({ value: infraccion, label: infraccion.titulo + " - monto: " + infraccion.monto })));
+            setMontoTotal(selectedOptions?.reduce((acc, curr) => acc + curr.value.monto, 0));
+
+        }
+    }, [multa]);
+
+    const handlePrimaryClick = async (e) => {
+        e.preventDefault();
+        if (textoBotonPrimario === "Guardar cambios") {
+            // Lógica para actualizar la multa
+            try {
+                await onGuardarCambios(nuevaMulta);
+                alert("Cambios realizados con éxito"); // Mensaje limpio
+            } catch (error) {
+                console.error("Error al actualizar la multa:", error);
+                alert("Hubo un error al actualizar la multa.");
+            }
+        } else {
+            // Lógica para crear la multa
+            try {
+                const data = await createMulta(nuevaMulta);
+                setNuevaMulta(initialMultaState); // Restablecer el estado de la multa
+                setSelectedOptions([]); // Limpiar las opciones seleccionadas
+                setMontoTotal(0); // Restablecer el monto total
+                alert("Multa creada con éxito"); // Mensaje limpio
+            } catch (error) {
+                console.error("Error al crear la multa:", error.message || error);
+                if (error.response) {
+                    console.error("Error details:", error.response.data);
+                } else if (error.request) {
+                    console.error("No response received:", error.request);
+                }
+                alert("Hubo un error al crear la multa.");
+            }
+        }
+    };
+    
+    
+    
+
+    useEffect(() => {
         if(!soloLectura){
             getInfracciones().then((data) => {
                 setInfracciones(data);
             });
         }
     }, [soloLectura]);
+
+
 
     const handleCedulaChange = (e) => {
         const value = e.target.value;
@@ -81,26 +126,7 @@ const FormularioMulta = ({ mostrarNumMulta = true, mostrarBotones = true, dosBot
         }
     };
 
-    const handlePrimaryClick =  async (e) => {
-        e.preventDefault();
-        if(soloLectura) {
-            // TODO agregar logica del boton primario del juez
-        } else {
-            try {
-                const data = await createMulta(nuevaMulta);
-                setNuevaMulta(initialMultaState);
-                setSelectedOptions([]);
-                setMontoTotal(0);
-            } catch (error) {
-                console.error("Error al crear la multa:", error.message || error);
-                if (error.response) {
-                    console.error("Error details:", error.response.data);
-                } else if (error.request) {
-                    console.error("No response received:", error.request);
-                }
-            }
-        }
-    };
+
 
     const getMultaInfracciones = (selected) => {
         const listaInfracciones = selected.map((infraccion) => ( infraccion.value ));

@@ -4,7 +4,7 @@ import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import FormularioMulta from '../../organism/Formulario/FormularioMulta.jsx';
 import Select from 'react-select';
-import { getMultasPorOficialId, getMultaById } from '../../../services/multaServices.js'; // Asegúrate de tener la función getMultaPorId
+import { getMultasPorOficialId, getMultaById, updateMulta } from '../../../services/multaServices.js'; // Asegúrate de tener la función getMultaPorId
 
 const GestionMultas = () => {
     const [multas, setMultas] = useState([]);
@@ -12,7 +12,7 @@ const GestionMultas = () => {
     const [multaDetalles, setMultaDetalles] = useState(null); // Nuevo estado para los detalles de la multa
 
     // Usar el ID de oficial fijo para la prueba
-    const oficialId = '8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8';
+    const oficialId = '5904AA06-6260-4374-8424-C8CDFD762456';
 
     useEffect(() => {
         // Obtener las multas para el oficial con el ID especificado
@@ -49,6 +49,20 @@ const GestionMultas = () => {
         setMultaDetalles(null); // Limpiar los detalles de la multa anterior
     };
 
+    // Método para actualizar la multa
+    const handleActualizarMulta = async (multaActualizada) => {
+        try {
+            console.log(multaActualizada);
+            await updateMulta(multaActualizada.idMulta, multaActualizada);
+            // Opcional: Actualizar el listado de multas si quieres reflejar el cambio en el select
+            const data = await getMultasPorOficialId(oficialId);
+            setMultas(data);
+        } catch (error) {
+            console.error('Error al actualizar la multa:', error);
+        }
+    };  
+
+
     return (
         <div className="estilos-oficial">
             <header>
@@ -82,6 +96,7 @@ const GestionMultas = () => {
                             textoBotonPrimario="Guardar cambios"
                             textoBotonSecundario="Eliminar multa"
                             multa={multaDetalles} // Pasas los detalles completos de la multa al formulario
+                            onGuardarCambios={handleActualizarMulta}
                         />
                     )}
                 </div>
