@@ -72,13 +72,10 @@ const Infracciones = () => {
 
   const handleGuardarInfraccion = () => {
     if (infraccionSeleccionada) {
-      // Editar infracción existente
-      console.log(nuevaInfraccion);
       updateInfraccion(nuevaInfraccion.idInfraccion, nuevaInfraccion).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
       });
     } else {
-      // Crear nueva infracción
       const { idInfraccion, ...infraccionSinId } = nuevaInfraccion;
       createInfraccion(infraccionSinId).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
@@ -114,21 +111,27 @@ const Infracciones = () => {
           <table>
             <thead>
               <tr>
+                <th>Artículo</th>
                 <th>Infracción</th>
+                <th>Monto</th>
+                <th></th> {/* Columna para el botón de editar */}
               </tr>
             </thead>
             <tbody>
               {InfraccionesActuales?.map((infraccion) => (
                 <tr key={infraccion.idInfraccion}>
-                  <td>{infraccion.titulo}</td>
+                  <td>{infraccion.articulo}</td> {/* Columna de Artículo */}
+                  <td>{infraccion.titulo}</td> {/* Columna de Infracción */}
+                  <td>{`₡${infraccion.monto}`}</td> {/* Columna de Monto con símbolo de colones */}
                   <td>
-                    <Button variant="primary" text="Editar Infracción" onClick={() => abrirModal(infraccion)} />
+                    <Button variant="secondary" size="small" text="Editar" onClick={() => abrirModal(infraccion)} />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
         <Paginador
           elementosPorPagina={elementosPorPagina}
           totalElementos={infraccionesFiltradas?.length}
@@ -136,64 +139,76 @@ const Infracciones = () => {
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
         />
-        <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
-        <Button variant="alternative" text="Crear Infracción" onClick={() => abrirModal(null)} />
-        
+
+        <div className="botones-infraccion">
+          <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
+          <Button variant="alternative" text="Crear Infracción" onClick={() => abrirModal(null)} />
+        </div>
+
         <Modal
+          className="modal-crear-infraccion"
           isOpen={modalIsOpen}
           onRequestClose={cerrarModal}
           style={{
             content: {
-              top: '10%',
-              left: '10%',
-              right: '10%',
-              bottom: '10%',
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              transform: 'translate(-50%, -50%)',
             },
           }}
         >
-          <button onClick={cerrarModal} style={{ float: 'right' }}>X</button>
+          <button onClick={cerrarModal} className="cerrar">X</button>
           <h2>{infraccionSeleccionada ? 'Editar Infracción' : 'Crear Infracción'}</h2>
-          <div>
-            <label>Nombre de la Infracción:</label>
-            <input
-              type="text"
-              name="titulo"
-              value={nuevaInfraccion.titulo}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Artículo:</label>
-            <input
-              type="text"
-              name="articulo"
-              value={nuevaInfraccion.articulo}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Monto:</label>
-            <input
-              type="text"
-              name="monto"
-              value={nuevaInfraccion.monto}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Descripción:</label>
-            <input
-              type="text"
-              name="descripcion"
-              value={nuevaInfraccion.descripcion}
-              onChange={handleChange}
-            />
-          </div>
-          <Button variant="alternative" text="Guardar Cambios" onClick={handleGuardarInfraccion} />
-          {infraccionSeleccionada && (
+          <form>
+            <div className="filas">
+              <label>Nombre de la Infracción:</label>
+              <input
+                type="text"
+                name="titulo"
+                value={nuevaInfraccion.titulo}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="filas">
+              <label>Artículo:</label>
+              <input
+                type="text"
+                name="articulo"
+                value={nuevaInfraccion.articulo}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="filas">
+              <label>Monto:</label>
+              <input
+                type="text"
+                name="monto"
+                value={nuevaInfraccion.monto}
+                onChange={handleChange}
+                placeholder="₡0.00"
+              />
+            </div>
+            <div className="filas">
+              <label>Descripción:</label>
+              <input
+                type="text"
+                name="descripcion"
+                value={nuevaInfraccion.descripcion}
+                onChange={handleChange}
+              />
+            </div>
+          </form>
+
+          <div className="botones-modal">
+            <Button variant="alternative" size="medium" text="Guardar Cambios" onClick={handleGuardarInfraccion} />
             <Button variant="danger" text="Eliminar Infracción" onClick={handleEliminarInfraccion} />
-          )}
+          </div>
         </Modal>
+
+
       </main>
       <footer>
         <Footer />
@@ -203,4 +218,3 @@ const Infracciones = () => {
 }
 
 export default Infracciones;
-

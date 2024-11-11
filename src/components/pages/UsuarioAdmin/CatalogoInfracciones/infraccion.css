@@ -1,88 +1,97 @@
-
-  
-  .filtro-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  .lista-infracciones {
-    padding: 20px;
-  }
-  
-  .lista-infracciones table {
-
-    border-collapse: collapse;
-    margin: 0 auto;
-  }
-  
-  .lista-infracciones th,
-  .lista-infracciones td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #B8860B; /* Línea de separación más oscura */
-  }
-  
-  
-  .lista-infracciones tbody tr:hover {
-    background-color: #F5F5F5; /* Color de fondo al pasar el cursor */
-  }
-button, .Button {
-  padding: 8px 16px; /* Espaciado interno para que el texto no quede pegado al borde */
-  font-size: 1rem; /* Ajuste del tamaño de la fuente */
-  text-align: center; /* Centra el texto dentro del botón */
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-  border: 1px solid #ccc; /* Bordes suaves */
-  border-radius: 4px; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  background-color: #f0f0f0; /* Color de fondo suave */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Efectos de transición */
+.filtro-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-button:hover, .Button:hover {
-  background-color: #e0e0e0; /* Color de fondo cuando se pasa el mouse */
-  transform: scale(1.05); /* Ligero aumento de tamaño al pasar el mouse */
+.lista-infracciones {
+  width: fit-content;
+  background-color: #181D23;
+  border-radius: 30px;
+  padding: 50px;
+  margin: 50px auto;
+  color: #dadada;
+  display: flex;
+  justify-content: center;
 }
 
-button:active, .Button:active {
-  transform: scale(0.98); /* Pequeño "presionado" cuando el botón es clickeado */
+.lista-infracciones table {
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
-button:disabled, .Button:disabled {
-  background-color: #d0d0d0; /* Color de fondo cuando está deshabilitado */
-  cursor: not-allowed; /* Cambia el cursor a uno de "no permitido" */
+.lista-infracciones th,
+.lista-infracciones td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 2px solid rgb(5, 4, 4);
 }
 
-/* Estilo para los botones específicos de tipo alternativa y peligro */
-button.variant-alternative, .Button.variant-alternative {
-background-color: #d0f0d0; /* Fondo verde suave para botones alternativos */
-border-color: #90c090; /* Borde verde */
+.botones-infraccion {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0px;
 }
 
-button.variant-danger, .Button.variant-danger {
-background-color: #f0d0d0; /* Fondo rojo suave para botones de eliminación */
-border-color: #c09090; /* Borde rojo */
+.modal-crear-infraccion {
+  padding: 30px;
+  margin: 30px;
+  background-color: white;
+  width: 600px;
+  position: relative;
+  border-radius: 15px;
 }
 
-button.variant-alternative:hover, .Button.variant-alternative:hover {
-background-color: #b0e0b0; /* Fondo más oscuro para hover */
+.modal-crear-infraccion button.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #181D23;
+  line-height: 1;
 }
 
-button.variant-danger:hover, .Button.variant-danger:hover {
-background-color: #e0b0b0; /* Fondo más oscuro para hover */
-  background-color: #d0f0d0; /* Fondo verde suave para botones alternativos */
-  border-color: #90c090; /* Borde verde */
+
+.modal-crear-infraccion h2 {
+  text-align: left;
+  margin-bottom: 20px;
 }
 
-button.variant-danger, .Button.variant-danger {
-  background-color: #f0d0d0; /* Fondo rojo suave para botones de eliminación */
-  border-color: #c09090; /* Borde rojo */
+.modal-crear-infraccion form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinea todo el contenido a la izquierda */
+  text-align: left;
+  padding-left: 40px;
 }
 
-button.variant-alternative:hover, .Button.variant-alternative:hover {
-  background-color: #b0e0b0; /* Fondo más oscuro para hover */
+.modal-crear-infraccion label {
+  color: #181D23;
+  margin-bottom: 5px;
 }
 
-button.variant-danger:hover, .Button.variant-danger:hover {
-  background-color: #e0b0b0; /* Fondo más oscuro para hover */
+.modal-crear-infraccion .filas {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.modal-crear-infraccion input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.modal-crear-infraccion .botones-modal {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
 }
