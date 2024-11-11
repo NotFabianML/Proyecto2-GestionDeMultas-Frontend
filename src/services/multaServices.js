@@ -68,6 +68,17 @@ export const getMultasPorCedulaUsuario = async (cedula) => {
   return response.data;
 };
 
+// Eliminar una multa por ID
+export const deleteMulta = async (multaId) => {
+  try {
+    const response = await axiosInstance.delete(`/Multas/${multaId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar la multa:", error);
+    throw error;
+  }
+};
+
 // Inicializar multas
 export const inicializarMultas = async () => {
   const response = await axiosInstance.post('/multas/inicializar');
