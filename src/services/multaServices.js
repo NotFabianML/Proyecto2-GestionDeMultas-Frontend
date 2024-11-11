@@ -32,9 +32,19 @@ export const getMultasPorInfraccion = async (infraccionId) => {
 
 // Crear una nueva multa
 export const createMulta = async (multaData) => {
-  const response = await axiosInstance.post('/Multas', multaData);
-  return response.data;
+  try {
+    const response = await axiosInstance.post('/Multas', multaData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear la multa:", error);
+    throw error;
+  }
 };
+
 
 // Actualizar una multa
 export const updateMulta = async (id, multaData) => {
