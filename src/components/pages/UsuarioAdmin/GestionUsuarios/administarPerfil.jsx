@@ -41,9 +41,6 @@ const AdministrarPerfil = () => {
     }
   };
 
-
-
-
   const openUploadWidget = () => {
     window.cloudinary.openUploadWidget(
       {

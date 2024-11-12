@@ -7,7 +7,7 @@ import FiltroInput from "../../../layouts/FiltroInput";
 import Paginador from "../../../layouts/Paginador";
 import ButtonLink from "../../../atoms/ButtonLink";
 import "./infraccion.css";
-import { createInfraccion, getInfracciones, updateInfraccion } from "../../../../services/infraccionService";
+import { createInfraccion, getInfracciones, updateInfraccion, cambiarEstadoInfraccion } from "../../../../services/infraccionService";
 
 const Infracciones = () => {
   const [filtro, setFiltro] = useState('');
@@ -24,6 +24,7 @@ const Infracciones = () => {
     descripcion: ''
   });
   const elementosPorPagina = 10;
+  const [ocultarBtnEliminar, setOcultarBtn] = useState(false);
  
   useEffect(() => {
     getInfracciones()
@@ -33,13 +34,14 @@ const Infracciones = () => {
     .catch((error) => {
         setError(`Error: ${error.message}`);
     });
-}, [!modalIsOpen]);
+  }, [!modalIsOpen]);
 
   const infraccionesFiltradas = infraccionesIniciales?.filter(infraccion =>
     infraccion.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
     infraccion.idInfraccion.toString().includes(filtro)
   );
 
+  //Hace tabla dinamica
   const indiceUltimoElemento = paginaActual * elementosPorPagina;
   const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
   const InfraccionesActuales = infraccionesFiltradas?.slice(indicePrimerElemento, indiceUltimoElemento);
@@ -53,9 +55,11 @@ const Infracciones = () => {
     if (infraccion) {
       setInfraccionSeleccionada(infraccion);
       setNuevaInfraccion(infraccion);
+      setOcultarBtn(false);
     } else {
       setInfraccionSeleccionada(null);
       setNuevaInfraccion({ idInfraccion: '', titulo: '', articulo: '', monto: '', descripcion: '' });
+      setOcultarBtn(true);
     }
     setModalIsOpen(true);
   };
@@ -69,27 +73,29 @@ const Infracciones = () => {
     const { name, value } = e.target;
     setNuevaInfraccion({ ...nuevaInfraccion, [name]: value });
   };
+  
 
   const handleGuardarInfraccion = () => {
     if (infraccionSeleccionada) {
       updateInfraccion(nuevaInfraccion.idInfraccion, nuevaInfraccion).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
+        alert("Infracción actualizada");
       });
     } else {
       const { idInfraccion, ...infraccionSinId } = nuevaInfraccion;
       createInfraccion(infraccionSinId).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
+        alert("Infracción creada");
       });
     }
     cerrarModal();
   };
 
   const handleEliminarInfraccion = () => {
-    const infraccionesActualizadas = infraccionesIniciales?.filter(infraccion =>
-      infraccion.idInfraccion !== infraccionSeleccionada.idInfraccion
-    );
-    infraccionesIniciales = infraccionesActualizadas;
-    cerrarModal();
+    cambiarEstadoInfraccion(infraccionSeleccionada.idInfraccion, 0).then((result) => {  
+      alert("Infracción eliminada");
+    });
+    cerrarModal();    
   };
 
   return (
@@ -120,9 +126,9 @@ const Infracciones = () => {
             <tbody>
               {InfraccionesActuales?.map((infraccion) => (
                 <tr key={infraccion.idInfraccion}>
-                  <td>{infraccion.articulo}</td> {/* Columna de Artículo */}
-                  <td>{infraccion.titulo}</td> {/* Columna de Infracción */}
-                  <td>{`₡${infraccion.monto}`}</td> {/* Columna de Monto con símbolo de colones */}
+                  <td>{infraccion.articulo}</td>
+                  <td>{infraccion.titulo}</td>
+                  <td>{`₡${infraccion.monto}`}</td>
                   <td>
                     <Button variant="secondary" size="small" text="Editar" onClick={() => abrirModal(infraccion)} />
                   </td>
@@ -204,7 +210,7 @@ const Infracciones = () => {
 
           <div className="botones-modal">
             <Button variant="alternative" size="medium" text="Guardar Cambios" onClick={handleGuardarInfraccion} />
-            <Button variant="danger" text="Eliminar Infracción" onClick={handleEliminarInfraccion} />
+            {!ocultarBtnEliminar && (<Button variant="danger" text="Eliminar Infracción" onClick={handleEliminarInfraccion} />)}
           </div>
         </Modal>
 
