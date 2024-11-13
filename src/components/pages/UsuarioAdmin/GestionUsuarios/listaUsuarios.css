@@ -1,78 +1,22 @@
 /* ListaUsuarios.css */
 
 .pagina-registro {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  header {
-    width: 100%;
-  }
-  
-  main {
-    flex: 1;
-  }
-  
-  h1 {
-    text-align: left;
-    margin-left: 20px;
-  }
-  
-  .filtro-container {
-    text-align: center;
-    margin: 20px 0;
-  }
-  
-  .lista-usuarios table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-  }
-  
-  .lista-usuarios th,
-  .lista-usuarios td {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .lista-usuarios th {
-    background-color: #f2f2f2;
-  }
-  
-  .lista-usuarios tbody tr {
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .lista-usuarios tbody tr:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .botones {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  button,
-  .ButtonLink {
-    margin: 0 5px;
-  }
-  
-  footer {
-    width: 100%;
-    text-align: center;
-    margin-top: auto;
-    }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
 
-    /* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
+/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
 header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #DADADA;  
-  z-index: 10;  
+  background-color: #DADADA;
+  z-index: 10;
 }
 
 footer {
@@ -83,11 +27,156 @@ footer {
   background-color: #DADADA;
   z-index: 10;
   text-align: center;
-  padding: 10px 0;
 }
 
-.pagina-inicio {
-  margin-top: 120px;  
-  padding-bottom: 10px; 
+.main-content {
+  flex: 1;
+  width: 100%;
+  padding: 120px 20px 60px 20px; 
+  text-align: center;
+  box-sizing: border-box;
   overflow: hidden; 
+  min-height: calc(100vh - 140px); 
+}
+
+h1 {
+  text-align: center;
+  font-size: 34px;
+  color: rgb(0, 0, 0); 
+  margin-bottom: 30px;
+}
+
+.filtro-container {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 20px;
+  align-items: right;
+  margin-right: 40px;
+}
+
+.filtro-container input {
+  padding: 8px;
+  max-width: 110px;
+  font-size: 16px;
+  margin-right: 10px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+}
+
+.filtro-container .search-icon {
+  font-size: 20px;
+  color: #666;
+}
+
+/* Estilos de la tabla */
+.tabla-general {
+  width: 800px;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background-color: white; /* Fondo blanco para la tabla */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Encabezados de la tabla */
+.tabla-general th, .tabla-general td {
+  padding: 12px;
+  color: #181D23;
+  text-align: left;
+  border: 1px solid #000000; /* Borde negro para las celdas */
+}
+
+/* Encabezado color azul letras blancas */
+.tabla-general th {
+  background-color: #181D23; 
+  color: white;
+  font-weight: bold;
+}
+
+/* Filas alternas con fondo blanco y amarillo mostaza */
+.tabla-general tr:nth-child(even) {
+  background-color: #181D23; 
+  color: #ffcc00; /* Letras amarillas para fondo rojo */
+}
+
+.tabla-general tr:nth-child(odd) {
+  background-color: #ffffff;
+  color: #181D23; /* Letras azules para fondo blanco */
+}
+
+/* Filas que se resaltan con el cursor (hover) */
+.tabla-general tr:hover {
+  background-color: #3c444e;  
+}
+
+/* Celdas con texto en negro */
+.tabla-general td {
+  color: inherit; /* Deja que el color de la celda dependa de la fila */
+}
+
+/* Celdas que contienen valores numéricos (por si es necesario) */
+.tabla-general td.num {
+  text-align: right; 
+}
+
+/* Estilo para bordes de la tabla */
+.tabla-general {
+  border: 2px solid #181D23; 
+  border-radius: 20px;
+}
+
+/* Estilo para las celdas */
+.tabla-general td, .tabla-general th {
+  border-left: 1px solid #ffcc00;
+  border-top: 1px solid #ffcc00;
+}
+
+/* Eliminar borde izquierdo en la primera columna */
+.tabla-general td:first-child, .tabla-general th:first-child {
+  border-left: none;
+}
+
+/* Estilo para la última fila  */
+.tabla-general tr:last-child {
+  background-color: #181D23; 
+  color: #ffcc00;
+}
+
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 10px; 
+  margin-top: 20px;
+}
+
+button, .ButtonLink {
+  margin: 0 5px;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .tabla-general {
+    width: 100%;
+  }
+
+  .main-content {
+    padding-top: 100px;
+  }
+
+  .botones {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }

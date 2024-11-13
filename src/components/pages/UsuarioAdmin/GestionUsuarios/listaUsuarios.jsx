@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom";
 import { getUsuarios } from "../../../../services/usuarioService";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
@@ -75,11 +75,11 @@ const ListaUsuarios = () => {
     };
 
     return (
-        <div>
+        <div className="pagina-registro">
             <header>
                 <AdminNavbar />
             </header>
-            <main>
+            <main className="main-content">
                 <h1>Lista de Usuarios</h1>
                 <div className="filtro-container">
                     <FiltroInput
@@ -90,7 +90,7 @@ const ListaUsuarios = () => {
                     <div><i className="fas fa-search search-icon"></i></div>
                 </div>
                 <div className="lista-usuarios">
-                    <table>
+                    <table className="tabla-general">
                         <thead>
                             <tr>
                                 <th>Usuario</th>
@@ -106,7 +106,7 @@ const ListaUsuarios = () => {
                                     <td>{usuario.id}</td>
                                     <td>{usuario.estado}</td>
                                     <td>
-                                        <ButtonLink variant="primary" size="small" text="Editar" to="/administrar-perfil" />
+                                        <ButtonLink variant="primary" size="small" text="Editar" onClick={() => abrirModal(usuario)} />
                                         <ButtonLink variant="danger" size="small" text="Eliminar" onClick={() => abrirModal(usuario)} />
                                     </td>
                                 </tr>
@@ -121,8 +121,10 @@ const ListaUsuarios = () => {
                     paginaActual={paginaActual}
                     totalPaginas={totalPaginas}
                 />
-                <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
-                <ButtonLink variant="alternative" text="Crear Usuario" onClick={() => abrirModal(null)} />
+                <div className="botones">
+                    <ButtonLink variant="primary" text="Regresar" to="/inicio-admin" />
+                    <ButtonLink variant="secondary" text="Crear Usuario" onClick={() => abrirModal(null)} />
+                </div>
 
                 <Modal
                     isOpen={modalIsOpen}
@@ -133,6 +135,8 @@ const ListaUsuarios = () => {
                             left: '10%',
                             right: '10%',
                             bottom: '10%',
+                            border: 'none', /* Quitar borde lila o predeterminado */
+                            boxShadow: 'none', /* Quitar sombra predeterminada */
                         },
                     }}
                 >
