@@ -4,21 +4,22 @@ import OficialNavbar from '../../layouts/Navbar/OficialNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import FormularioMulta from '../../organism/Formulario/FormularioMulta.jsx';
 import Select from 'react-select';
-import { getMultasPorOficialId, getMultaById, updateMulta } from '../../../services/multaServices.js'; // Asegúrate de tener la función getMultaPorId
+import { getMultasPorOficialId, getMultaById, updateMulta, deleteMulta} from '../../../services/multaServices.js'; // Asegúrate de tener la función getMultaPorId
+import { useUserContext } from '../../../contexts/UserContext.jsx';
+
 
 const GestionMultas = () => {
     const [multas, setMultas] = useState([]);
     const [selectedMulta, setSelectedMulta] = useState(null);
     const [multaDetalles, setMultaDetalles] = useState(null); // Nuevo estado para los detalles de la multa
+    const { userId } = useUserContext();
 
-    // Usar el ID de oficial fijo para la prueba
-    const oficialId = '5904AA06-6260-4374-8424-C8CDFD762456';
-
+    console.log(userId);
     useEffect(() => {
         // Obtener las multas para el oficial con el ID especificado
         const fetchMultas = async () => {
             try {
-                const data = await getMultasPorOficialId(oficialId);
+                const data = await getMultasPorOficialId(userId);
                 setMultas(data);
             } catch (error) {
                 console.error('Error al obtener las multas:', error);
@@ -26,7 +27,7 @@ const GestionMultas = () => {
         };
 
         fetchMultas();
-    }, [oficialId]);
+    }, [userId]);
 
     // Función para obtener los detalles de la multa seleccionada
     useEffect(() => {
@@ -49,16 +50,27 @@ const GestionMultas = () => {
         setMultaDetalles(null); // Limpiar los detalles de la multa anterior
     };
 
-    // Método para actualizar la multa
     const handleActualizarMulta = async (multaActualizada) => {
         try {
             console.log(multaActualizada);
             await updateMulta(multaActualizada.idMulta, multaActualizada);
-            // Opcional: Actualizar el listado de multas si quieres reflejar el cambio en el select
-            const data = await getMultasPorOficialId(oficialId);
+            // Actualizar el listado de multas si quieres reflejar el cambio en el select
+            const data = await getMultasPorOficialId(userId);
             setMultas(data);
         } catch (error) {
             console.error('Error al actualizar la multa:', error);
+        }
+    };  
+
+    const handleEliminarMulta = async (multaEliminada) => {
+        try {
+            console.log(multaEliminada);
+            await deleteMulta(multaEliminada.idMulta);
+            // Actualizar el listado de multas si quieres reflejar el cambio en el select
+            const data = await getMultasPorOficialId(userId);
+            setMultas(data);
+        } catch (error) {
+            console.error('Error al eliminar la multa:', error);
         }
     };  
 
@@ -97,6 +109,7 @@ const GestionMultas = () => {
                             textoBotonSecundario="Eliminar multa"
                             multa={multaDetalles} // Pasas los detalles completos de la multa al formulario
                             onGuardarCambios={handleActualizarMulta}
+                            onEliminarMulta={handleEliminarMulta}
                         />
                     )}
                 </div>

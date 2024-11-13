@@ -10,15 +10,8 @@ import { createMulta } from "../../../services/multaServices.js";
 import MapPopup from "../MapPopUp.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 
-const FormularioMulta = ({
-  mostrarNumMulta = true,
-  mostrarBotones = true,
-  dosBotones = true,
-  textoBotonPrimario,
-  textoBotonSecundario,
-  soloLectura = false,
-  multa,
-}) => {
+const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta }) => {
+
   const { userId } = useUserContext();
   const [cedulaError, setCedulaError] = useState("");
   const [placaError, setPlacaError] = useState("");
@@ -29,7 +22,7 @@ const FormularioMulta = ({
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [position, setPosition] = useState({ lat: null, lng: null });
 
-  const initialMultaState = {
+  const initialMultaState = multa || {
     numeroPlaca: "",
     cedulaInfractor: "",
     usuarioIdOficial: userId,
@@ -47,6 +40,25 @@ const FormularioMulta = ({
       getInfracciones().then((data) => setInfracciones(data));
     }
   }, [soloLectura]);
+
+  useEffect(() => {
+    if (multa) {
+        setNuevaMulta(multa);
+        setSelectedOptions(multa.infracciones?.map((infraccion) => ({ value: infraccion, label: infraccion.titulo + " - monto: " + infraccion.monto })));
+        setMontoTotal(multa.montoTotal);
+    }
+  }, [multa]);
+
+  useEffect(() => {
+    if (multa) {
+        setNuevaMulta({
+            ...multa,
+            latitud: multa.latitud || 0,
+            longitud: multa.longitud || 0
+        });
+        setPosition({ lat: multa.latitud, lng: multa.longitud });
+    }
+  }, [multa]);
 
   const handleCedulaChange = (e) => {
     const value = e.target.value;
@@ -102,35 +114,56 @@ const FormularioMulta = ({
 
   const handlePrimaryClick = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+        if (textoBotonPrimario === "Guardar cambios") {
+            // Lógica para actualizar la multa
+            try {
+                await onGuardarCambios(nuevaMulta);
+                alert("Cambios realizados con éxito"); // Mensaje limpio
+            } catch (error) {
+                console.error("Error al actualizar la multa:", error);
+                alert("Hubo un error al actualizar la multa.");
+            }
+        } else {
+          if (!validateForm()) return;
 
-    const multaData = {
-      numeroPlaca: nuevaMulta.numeroPlaca,
-      cedulaInfractor: nuevaMulta.cedulaInfractor,
-      usuarioIdOficial: userId,
-      fechaHora: nuevaMulta.fechaHora,
-      latitud: nuevaMulta.latitud,
-      longitud: nuevaMulta.longitud,
-      comentario: nuevaMulta.comentario,
-      estado: nuevaMulta.estado,
-    };
+          const multaData = {
+            numeroPlaca: nuevaMulta.numeroPlaca,
+            cedulaInfractor: nuevaMulta.cedulaInfractor,
+            usuarioIdOficial: userId,
+            fechaHora: nuevaMulta.fechaHora,
+            latitud: nuevaMulta.latitud,
+            longitud: nuevaMulta.longitud,
+            comentario: nuevaMulta.comentario,
+            estado: nuevaMulta.estado,
+          };
+      
+          try {
+            const nuevaMultaResponse = await createMulta(multaData);
+            const multaId = nuevaMultaResponse.idMulta;
+      
+            // Asigna cada infracción seleccionada a la multa
+            for (const idInfraccion of nuevaMulta.infracciones) {
+              await asignarInfraccionAMulta(multaId, idInfraccion);
+            }
+      
+            setNuevaMulta(initialMultaState);
+            setSelectedOptions([]);
+            setMontoTotal(0);
+            setPosition({ lat: null, lng: null });
+            alert("Multa creada con éxito");
+          } catch (error) {
+            console.error("Error al crear la multa:", error.message || error);
+            if (error.response) {
+                console.error("Error details:", error.response.data);
+            } else if (error.request) {
+                console.error("No response received:", error.request);
+            }
+            alert("Hubo un error al crear la multa.");
+          }
 
-    try {
-      const nuevaMultaResponse = await createMulta(multaData);
-      const multaId = nuevaMultaResponse.idMulta;
+        }
 
-      // Asigna cada infracción seleccionada a la multa
-      for (const idInfraccion of nuevaMulta.infracciones) {
-        await asignarInfraccionAMulta(multaId, idInfraccion);
-      }
-
-      setNuevaMulta(initialMultaState);
-      setSelectedOptions([]);
-      setMontoTotal(0);
-      setPosition({ lat: null, lng: null });
-    } catch (error) {
-      console.error("Error al crear la multa o asignar infracciones:", error.message || error);
-    }
+    
   };
 
   const formatCurrency = (amount) => {
@@ -273,7 +306,7 @@ const FormularioMulta = ({
             <input
               type="text"
               id="montoTotal"
-              value={formatCurrency(montoTotal)}
+              value={soloLectura ? formatCurrency(multa?.montoTotal) : formatCurrency(montoTotal)}
               readOnly
             />
           </div>
