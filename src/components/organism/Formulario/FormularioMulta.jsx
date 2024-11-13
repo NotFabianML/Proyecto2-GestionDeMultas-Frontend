@@ -43,19 +43,13 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
 
   useEffect(() => {
     if (multa) {
-        setNuevaMulta(multa);
+      setNuevaMulta({
+        ...multa,
+        latitud: multa.latitud || 0,
+        longitud: multa.longitud || 0
+    });
         setSelectedOptions(multa.infracciones?.map((infraccion) => ({ value: infraccion, label: infraccion.titulo + " - monto: " + infraccion.monto })));
         setMontoTotal(multa.montoTotal);
-    }
-  }, [multa]);
-
-  useEffect(() => {
-    if (multa) {
-        setNuevaMulta({
-            ...multa,
-            latitud: multa.latitud || 0,
-            longitud: multa.longitud || 0
-        });
         setPosition({ lat: multa.latitud, lng: multa.longitud });
     }
   }, [multa]);
@@ -114,56 +108,65 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
 
   const handlePrimaryClick = async (e) => {
     e.preventDefault();
-        if (textoBotonPrimario === "Guardar cambios") {
-            // Lógica para actualizar la multa
-            try {
-                await onGuardarCambios(nuevaMulta);
-                alert("Cambios realizados con éxito"); // Mensaje limpio
-            } catch (error) {
-                console.error("Error al actualizar la multa:", error);
-                alert("Hubo un error al actualizar la multa.");
-            }
-        } else {
-          if (!validateForm()) return;
+    if (textoBotonPrimario === "Guardar cambios") {
+      // Lógica para actualizar la multa
+      try {
+          await onGuardarCambios(nuevaMulta);
+          limpiarFormulario();
+          alert("Cambios realizados con éxito"); // Mensaje limpio
+      } catch (error) {
+          console.error("Error al actualizar la multa:", error);
+          alert("Hubo un error al actualizar la multa.");
+      }
+    } else {
+      if (!validateForm()) return;
 
-          const multaData = {
-            numeroPlaca: nuevaMulta.numeroPlaca,
-            cedulaInfractor: nuevaMulta.cedulaInfractor,
-            usuarioIdOficial: userId,
-            fechaHora: nuevaMulta.fechaHora,
-            latitud: nuevaMulta.latitud,
-            longitud: nuevaMulta.longitud,
-            comentario: nuevaMulta.comentario,
-            estado: nuevaMulta.estado,
-          };
-      
-          try {
-            const nuevaMultaResponse = await createMulta(multaData);
-            const multaId = nuevaMultaResponse.idMulta;
-      
-            // Asigna cada infracción seleccionada a la multa
-            for (const idInfraccion of nuevaMulta.infracciones) {
-              await asignarInfraccionAMulta(multaId, idInfraccion);
-            }
-      
-            setNuevaMulta(initialMultaState);
-            setSelectedOptions([]);
-            setMontoTotal(0);
-            setPosition({ lat: null, lng: null });
-            alert("Multa creada con éxito");
-          } catch (error) {
-            console.error("Error al crear la multa:", error.message || error);
-            if (error.response) {
-                console.error("Error details:", error.response.data);
-            } else if (error.request) {
-                console.error("No response received:", error.request);
-            }
-            alert("Hubo un error al crear la multa.");
-          }
-
+      const multaData = {
+        numeroPlaca: nuevaMulta.numeroPlaca,
+        cedulaInfractor: nuevaMulta.cedulaInfractor,
+        usuarioIdOficial: userId,
+        fechaHora: nuevaMulta.fechaHora,
+        latitud: nuevaMulta.latitud,
+        longitud: nuevaMulta.longitud,
+        comentario: nuevaMulta.comentario,
+        estado: nuevaMulta.estado,
+      };
+  
+      try {
+        const nuevaMultaResponse = await createMulta(multaData);
+        const multaId = nuevaMultaResponse.idMulta;
+  
+        // Asigna cada infracción seleccionada a la multa
+        for (const idInfraccion of nuevaMulta.infracciones) {
+          await asignarInfraccionAMulta(multaId, idInfraccion);
         }
+  
+         limpiarFormulario();
+        alert("Multa creada con éxito");
+      } catch (error) {
+        console.error("Error al crear la multa:", error.message || error);
+        if (error.response) {
+            console.error("Error details:", error.response.data);
+        } else if (error.request) {
+            console.error("No response received:", error.request);
+        }
+        alert("Hubo un error al crear la multa.");
+      }
+    }
+  };
 
-    
+  const handleSecondaryClick = async (e) => {
+    e.preventDefault();
+    if (onEliminarMulta) {
+      try {
+        await onEliminarMulta(nuevaMulta);
+        alert("Multa eliminada con éxito");
+      } catch (error) {
+        console.error("Error al eliminar la multa:", error);
+        alert("Hubo un error al eliminar la multa.");
+      }
+      limpiarFormulario();
+    }
   };
 
   const formatCurrency = (amount) => {
@@ -174,6 +177,24 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
     }).format(amount);
   };
 
+  const limpiarFormulario = () => {
+    const multaVacia =  {
+      numeroPlaca: "",
+      cedulaInfractor: "",
+      usuarioIdOficial: userId,
+      fechaHora: new Date().toISOString(),
+      latitud: 0,
+      longitud: 0,
+      comentario: "",
+      estado: 1,
+      infracciones: [],
+    };
+    setNuevaMulta(multaVacia);
+    setSelectedOptions([]);
+    setMontoTotal(0);
+    setPosition({ lat: null, lng: null });
+  }
+
   return (
     <div className="formulario-container">
       <form className="formulario-multa" onSubmit={handlePrimaryClick}>
@@ -181,7 +202,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
           <h2>{"Multa N°: " + (multa?.idMulta || "Nueva")}</h2>
         )}
 
-<div className="fila">
+  	    <div className="fila">
           <div className="input-group">
             <label htmlFor="cedula">Cédula del infractor:</label>
             <input
@@ -338,12 +359,14 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
               variant="secondary"
               size="medium"
               text={textoBotonPrimario}
+              onClick={handlePrimaryClick}
             />
             {dosBotones && (
               <Button
                 variant="secondary"
                 size="medium"
                 text={textoBotonSecundario}
+                onClick={handleSecondaryClick}
               />
             )}
           </div>

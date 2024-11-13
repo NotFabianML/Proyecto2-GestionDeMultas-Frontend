@@ -63,16 +63,20 @@ const GestionMultas = () => {
     };  
 
     const handleEliminarMulta = async (multaEliminada) => {
+        console.log(multaEliminada);
+        if (!multaEliminada || !multaEliminada.idMulta) {
+            console.error("La multa o el idMulta no están definidos.");
+            return;
+        }
         try {
-            console.log(multaEliminada);
             await deleteMulta(multaEliminada.idMulta);
-            // Actualizar el listado de multas si quieres reflejar el cambio en el select
             const data = await getMultasPorOficialId(userId);
             setMultas(data);
         } catch (error) {
-            console.error('Error al eliminar la multa:', error);
+            console.error("Error al eliminar la multa:", error);
         }
-    };  
+    };
+    
 
 
     return (
