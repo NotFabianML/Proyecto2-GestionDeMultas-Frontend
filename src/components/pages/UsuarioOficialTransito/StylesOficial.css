@@ -43,3 +43,30 @@ footer {
     margin-top: auto;
     width: 100%; /* Asegura que el footer ocupe todo el ancho */
 }
+
+/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #DADADA;  
+    z-index: 10;  
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #DADADA;
+    z-index: 10;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.pagina-inicio {
+    margin-top: 120px;  
+    padding-bottom: 10px; 
+    overflow: hidden; 
+}

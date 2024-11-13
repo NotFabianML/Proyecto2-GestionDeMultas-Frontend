@@ -1,85 +1,96 @@
 /* EditarPerfil.css */
 
 .pagina-editar-perfil {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  header {
-    width: 100%;
-  }
-  
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  h1 {
-    text-align: left;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .perfil-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  
-  .user-photo {
-    width: 150px; 
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0 50px; 
+}
 
-  .btn-foto {
-    margin: 10px 0;
-  }
+header {
+  width: 100%;
+}
 
-  .perfil-info {
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    border: 2px solid black;
-    border-radius: 15px;
-    padding: 20px;
-  }
-  
-  .columna-izquierda, .columna-derecha {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  input[type="text"], input[type="email"], input[type="password"], select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  select {
-    color: #61dafb;
-  }
-  
-  .guardar-cambios {
-    margin-top: 20px; /* Add margin for spacing */
-  }
-  
-  footer {
-    width: 100%;
-    text-align: center;
-    margin-top: auto;
-  }
-/* styles.css */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  overflow: visible; 
+}
+
+h1 {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.perfil-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+
+.user-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.btn-foto {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 50%; 
+  border: 2px solid #ccc; 
+  font-size: 14px; 
+}
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  border: 2px solid #181D23;
+  border-radius: 15px;
+  padding: 20px;
+  width: 100%; 
+  max-width: 900px; 
+  margin-bottom: 30px;
+}
+
+.columna-izquierda, .columna-derecha {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 100%; 
+}
+
+input[type="text"], input[type="email"], input[type="password"], select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+select {
+  color: #61dafb;
+}
+
+.guardar-cambios {
+  margin-top: 20px; /* Espaciado entre el botón y el contenido */
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+}
+
 .modal-content {
   background-color: #181D23;
   color: yellow;
@@ -98,23 +109,115 @@
 }
 
 .btn-link:hover {
-  color: #FFD700; /* Un color ligeramente más claro para el hover */
+  color: #FFD700;
 }
 
 .btn-secondary {
   background-color: yellow;
   border-color: yellow;
   color: #181D23;
+  border-radius: 50%; 
+  padding: 10px 20px; 
 }
 
 .btn-secondary:hover {
-  background-color: #FFD700; /* Un color ligeramente más claro para el hover */
+  background-color: #FFD700;
   border-color: #FFD700;
 }
 
-.role-selector{
+.role-selector {
   display: flex;
   justify-content: center;
   gap: 20px;
   background-color: #181D23;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;
+  z-index: 10;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;
+  z-index: 10;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.pagina-inicio {
+  margin-top: 120px;
+  padding-bottom: 10px;
+  overflow: hidden;
+}
+
+
+.rol-modal button {
+  border-radius: 20px; 
+  padding: 10px;
+  background-color:  #181D23;;
+  color: #FFA500;
+  border: none;
+  font-size: 14px;
+  margin: 5px;
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+.rol-modal button:hover {
+  background-color: #272f38; 
+}
+
+
+label[for="rol"] {
+  color: #181D23; 
+}
+
+
+.role-selector button {
+  border-radius: 10px; 
+  padding: 10px 20px;
+  color: #181D23;
+  border: none;
+  font-size: 14px;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.role-selector button:hover {
+  background-color: #272f38; 
+}
+
+/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;  
+  z-index: 10;  
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;
+  z-index: 10;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.pagina-inicio {
+  margin-top: 120px;  
+  padding-bottom: 10px; 
+  overflow: visible; 
 }

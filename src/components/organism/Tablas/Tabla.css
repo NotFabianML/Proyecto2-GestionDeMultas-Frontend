@@ -1,0 +1,95 @@
+/* Contenedor de filtro */
+.filtro-container {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 20px;
+    align-items: right;
+    margin-right: 40px;
+}
+
+.filtro-container input {
+    padding: 8px;
+    max-width: 110px;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 14px;
+    border: 1px solid #ccc;
+}
+
+.filtro-container .search-icon {
+    font-size: 20px;
+    color: #666;
+}
+
+/* Estilos de la tabla */
+.tabla-general {
+    width: 800px;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: white; /* Fondo blanco para la tabla */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Encabezados de la tabla */
+.tabla-general th, .tabla-general td {
+    padding: 12px;
+    color: #181D23;
+    text-align: left;
+    border: 1px solid #000000; /* Borde negro para las celdas */
+}
+
+/* Encabezado color azul letras blancas*/
+.tabla-general th {
+    background-color: #181D23; 
+    color: white;
+    font-weight: bold;
+}
+
+/* Filas alternas con fondo blanco y amarillo mostaza */
+.tabla-general tr:nth-child(even) {
+    background-color: #181D23; 
+    color: #ffcc00; /* Letras amarillas para fondo rojo */
+}
+
+.tabla-general tr:nth-child(odd) {
+    background-color: #ffffff;
+    color: #181D23; /* Letras azules para fondo blanco */
+}
+
+/* Filas que se resaltan con el cursor (hover) */
+.tabla-general tr:hover {
+    background-color: #3c444e;  
+}
+
+/* Celdas con texto en negro */
+.tabla-general td {
+    color: inherit; /* Deja que el color de la celda dependa de la fila */
+}
+
+/* Celdas que contienen valores numéricos (por si es necesario) */
+.tabla-general td.num {
+    text-align: right; 
+}
+
+/* Estilo para bordes de la tabla */
+.tabla-general {
+    border: 2px solid #181D23; 
+    border-radius: 20px;
+}
+
+/* Estilo para las celdas */
+.tabla-general td, .tabla-general th {
+    border-left: 1px solid #ffcc00;
+    border-top: 1px solid #ffcc00;
+}
+
+/* Eliminar borde izquierdo en la primera columna */
+.tabla-general td:first-child, .tabla-general th:first-child {
+    border-left: none;
+}
+
+/* Estilo para la última fila  */
+.tabla-general tr:last-child {
+    background-color: #181D23; 
+    color: #ffcc00;
+}

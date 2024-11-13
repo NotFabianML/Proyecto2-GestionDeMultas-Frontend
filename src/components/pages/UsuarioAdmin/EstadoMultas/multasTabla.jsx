@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import FiltroInput from "../../../layouts/FiltroInput";
 import Paginador from "../../../layouts/Paginador";
-import Footer from "../../../layouts/Footer"
+import Footer from "../../../layouts/Footer";
 import ButtonLink from "../../../atoms/ButtonLink";
+import './multasTabla.css'; 
 
 const MultasTabla = () => {
     const [filtro, setFiltro] = useState('');
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
-  
+
     const multas = [
       { id: 30, fechaEmision: '2024-10-29', fechaCancelacion: '-------------', tipoInfraccion: 'Exceso de velocidad', estado: 'Pendiente' },
       { id: 29, fechaEmision: '2024-10-28', fechaCancelacion: '2024-11-05', tipoInfraccion: 'Conducir sin licencia', estado: 'Pagada' },
@@ -42,21 +43,22 @@ const MultasTabla = () => {
       { id: 2, fechaEmision: '2024-10-01', fechaCancelacion: '2024-10-08', tipoInfraccion: 'Pasar en rojo', estado: 'Pagada' },
       { id: 1, fechaEmision: '2024-09-30', fechaCancelacion: '2024-10-07', tipoInfraccion: 'No usar el cinturón de seguridad', estado: 'Pagada' },
     ];
-  
+
     const multasFiltradas = multas.filter(multa =>
       multa.id.toString().includes(filtro)
     );
-  
+
     const multasOrdenadas = multasFiltradas.sort((a, b) => b.id - a.id).slice(0, 20);
-  
+
     const indiceUltimoElemento = paginaActual * elementosPorPagina;
     const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
     const MultasActuales = multasOrdenadas.slice(indicePrimerElemento, indiceUltimoElemento);
     const totalPaginas = Math.ceil(multasOrdenadas.length / elementosPorPagina);
-  
+
     const cambiarPagina = (numeroPagina) => {
       setPaginaActual(numeroPagina);
     };
+
     return (
         <div>
         <header>
@@ -73,7 +75,7 @@ const MultasTabla = () => {
                 <div><i className="fas fa-search search-icon"></i></div>
             </div>
             <div className="lista-multas">
-                <table>
+                <table className="tabla-general"> {/* Cambié la clase a tabla-general */}
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -101,15 +103,16 @@ const MultasTabla = () => {
                     cambiarPagina={cambiarPagina}
                 />
             </div>
-            <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
-            <ButtonLink variant="secondary" text="Visualizar Grafico" to="/multas-grafico" />
+            <div className="boton-container">
+                <ButtonLink variant="primary" text="Regresar" to="/inicio-admin" />
+                <ButtonLink variant="secondary" text="Visualizar Gráfico" to="/multas-grafico" />
+            </div>
         </main>
         <footer>
             <Footer />
         </footer>
     </div>
-
     );
-    }
+}
 
-    export default MultasTabla;
+export default MultasTabla;

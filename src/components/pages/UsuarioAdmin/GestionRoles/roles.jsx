@@ -8,7 +8,7 @@ import Footer from "../../../layouts/Footer";
 import Paginador from "../../../layouts/Paginador";
 import Button from "../../../atoms/Button";
 import Modal from 'react-modal';
-
+import './roles.css'; 
 
 const Roles = () => {
   const handleClick = () => {
@@ -49,65 +49,68 @@ const Roles = () => {
     roles.push({ id: (roles.length + 1).toString(), rol: nuevoRol });
     cerrarModal();
   };
-  
+
   const rolesFiltrados = roles.filter(rol =>
     rol.rol.toLowerCase().includes(filtro.toLowerCase()) ||
     rol.id.toString().includes(filtro)
   );
 
-    // Calcular los índices de la página actual
-    const indiceUltimoElemento = paginaActual * elementosPorPagina;
-    const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
-    const RolesActuales = rolesFiltrados.slice(indicePrimerElemento, indiceUltimoElemento);
-    const totalPaginas = Math.ceil(rolesFiltrados.length / elementosPorPagina);
+  // Calcular los índices de la página actual
+  const indiceUltimoElemento = paginaActual * elementosPorPagina;
+  const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
+  const RolesActuales = rolesFiltrados.slice(indicePrimerElemento, indiceUltimoElemento);
+  const totalPaginas = Math.ceil(rolesFiltrados.length / elementosPorPagina);
 
-const cambiarPagina = (numeroPagina) => {
+  const cambiarPagina = (numeroPagina) => {
     setPaginaActual(numeroPagina);
-};
+  };
+
   return (
     <div>
-       <header>
-            <AdminNavbar />
-            </header>
-            <main>
-                <h1>Lista de Roles</h1>
-                <div className="filtro-container">
-                    <FiltroInput 
-                        placeholder="Filtrar" 
-                        value={filtro}
-                        onChange={(e) => setFiltro(e.target.value)} 
-                    />
-                    <div><i className="fas fa-search search-icon"></i></div>
-                    </div>
-                <div className="lista-roles">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>rol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {RolesActuales.map((rol) => (
-                                <tr key={rol.id}>
-                                    <td>{rol.rol}</td>
-                                    <td>
-                                      <Button variant="primary" text="Editar Rol y Permisos" onClick={handleClick} />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-                <Paginador
-                    elementosPorPagina={elementosPorPagina}
-                    totalElementos={rolesFiltrados.length}
-                    cambiarPagina={cambiarPagina}
-                    paginaActual={paginaActual}
-                    totalPaginas={totalPaginas}
-                />
-                <ButtonLink variant="outline" text="Regresar" to="/inicio-admin" />
-                <Button variant="alternative" text="Crear Rol" onClick={abrirModal} />
-        
+      <header>
+        <AdminNavbar />
+      </header>
+      <main>
+        <h1>Lista de Roles</h1>
+        <div className="filtro-container">
+          <FiltroInput 
+            placeholder="Filtrar" 
+            value={filtro}
+            onChange={(e) => setFiltro(e.target.value)} 
+          />
+          <div><i className="fas fa-search search-icon"></i></div>
+        </div>
+        <div className="lista-roles">
+          <table>
+            <thead>
+              <tr>
+                <th>Rol</th>
+              </tr>
+            </thead>
+            <tbody>
+              {RolesActuales.map((rol) => (
+                <tr key={rol.id}>
+                  <td>{rol.rol}</td>
+                  <td>
+                    <Button variant="primary" text="Editar" onClick={handleClick} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Paginador
+          elementosPorPagina={elementosPorPagina}
+          totalElementos={rolesFiltrados.length}
+          cambiarPagina={cambiarPagina}
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+        />
+        <div className="espaciado-botones">
+          <ButtonLink variant="secondary" text="Regresar" to="/inicio-admin" />
+          <Button className="crear-rol-btn" variant="primary" text="Crear Rol" onClick={abrirModal} />
+        </div>
+
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={cerrarModal}
@@ -122,18 +125,18 @@ const cambiarPagina = (numeroPagina) => {
         >
           <h2>Crear Nuevo Rol</h2>
           <div>
-            <label>Nombre del Rol:</label>
+            <label className="nombre-rol-label">Nombre del Rol:</label>
             <input
               type="text"
               value={nuevoRol}
               onChange={(e) => setNuevoRol(e.target.value)}
             />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px' }}>
+          <div className="permisos-container">
             <h3>Permisos</h3>
             {Object.keys(permisos).map((permiso, index) => (
               <div key={index}>
-                <label>{`Permiso ${index + 1}`}</label>
+                <label className="permiso-label">{`Permiso ${index + 1}`}</label>
                 <input
                   type="checkbox"
                   checked={permisos[permiso]}
@@ -142,14 +145,14 @@ const cambiarPagina = (numeroPagina) => {
               </div>
             ))}
           </div>
-          <Button variant="alternative" text="Guardar Rol" onClick={handleGuardarRol} />
+          <Button className="guardar-rol-btn" variant="primary" size="medium" text="Guardar Rol" onClick={handleGuardarRol} />
         </Modal>
-            </main>
-            <footer>
-                <Footer />
-            </footer>
+      </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
-}
+};
 
 export default Roles;

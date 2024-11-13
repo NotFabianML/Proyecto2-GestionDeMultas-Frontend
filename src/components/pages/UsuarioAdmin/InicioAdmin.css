@@ -1,36 +1,59 @@
 /* InicioAdmin.css */
 
 .pagina-registro {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  header {
-    width: 100%;
-  }
-  
-  main {
-    flex: 1;
-  }
-  
-  h1 {
-    text-align: left;
-    margin-left: 20px;
-  }
-  
-  .BotonesAdmin {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-    margin-right: 20px;  
-    margin-right: 30%;
-    margin-top: 5%;
-    margin-left: 20%;
-    margin-bottom: 20%;
-  }
-  
-  footer {
-    width: 100%;
-    text-align: center;
-  }     
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+  overflow: hidden; /* Elimina el scroll global */
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;
+  z-index: 10;
+  height: 120px;  /* Definir altura fija para el header */
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #DADADA;
+  z-index: 10;
+  text-align: center;
+  padding: 10px 0;
+  height: 60px;  /* Definir altura fija para el footer */
+}
+
+.pagina-inicio {
+  margin-top: 120px;  /* Esto deja espacio debajo del header fijo */
+  padding-bottom: 60px;  /* Esto asegura que el contenido no se esconda debajo del footer */
+  overflow: auto;  /* Permite scroll solo dentro del área del contenido si es necesario */
+  flex-grow: 1;  /* Asegura que el contenido ocupe el espacio restante */
+}
+
+h1 {
+  text-align: left;
+  margin-left: 20px;
+}
+
+.BotonesAdmin {
+  display: grid;
+  grid-template-columns: repeat(2, auto);  
+  grid-gap: 50px;
+  text-align: center;
+  justify-content: center;  
+  margin-top: 190px;  
+  margin-bottom: 10%;
+}
+
+.BotonesAdmin a {
+  justify-content: center;
+  max-width: 330px;  /* Ajustado para hacer los botones de tamaño normal */
+  width: 110%;
+}
