@@ -18,10 +18,10 @@ const InicioAdmin = () => {
 
       <h1>Opciones de Administrador</h1>
       <div className="BotonesAdmin">
-      <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/lista-usuarios" />
-      <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/roles" />
-      <ButtonLink variant="secondary" text="Gestionar Catalogo de Infracciones" to="/infraccion" />
-      <ButtonLink variant="secondary" text="Estadisticas de Multas" to="/multas-tabla" />
+        <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/lista-usuarios" />
+        <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/roles" />
+        <ButtonLink variant="secondary" text="Gestionar Catálogo de Infracciones" to="/infraccion" />
+        <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/multas-tabla" />
       </div>
       <footer>
         <Footer />
