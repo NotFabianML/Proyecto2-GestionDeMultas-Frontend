@@ -208,5 +208,5 @@ footer {
 .pagina-inicio {
   margin-top: 120px;
   padding-bottom: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
