@@ -20,7 +20,7 @@ const MisVehiculos = () => {
     const elementosPorPagina = 10;
     const navigate = useNavigate();
     
-    const usuarioId = "17E97F21-4302-4FB1-B140-180E880A0C61"; // Id quemado - Hacerlo dinámico
+    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
         getVehiculosPorUsuario(usuarioId)

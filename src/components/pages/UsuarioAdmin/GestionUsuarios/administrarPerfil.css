@@ -4,11 +4,6 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 0 50px; 
-}
-
-header {
-  width: 100%;
 }
 
 main {
@@ -85,12 +80,6 @@ select {
   margin-top: 20px; /* Espaciado entre el botón y el contenido */
 }
 
-footer {
-  width: 100%;
-  text-align: center;
-  margin-top: auto;
-}
-
 .modal-content {
   background-color: #181D23;
   color: yellow;
@@ -132,32 +121,6 @@ footer {
   background-color: #181D23;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;
-  z-index: 10;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;
-  z-index: 10;
-  text-align: center;
-  padding: 10px 0;
-}
-
-.pagina-inicio {
-  margin-top: 120px;
-  padding-bottom: 10px;
-  overflow: hidden;
-}
-
 
 .rol-modal button {
   border-radius: 20px; 
@@ -195,29 +158,3 @@ label[for="rol"] {
   background-color: #272f38; 
 }
 
-/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;  
-  z-index: 10;  
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;
-  z-index: 10;
-  text-align: center;
-  padding: 10px 0;
-}
-
-.pagina-inicio {
-  margin-top: 120px;  
-  padding-bottom: 10px; 
-  overflow: visible; 
-}

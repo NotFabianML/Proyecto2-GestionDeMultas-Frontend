@@ -107,7 +107,7 @@ const AdministrarPerfil = () => {
       <header>
         <AdminNavbar />
       </header>
-      <main>
+      <main >
         <h1>Editar Perfil</h1>
 
         <div className="perfil-container">

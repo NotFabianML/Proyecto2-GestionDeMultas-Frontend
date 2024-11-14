@@ -5,29 +5,6 @@
   flex-direction: column;
   min-height: 100vh;
   height: 100%;
-  overflow: hidden; /* Elimina el scroll global */
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;
-  z-index: 10;
-  height: 120px;  /* Definir altura fija para el header */
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #DADADA;
-  z-index: 10;
-  text-align: center;
-  padding: 10px 0;
-  height: 60px;  /* Definir altura fija para el footer */
 }
 
 .pagina-inicio {
