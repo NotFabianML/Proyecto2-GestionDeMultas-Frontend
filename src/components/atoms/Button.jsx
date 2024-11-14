@@ -8,7 +8,6 @@ const Button = ({
   onClick,
   ...props
 }) => {
-
   const getButtonStyle = (variant, size) => {
     let baseStyle = {
       textDecoration: "none",
@@ -46,6 +45,11 @@ const Button = ({
       case "lightGrey":
         baseStyle.backgroundColor = colors.background;
         baseStyle.color = colors.text; // Color de texto oscuro
+        baseStyle.border = "none";
+        break;
+      case "danger":
+        baseStyle.backgroundColor = "#e74c3c"; // Fondo rojo para advertencia
+        baseStyle.color = "#FFFFFF"; // Texto blanco
         baseStyle.border = "none";
         break;
       default:
