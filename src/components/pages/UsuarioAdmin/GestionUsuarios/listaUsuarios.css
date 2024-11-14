@@ -1,6 +1,5 @@
-/* ListaUsuarios.css */
-
-.pagina-registro {
+/* Contenedor principal */
+.pagina-usuarios-registro {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -9,8 +8,184 @@
   margin: 0;
 }
 
-/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
-header {
+/* Contenido principal */
+.main-content-usuarios {
+  flex: 1;
+  width: 100%;
+  padding: 120px 20px 60px 20px;
+  text-align: center;
+  box-sizing: border-box;
+  min-height: calc(100vh - 140px);
+}
+
+/* Contenedor del filtro */
+.filtro-container-usuarios {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de la lista de usuarios */
+.lista-usuarios-tabla {
+  width: fit-content;
+  background-color: #181D23;
+  border-radius: 30px;
+  padding: 50px;
+  margin: 50px auto;
+  color: #dadada;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilos para la tabla */
+.tabla-general-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.tabla-general-usuarios th,
+.tabla-general-usuarios td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 2px solid rgb(5, 4, 4);
+}
+
+.tabla-general-usuarios th {
+  background-color: #282c34;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.tabla-general-usuarios td {
+  background-color: #181D23;
+  color: #dadada;
+}
+
+/* Estilos para filas cuando se hace hover */
+.tabla-general-usuarios tr:hover {
+  background-color: #3c444e;
+}
+
+/* Botones de acción */
+.botones-usuarios {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+button, .ButtonLink {
+  margin: 0 5px;
+}
+
+.botones-accion {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0;
+}
+
+.botones-accion button {
+  padding: 5px 10px;
+}
+
+/* Estilos para el fondo oscuro del modal */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos del modal */
+.modal-usuarios {
+  background-color: white;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 15px;
+  padding: 30px;
+  position: relative;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  overflow: auto;
+  max-height: 90vh;
+}
+
+.modal-usuarios button.cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #181D23;
+  line-height: 1;
+}
+
+.modal-usuarios h2 {
+  text-align: left;
+  color: #181D23;
+  margin-bottom: 20px;
+}
+
+.modal-usuarios form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.modal-usuarios label {
+  color: #181D23;
+  margin-bottom: 5px;
+}
+
+.modal-usuarios .filas {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.modal-usuarios input,
+.modal-usuarios select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.modal-usuarios .botones-modal {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.modal-usuarios .botones-modal button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #282c34;
+  color: #ffcc00;
+  border: none;
+}
+
+.modal-usuarios .botones-modal button:hover {
+  background-color: #ffcc00;
+  color: #282c34;
+}
+
+/* Ajustes para navbar y footer */
+/* header {
   position: fixed;
   top: 0;
   left: 0;
@@ -27,156 +202,11 @@ footer {
   background-color: #DADADA;
   z-index: 10;
   text-align: center;
-}
+  padding: 10px 0;
+} */
 
-.main-content {
-  flex: 1;
-  width: 100%;
-  padding: 120px 20px 60px 20px; 
-  text-align: center;
-  box-sizing: border-box;
-  overflow: hidden; 
-  min-height: calc(100vh - 140px); 
-}
-
-h1 {
-  text-align: center;
-  font-size: 34px;
-  color: rgb(0, 0, 0); 
-  margin-bottom: 30px;
-}
-
-.filtro-container {
-  display: flex;
-  justify-content: right;
-  margin-bottom: 20px;
-  align-items: right;
-  margin-right: 40px;
-}
-
-.filtro-container input {
-  padding: 8px;
-  max-width: 110px;
-  font-size: 16px;
-  margin-right: 10px;
-  border-radius: 14px;
-  border: 1px solid #ccc;
-}
-
-.filtro-container .search-icon {
-  font-size: 20px;
-  color: #666;
-}
-
-/* Estilos de la tabla */
-.tabla-general {
-  width: 800px;
-  margin: 30px auto;
-  border-collapse: collapse;
-  background-color: white; /* Fondo blanco para la tabla */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-}
-
-/* Encabezados de la tabla */
-.tabla-general th, .tabla-general td {
-  padding: 12px;
-  color: #181D23;
-  text-align: left;
-  border: 1px solid #000000; /* Borde negro para las celdas */
-}
-
-/* Encabezado color azul letras blancas */
-.tabla-general th {
-  background-color: #181D23; 
-  color: white;
-  font-weight: bold;
-}
-
-/* Filas alternas con fondo blanco y amarillo mostaza */
-.tabla-general tr:nth-child(even) {
-  background-color: #181D23; 
-  color: #ffcc00; /* Letras amarillas para fondo rojo */
-}
-
-.tabla-general tr:nth-child(odd) {
-  background-color: #ffffff;
-  color: #181D23; /* Letras azules para fondo blanco */
-}
-
-/* Filas que se resaltan con el cursor (hover) */
-.tabla-general tr:hover {
-  background-color: #3c444e;  
-}
-
-/* Celdas con texto en negro */
-.tabla-general td {
-  color: inherit; /* Deja que el color de la celda dependa de la fila */
-}
-
-/* Celdas que contienen valores numéricos (por si es necesario) */
-.tabla-general td.num {
-  text-align: right; 
-}
-
-/* Estilo para bordes de la tabla */
-.tabla-general {
-  border: 2px solid #181D23; 
-  border-radius: 20px;
-}
-
-/* Estilo para las celdas */
-.tabla-general td, .tabla-general th {
-  border-left: 1px solid #ffcc00;
-  border-top: 1px solid #ffcc00;
-}
-
-/* Eliminar borde izquierdo en la primera columna */
-.tabla-general td:first-child, .tabla-general th:first-child {
-  border-left: none;
-}
-
-/* Estilo para la última fila  */
-.tabla-general tr:last-child {
-  background-color: #181D23; 
-  color: #ffcc00;
-}
-
-.botones {
-  display: flex;
-  justify-content: center;
-  gap: 10px; 
-  margin-top: 20px;
-}
-
-button, .ButtonLink {
-  margin: 0 5px;
-}
-
-footer {
-  width: 100%;
-  text-align: center;
-  margin-top: auto;
-}
-
-@media (max-width: 768px) {
-  .tabla-general {
-    width: 100%;
-  }
-
-  .main-content {
-    padding-top: 100px;
-  }
-
-  .botones {
-    flex-direction: column;
-    gap: 20px;
-  }
-}
-
-
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  box-sizing: border-box;
+.pagina-inicio {
+  margin-top: 120px;
+  padding-bottom: 10px;
+  overflow: hidden;
 }

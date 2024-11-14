@@ -136,7 +136,7 @@ body {
 }
 
 /* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
-header {
+/* header {
     position: fixed;
     top: 0;
     left: 0;
@@ -154,7 +154,7 @@ footer {
     z-index: 10;
     text-align: center;
     padding: 10px 0;
-}
+} */
 
 .pagina-inicio {
     margin-top: 120px;  
