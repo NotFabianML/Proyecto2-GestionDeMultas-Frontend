@@ -39,6 +39,22 @@ export const asignarRolAUsuario = async (usuarioId, rolId) => {
   await axiosInstance.post(`/roles/${usuarioId}/asignar-rol/${rolId}`);
 };
 
+// Asignar rol a usuario utilizando el nombre del rol
+export const asignarRolPorNombre = async (usuarioId, rolNombre) => {
+  try {
+    const response = await axiosInstance.post(`/usuarios/${usuarioId}/asignar-rol-por-nombre/${rolNombre}`, null, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.status === 204;
+  } catch (error) {
+    console.error("Error al asignar rol:", error);
+    throw new Error("Hubo un problema al asignar el rol.");
+  }
+};
+
+
 // Eliminar rol de un usuario
 export const deleteRolDeUsuario = async (usuarioId, rolId) => {
   await axiosInstance.delete(`/roles/${usuarioId}/eliminar-rol/${rolId}`);
