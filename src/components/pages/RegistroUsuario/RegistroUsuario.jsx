@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './RegistroUsuario.css';
-import NavbarRegistro from '../../layouts/Navbar/NavbarRegistro.jsx';
+import InvitadoNavbar from '../../layouts/Navbar/InvitadoNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import { detectCedulaFromImage } from '../../../services/imageRecognitionService.js';
 import { register } from '../../../services/authService.js';
@@ -109,7 +109,7 @@ const RegistroUsuario = () => {
     return (
         <div className="pagina-registro">
             <header>
-                <NavbarRegistro />
+                <InvitadoNavbar />
             </header>
 
             <div className="registro-usuario-container">

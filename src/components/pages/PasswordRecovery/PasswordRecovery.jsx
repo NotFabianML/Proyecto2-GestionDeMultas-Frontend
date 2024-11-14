@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PasswordRecovery.css';
 import Button from '../../atoms/Button.jsx';
-import NavbarRegistro from '../../layouts/Navbar/NavbarRegistro.jsx';
+import InvitadoNavbar from '../../layouts/Navbar/InvitadoNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 
 const PasswordRecovery = () => {
@@ -33,7 +33,7 @@ const PasswordRecovery = () => {
     return (
         <div className="password-recovery-container">
             <header>
-                <NavbarRegistro />
+                <InvitadoNavbar />
             </header>
 
             <div className="password-recovery-box">
@@ -56,7 +56,7 @@ const PasswordRecovery = () => {
 
                     {/* Botón de Enviar */}
                     <div className="input-group">
-                        <Button variant="primary" size="medium" text="Enviar" />
+                        <Button variant="secondary" size="medium" text="Enviar" />
                     </div>
                 </form>
             </div>

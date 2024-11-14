@@ -1,6 +1,6 @@
 import React from 'react';
 import './MapaCalor.css';
-import InvitadoNavbarTres from '../../layouts/Navbar/InvitadoNavbarTres.jsx';
+import InvitadoNavbar from '../../layouts/Navbar/InvitadoNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import MapaCalorImg from '../../../assets/MapaCalorImg.png';
 
@@ -8,7 +8,7 @@ const MapaCalor = () => {
     return (
         <div className="mapa-calor-page">
             <header>
-                <InvitadoNavbarTres />
+                <InvitadoNavbar />
             </header>
 
             <main className="mapa-calor-content">
