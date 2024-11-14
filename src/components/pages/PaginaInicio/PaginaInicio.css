@@ -137,30 +137,3 @@
 .paginainicio-mapa-calor-button:hover {
     background-color: #f3cb2c; 
 }
-
-/* Ajustes del navbar/footer para que se mantengan fijos en sus lugares */
-.paginainicio-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #DADADA;  
-    z-index: 10;  
-}
-
-.paginainicio-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #DADADA;
-    z-index: 10;
-    text-align: center;
-    padding: 10px 0;
-}
-
-.paginainicio {
-    margin-top: 120px;  
-    padding-bottom: 10px; 
-    overflow: hidden; 
-}  
