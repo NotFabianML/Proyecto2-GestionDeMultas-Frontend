@@ -18,6 +18,11 @@ export const getUsuarioPorCedula = async (cedula) => {
   return response.data;
 };
 
+export const verificarCorreoUnico = async (email) => {
+  const response = await axiosInstance.get(`/usuarios/verificar-correo/${email}`);
+  return response.data;
+};
+
 // Obtener usuarios por rol ID
 export const getUsuariosPorRol = async (rolId) => {
   const response = await axiosInstance.get(`/usuarios/usuarios-por-rol/${rolId}`);
@@ -39,6 +44,12 @@ export const createUsuario = async (usuarioData) => {
 // Actualizar usuario por ID
 export const updateUsuario = async (id, usuarioData) => {
   const response = await axiosInstance.put(`/usuarios/${id}`, usuarioData);
+  return response.data;
+};
+
+// Eliminar usuario por ID
+export const deleteUsuario = async (idUsuario) => {
+  const response = await axiosInstance.delete(`/usuarios/${idUsuario}`);
   return response.data;
 };
 
