@@ -7,7 +7,7 @@ import {
   updateUsuario,
   deleteUsuario,
 } from "../../../../services/usuarioService";
-import { getRoles } from "../../../../services/rolService";
+import { getRoles, asignarRolAUsuario, deleteRolDeUsuario } from "../../../../services/rolService";
 import { formatFechaNacimiento } from "../../../../utils/dateUtils";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import Footer from "../../../layouts/Footer";
@@ -332,6 +332,57 @@ const ListaUsuarios = () => {
                   <option value="Inactivo">Inactivo</option>
                 </select>
               </div>
+              <div className="filas">
+              <label>Rol</label>
+                    <select
+                    value=""
+                    onChange={async (e) => {
+                        try {
+                        const rolId = e.target.value;
+                        await asignarRolAUsuario(usuarioSeleccionado.idUsuario, rolId);
+                        alert("Rol asignado exitosamente.");
+                        fetchUsuarios(); // Actualizar la lista de usuarios
+                        } catch (error) {
+                        alert("Error al asignar el rol.");
+                        }
+                    }}
+                    >
+                    <option value="">Seleccionar rol</option>
+                    {roles.map((rol) => (
+                        <option key={rol.idRol} value={rol.idRol}>
+                        {rol.nombreRol}
+                        </option>
+                    ))}
+                    </select>
+                </div>
+                <div className="filas">
+                <label>Eliminar Rol</label>
+    <select
+      defaultValue=""
+      onChange={async (e) => {
+        const rolId = e.target.value;
+        if (!rolId) {
+          alert("Selecciona un rol válido para eliminar.");
+          return;
+        }
+        try {
+          await deleteRolDeUsuario(usuarioSeleccionado.idUsuario, rolId);
+          alert("Rol eliminado exitosamente.");
+          fetchUsuarios(); // Actualizar la lista de usuarios
+        } catch (error) {
+          console.error("Error al eliminar el rol:", error);
+          alert("Error al eliminar el rol.");
+        }
+      }}
+    >
+      <option value="">Seleccionar rol para eliminar</option>
+      {usuarioSeleccionado.roles?.map((rol) => (
+        <option key={rol.idRol} value={rol.idRol}>
+          {rol.nombreRol}
+        </option>
+      ))}
+    </select>
+</div>
               <div className="botones-modal">
                 <Button
                   type="submit"
