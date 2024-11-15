@@ -137,17 +137,7 @@ const AdministrarPerfil = () => {
 
           <div className="columna-derecha">
             <div>
-              <label>Rol:</label>
-              <div className="rol-selector">
-                <button onClick={() => setShowModal(true)}>{rol}</button>
-                {showModal && (
-                  <div className="rol-modal">
-                    {roles.map((role) => (
-                      <button key={role} onClick={() => handleRoleSelect(role)}>{role}</button>
-                    ))}
-                  </div>
-                )}
-              </div>
+          
             </div>
           </div>
 

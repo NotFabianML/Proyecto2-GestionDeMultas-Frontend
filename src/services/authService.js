@@ -60,6 +60,50 @@ export const register = async (newUser) => {
   }
 };
 
+// Crear usuario desde administración
+export const registerUsuarioAdmin = async (newUser, roleName) => {
+  try {
+    const response = await axiosInstance.post('/auth/RegisterUsuarioAdmin', 
+      { ...newUser, roleName }, 
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al registrar el usuario:", error);
+    throw new Error("Hubo un problema al registrar el usuario");
+  }
+};
+
+// Crear usuario desde administración y luego asignar el rol
+export const createUserWithRole = async (newUser, rolNombre) => {
+  try {
+    // Crear el usuario
+    const response = await axiosInstance.post('/auth/RegisterUsuarioAdmin', newUser, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    const createdUser = response.data; // Guardamos el usuario creado
+    
+    // Verificar que se haya recibido un ID para asignar el rol
+    if (createdUser && createdUser.idUsuario) {
+      // Asignar el rol utilizando el ID del usuario recién creado y el ID del rol
+      await axiosInstance.post(`/roles/${createdUser.idUsuario}/asignar-rol-por-nombre/${rolNombre}`);
+      return createdUser;
+    } else {
+      throw new Error("Error al obtener el ID del usuario creado.");
+    }
+  } catch (error) {
+    console.error("Error en el proceso de creación y asignación de rol:", error);
+    throw new Error("Hubo un problema al crear el usuario o asignarle el rol.");
+  }
+};
+
 // Obtener usuario con rol de Admin
 export const isAdmin = async (userName) => {
   try {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./InicioSesion.css";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../../layouts/Navbar/Navbar.jsx";
+import InvitadoNavbar from "../../layouts/Navbar/InvitadoNavbar.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import { login } from "../../../services/authService";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
@@ -66,7 +66,7 @@ const InicioSesion = () => {
   return (
     <div className="pagina-inicio-sesion">
       <header>
-        <Navbar />
+        <InvitadoNavbar />
       </header>
 
       <div className="contenedor-principal">

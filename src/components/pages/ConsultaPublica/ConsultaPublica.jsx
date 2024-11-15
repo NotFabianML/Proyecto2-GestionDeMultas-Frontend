@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ConsultaPublica.css';
 import Button from '../../atoms/Button.jsx';
-import InvitadoNavbarDos from '../../layouts/Navbar/InvitadoNavbarDos.jsx';
+import InvitadoNavbar from '../../layouts/Navbar/InvitadoNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import { getMultasPorPlaca } from '../../../services/multaServices.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';
@@ -50,7 +50,7 @@ const ConsultaPublica = () => {
     return (
         <div className="consulta-publica">
             <header>
-                <InvitadoNavbarDos />
+                <InvitadoNavbar />
             </header>
 
             <div className="contenido">
