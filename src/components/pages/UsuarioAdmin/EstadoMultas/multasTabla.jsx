@@ -65,7 +65,7 @@ const MultasTabla = () => {
             <AdminNavbar />
         </header>
         <main>
-            <h1>Lista de Multas</h1>
+            <h1 className="titulo-multas-tabla">Lista de Multas</h1>
             <div className="filtro-container">
                 <FiltroInput 
                     placeholder="Filtrar" 

@@ -68,7 +68,7 @@ export const MainRouter = () => {
         <Route path="/multas-tabla" element={<MultasTabla />} />
 
         {/* Juez de Tránsito */}
-        <Route path="/pagina-juez" element={<PaginaJuez />} />
+        <Route path="/pagina-juez" element={<DisputasJuez />} />
         <Route path="/disputas-juez" element={<DisputasJuez />} />
         <Route path="/resolver-disputa" element={<ResolverDisputa />} />
 

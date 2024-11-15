@@ -1,3 +1,4 @@
+
 /* Ajustes para el contenedor principal */
 .paginainicio-container {
     display: flex;
@@ -136,4 +137,15 @@
 .paginainicio-consulta-multas-button:hover,
 .paginainicio-mapa-calor-button:hover {
     background-color: #f3cb2c; 
+}
+
+.paginainicio {
+    display: flex;
+    flex-direction: column;
+    background-color: #dadada;
+    min-height: 100vh;
+}
+
+.paginainicio-footer {
+    margin-top: auto; /* Hace que el footer se mantenga en la parte inferior */
 }

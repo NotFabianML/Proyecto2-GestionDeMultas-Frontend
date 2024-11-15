@@ -28,13 +28,15 @@ const Infracciones = () => {
  
   useEffect(() => {
     getInfracciones()
-    .then((data) => {
-        setInfracciones(data);
-    })
-    .catch((error) => {
+      .then((data) => {
+        const infraccionesActivas = data.filter(infraccion => infraccion.estado === true);
+        setInfracciones(infraccionesActivas);
+      })
+      .catch((error) => {
         setError(`Error: ${error.message}`);
-    });
+      });
   }, [!modalIsOpen]);
+  
 
   const infraccionesFiltradas = infraccionesIniciales?.filter(infraccion =>
     infraccion.titulo.toLowerCase().includes(filtro.toLowerCase()) ||
@@ -99,11 +101,11 @@ const Infracciones = () => {
   };
 
   return (
-    <div>
+    <div className="contenedor-infraccion">
       <header>
         <AdminNavbar />
       </header>
-      <main>
+
         <h1>Lista de Infracciones</h1>
         <div className="filtro-container">
           <FiltroInput 
@@ -212,10 +214,9 @@ const Infracciones = () => {
             <Button variant="alternative" size="medium" text="Guardar Cambios" onClick={handleGuardarInfraccion} />
             {!ocultarBtnEliminar && (<Button variant="danger" text="Eliminar Infracción" onClick={handleEliminarInfraccion} />)}
           </div>
+
         </Modal>
 
-
-      </main>
       <footer>
         <Footer />
       </footer>

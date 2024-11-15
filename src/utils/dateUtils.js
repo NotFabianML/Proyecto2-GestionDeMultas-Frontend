@@ -1,5 +1,7 @@
 export const isoToDateFormatter = (isoDate) => {
-    const date = new Date(isoDate);
+
+    const isoDateValue = isoDate ? isoDate : new Date().toISOString();
+    const date = new Date(isoDateValue);
 
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -14,12 +16,14 @@ export const isoToDateFormatter = (isoDate) => {
 };
 
 export const getDateFromISO = (isoString) => {
-    const date = new Date(isoString);
+    const isoDateValue = isoString ? isoString : new Date().toISOString();
+    const date = new Date(isoDateValue);
     return date.toISOString().split('T')[0];
   }
 
 export const getTimeFromISO = (isoString) => {
-    const date = new Date(isoString);
+    const isoDateValue = isoString ? isoString : new Date().toISOString();
+    const date = new Date(isoDateValue);
     const hours = date.getHours();
     const minutes = String(date.getMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;

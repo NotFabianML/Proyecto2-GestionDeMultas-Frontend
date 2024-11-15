@@ -289,7 +289,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
               id="hora"
               name="hora"
               disabled={soloLectura}
-              hora={getTimeFromISO(multa?.fechaHora || nuevaMulta.fechaHora)}
+              hora={getTimeFromISO(multa?.fechaHora || nuevaMulta?.fechaHora)}
             />
           </div>
           <div className="input-group">
@@ -299,7 +299,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
               id="fecha"
               name="fecha"
               disabled={soloLectura}
-              fecha={getDateFromISO(multa?.fechaHora || nuevaMulta.fechaHora)}
+              fecha={getDateFromISO(multa?.fechaHora || nuevaMulta?.fechaHora)}
             />
           </div>
         </div>

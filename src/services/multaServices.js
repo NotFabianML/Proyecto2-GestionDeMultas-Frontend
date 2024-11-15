@@ -8,7 +8,7 @@ export const getMultas = async () => {
 
 // Obtener multa por ID
 export const getMultaById = async (id) => {
-  const response = await axiosInstance.get(`/multas/${id}`);
+  const response = await axiosInstance.get(`/Multas/${id}`);
   return response.data;
 };
 
