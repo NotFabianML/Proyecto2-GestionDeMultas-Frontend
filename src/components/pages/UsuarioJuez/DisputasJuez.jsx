@@ -21,7 +21,6 @@ const Disputas = () => {
     const navigate = useNavigate();
     const { userId } = useUserContext();
 
-        console.log(userId);
 
     useEffect(() => {
         getMultasAsignadasAJuez(userId)

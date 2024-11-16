@@ -8,6 +8,7 @@ import Button from '../../atoms/Button.jsx';
 import Paginador from '../../layouts/Paginador.jsx';
 import { useNavigate } from 'react-router-dom';
 import { createVehiculo } from '../../../services/vehiculoService';
+import { useUserContext } from '../../../contexts/UserContext.jsx';
 
 
 const MisVehiculos = () => {
@@ -20,17 +21,20 @@ const MisVehiculos = () => {
     const elementosPorPagina = 10;
     const navigate = useNavigate();
     
-    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
+    // Desestructurar funciones de UserContext
+    const { userId } = useUserContext();
+
+    console.log(userId);
 
     useEffect(() => {
-        getVehiculosPorUsuario(usuarioId)
-            .then((data) => {
-                setVehiculos(data);
-            })
-            .catch((error) => {
-                setError(`Error: ${error.message}`);
-            });
-    }, [usuarioId]);
+        getVehiculosPorUsuario(userId)
+        .then((data) => {
+            setVehiculos(data);
+        })
+        .catch((error) => {
+            setError(`Error: ${error.message}`);
+        });
+    }, [userId]);
 
     const handleVerDetalles = (vehiculo) => {
         navigate(`/detalle-vehiculo`, { state: { idVehiculo: vehiculo.idVehiculo } });
@@ -55,7 +59,7 @@ const MisVehiculos = () => {
         try {
             const vehiculoCreado = await createVehiculo({
                 ...nuevoVehiculo,
-                usuarioId
+                userId
             });
             setVehiculos([...vehiculos, vehiculoCreado]); // Agregar el nuevo vehículo a la lista
             handleCerrarModal(); // Cerrar el modal

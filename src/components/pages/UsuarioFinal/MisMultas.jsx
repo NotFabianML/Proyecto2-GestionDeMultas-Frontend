@@ -3,11 +3,19 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
-import { getMultasPorUsuarioId } from '../../../services/multaServices';
+import { getMultasPorUsuarioId } from '../../../services/multaServices.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
 import '../../../styles/index.css';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Checkout from './Checkout';
+
+const initialOptions = {
+  "client-id": "Adoww9KeExfepE0evtSMzMHBZqgFYTOitCqUjfQaLt1Np1V7gY9P-v-kPO-FzrBeMt4IsCDw0qC9tzqQ",
+  currency: "USD",
+  intent: "capture",
+};
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
@@ -29,34 +37,21 @@ const MisMultas = () => {
         montoTotal: 0,
         montoMora: 0
     });
-
-       //Solo para pruebas
-       const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
-       useEffect(() => {
-        getMultasPorUsuarioId(usuarioId)
-               .then((data) => {
-                   setMultas(data);
-               })
-               .catch((error) => {
-                   setError(`Error: ${error.message}`);
-               });
-       }, [usuarioId]);
-
-
-
+  
     // Desestructurar funciones de UserContext
-    //const { UserId } = useUserContext();
-    const UserId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
+    const { userId } = useUserContext();
 
-    // useEffect(() => {
-    //     getMultaByUsuarioId(UserId)
-    //     .then((data) => {
-    //         setMultas(data);
-    //     })
-    //     .catch((error) => {
-    //         setError(`Error: ${error.message}`);
-    //     });
-    // }, [UserId]);
+    console.log(userId);
+
+    useEffect(() => {
+        getMultasPorUsuarioId(userId)
+        .then((data) => {
+            setMultas(data);
+        })
+        .catch((error) => {
+            setError(`Error: ${error.message}`);
+        });
+    }, [userId]);
 
 
     function openPopup(type) {
@@ -78,7 +73,7 @@ const MisMultas = () => {
             ...disputeDataRef.current,
             [name]: value,
             multaId: multa.idMulta,
-            usuarioId: UserId
+            usuarioId: userId
         };
     }
 
@@ -203,14 +198,18 @@ const MisMultas = () => {
                         </tbody>
                     </table>
                     <div className="button-row">
-                        <Button onClick={() => console.log('Pago con Sinpe')} variant="primary" size="small" text="Pagar con Sinpe" />
-                        <Button onClick={() => console.log('Pago con PayPal')} variant="outline" size="small" text="Pagar con Paypal" />
+    
+                        <PayPalScriptProvider options={initialOptions}>
+                            <Checkout amount={multa.montoTotal || 1} />
+                        </PayPalScriptProvider>
+                    
                     </div>
                 </form>
             </div>
         </div>
     );
 
+        
     return (
         <div className="container">
             <UsuarioNavbar />

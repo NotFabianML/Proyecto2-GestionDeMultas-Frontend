@@ -4,11 +4,13 @@ import { UserContextProvider } from "./contexts/UserContext";
 import { MainRouter } from "./routes";
 import React from 'react'
 
+
 function App() {
+
   return (
-    <UserContextProvider>
+    <><UserContextProvider>
       <MainRouter />
-    </UserContextProvider>
+    </UserContextProvider></>
   );
 }
 

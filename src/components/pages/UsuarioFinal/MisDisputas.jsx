@@ -3,21 +3,26 @@ import './MisDisputas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import { getDisputasPorUsuario } from '../../../services/disputaService';
+import { useUserContext } from '../../../contexts/UserContext.jsx';
 
 const MisDisputas = () => {
     const [disputas, setDisputas] = useState([]);
     const [error, setError] = useState(null);
-    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
+
+    // Desestructurar funciones de UserContext
+    const { userId } = useUserContext();
+
+    console.log(userId);
 
     useEffect(() => {
-        getDisputasPorUsuario(usuarioId)
-            .then((data) => {
-                setDisputas(data);
-            })
-            .catch((error) => {
-                setError(`Error: ${error.message}`);
-            });
-    }, [usuarioId]);
+        getDisputasPorUsuario(userId)
+        .then((data) => {
+            setDisputas(data);
+        })
+        .catch((error) => {
+            setError(`Error: ${error.message}`);
+        });
+    }, [userId]);
 
     return (
         <div className="container-disputas">
