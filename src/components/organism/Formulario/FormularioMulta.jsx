@@ -10,7 +10,7 @@ import { createMulta } from "../../../services/multaServices.js";
 import MapPopup from "../MapPopUp.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 
-const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta }) => {
+const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta, placaImagen}) => {
 
   const { userId } = useUserContext();
   const [cedulaError, setCedulaError] = useState("");
@@ -53,6 +53,12 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
         setPosition({ lat: multa.latitud, lng: multa.longitud });
     }
   }, [multa]);
+
+  useEffect(() => {
+    if (placaImagen) {
+      setNuevaMulta((prev) => ({ ...prev, numeroPlaca: placaImagen }));
+    }
+  }, [placaImagen]);
 
   const handleCedulaChange = (e) => {
     const value = e.target.value;

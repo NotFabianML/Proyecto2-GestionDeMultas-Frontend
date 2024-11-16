@@ -13,6 +13,7 @@
 }
 
 .columna-izquierda  {
+    margin-top: 5%;
     width: 30%;
     float: left;
 }
@@ -22,9 +23,9 @@
     color:#181D23
 }
 
-.columna-izquierda label {
+.columna-izquierda h3 {
     color:#181D23;
-    margin: 10px;
+    margin: 15px;
 }
 
 .columna-derecha {
@@ -38,5 +39,11 @@
     margin: 30px;
 }
 
+.foto-placa {
+    width: 100%; /* Ajusta el tamaño de la imagen al ancho del contenedor */
+    max-width: 500px; /* Establece un tamaño máximo para evitar que se estire demasiado */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: contain; /* Asegura que la imagen se ajusta sin perder proporciones */
+}
 
 
