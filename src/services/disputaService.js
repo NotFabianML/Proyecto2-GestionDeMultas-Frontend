@@ -32,21 +32,21 @@ export const createDisputa = async (disputaData) => {
 
 // Actualizar disputa por ID
 export const updateDisputa = async (id, disputaData) => {
-  await axiosInstance.put(`/disputas/${id}`, disputaData);
+  await axiosInstance.put(`/Disputas/${id}`, disputaData);
 };
 
 // Cambiar el estado de una disputa
 export const cambiarEstadoDisputa = async (id, estado) => {
-  await axiosInstance.post(`/disputas/${id}/cambiar-estado/${estado}`);
+  await axiosInstance.post(`/Disputas/${id}/cambiar-estado/${estado}`);
 };
 
 // Eliminar disputa
 export const deleteDisputa = async (id) => {
-  await axiosInstance.delete(`/disputas/${id}`);
+  await axiosInstance.delete(`/Disputas/${id}`);
 };
 
 // Inicializar disputas
 export const inicializarDisputas = async () => {
-  const response = await axiosInstance.post('/disputas/inicializar');
+  const response = await axiosInstance.post('/Disputas/inicializar');
   return response.data;
 };

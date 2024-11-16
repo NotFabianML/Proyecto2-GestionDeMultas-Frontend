@@ -7,6 +7,7 @@ import { getMultasPorUsuarioId } from '../../../services/multaServices';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
+import '../../../styles/index.css';
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
@@ -215,33 +216,35 @@ const MisMultas = () => {
             <UsuarioNavbar />
             <h1>Mis Multas</h1>
             <p className="textoIn">Selecciona una multa ...</p>
+            
+            <div className='main-container'>
+                <div className="grid-container">
+                    {multas.map((multa) => (
+                        <div key={multa.id} className="card">
+                            <div className="infoMulta">
+                                <p><strong>ID Multa:</strong> {multa.idMulta}</p>
+                                <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
+                                <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
+                                <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
+                            </div>
 
-            <div className="grid-container">
-                {multas.map((multa) => (
-                    <div key={multa.id} className="card">
-                        <div className="infoMulta">
-                            <p><strong>ID Multa:</strong> {multa.idMulta}</p>
-                            <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
-                            <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
-                            <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
+                            <div className="button-container">
+                                <Button 
+                                    onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
+                                    variant="outline" 
+                                    size="small" 
+                                    text="Abrir Disputa" 
+                                />
+                                <Button 
+                                    onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
+                                    variant="primary" 
+                                    size="small" 
+                                    text="Pagar Multa" 
+                                />
+                            </div>
                         </div>
-
-                        <div className="button-container">
-                            <Button 
-                                onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
-                                variant="outline" 
-                                size="small" 
-                                text="Abrir Disputa" 
-                            />
-                            <Button 
-                                onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
-                                variant="primary" 
-                                size="small" 
-                                text="Pagar Multa" 
-                            />
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {popupVisible && popupContent.type === 'dispute' && <DisputePopup />}
