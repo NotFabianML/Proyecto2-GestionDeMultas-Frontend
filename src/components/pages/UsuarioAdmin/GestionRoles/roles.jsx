@@ -1,39 +1,52 @@
-import React from "react";
-import '@fortawesome/fontawesome-free/css/all.css';
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import FiltroInput from "../../../layouts/FiltroInput";
-import ButtonLink from "../../../atoms/ButtonLink";
-import Footer from "../../../layouts/Footer";
-import Paginador from "../../../layouts/Paginador";
 import Button from "../../../atoms/Button";
-import Modal from 'react-modal';
-import './roles.css'; 
+import ButtonLink from "../../../atoms/ButtonLink";
+import Modal from "react-modal";
+import Paginador from "../../../layouts/Paginador";
+import Footer from "../../../layouts/Footer";
+import {
+  getRoles,
+  createRol,
+  updateRol,
+  deleteRol,
+} from "../../../../services/rolService";
+import "./roles.css";
 
 const Roles = () => {
-  const handleClick = () => {
-    alert("Boton clickeado");
-  };
-  const [filtro, setFiltro] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [filtro, setFiltro] = useState("");
   const [paginaActual, setPaginaActual] = useState(1);
-  const elementosPorPagina = 10;
-  const roles = [
-    { id: '1', rol: 'Administrador' },
-    { id: '2', rol: 'Juez' },
-    { id: '3', rol: 'UsuarioNormal' },
-    { id: '4', rol: 'Oficial' },
-  ];
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [nuevoRol, setNuevoRol] = useState('');
-  const [permisos, setPermisos] = useState({
-    permiso1: false,
-    permiso2: false,
-    permiso3: false,
-    permiso4: false,
-    permiso5: false,
-    permiso6: false,
-  });
-  const abrirModal = () => {
+  const [nuevoRol, setNuevoRol] = useState("");
+  const [descripcionRol, setDescripcionRol] = useState("");
+  const [rolSeleccionado, setRolSeleccionado] = useState(null);
+  const elementosPorPagina = 10;
+
+  useEffect(() => {
+    fetchRoles();
+  }, []);
+
+  const fetchRoles = async () => {
+    try {
+      const rolesObtenidos = await getRoles();
+      setRoles(rolesObtenidos);
+    } catch (error) {
+      console.error("Error al obtener roles:", error);
+    }
+  };
+
+  const abrirModal = (rol = null) => {
+    if (rol) {
+      setRolSeleccionado(rol);
+      setNuevoRol(rol.nombreRol);
+      setDescripcionRol(rol.descripcion);
+    } else {
+      setRolSeleccionado(null);
+      setNuevoRol("");
+      setDescripcionRol("");
+    }
     setModalIsOpen(true);
   };
 
@@ -41,21 +54,43 @@ const Roles = () => {
     setModalIsOpen(false);
   };
 
-  const handlePermisoChange = (permiso) => {
-    setPermisos({ ...permisos, [permiso]: !permisos[permiso] });
+  const handleGuardarRol = async () => {
+    try {
+      if (rolSeleccionado) {
+        // Si rolSeleccionado existe, se actualiza el rol
+        await updateRol(rolSeleccionado.IdRol, { nombreRol: nuevoRol, descripcion: descripcionRol });
+        alert("Rol actualizado exitosamente.");
+      } else {
+        // Si no existe rolSeleccionado, se crea un nuevo rol
+        await createRol({ nombreRol: nuevoRol, descripcion: descripcionRol });
+        alert("Rol creado exitosamente.");
+      }
+      fetchRoles();  // Refresca los roles
+      cerrarModal();  // Cierra el modal
+    } catch (error) {
+      console.error("Error al guardar el rol:", error);
+      alert("Error al guardar el rol.");
+    }
   };
 
-  const handleGuardarRol = () => {
-    roles.push({ id: (roles.length + 1).toString(), rol: nuevoRol });
-    cerrarModal();
+  const handleEliminarRol = async (idRol) => {
+    console.log("Eliminando rol con id:", idRol); // Agrega un log para ver el id
+    try {
+      await deleteRol(idRol);
+      alert("Rol eliminado exitosamente.");
+      fetchRoles();
+    } catch (error) {
+      console.error("Error al eliminar el rol:", error.response ? error.response.data : error.message);
+      alert("Error al eliminar el rol.");
+    }
   };
 
-  const rolesFiltrados = roles.filter(rol =>
-    rol.rol.toLowerCase().includes(filtro.toLowerCase()) ||
-    rol.id.toString().includes(filtro)
+  const rolesFiltrados = roles.filter(
+    (rol) =>
+      rol.nombreRol.toLowerCase().includes(filtro.toLowerCase()) ||
+      rol.IdRol.toString().includes(filtro)
   );
 
-  // Calcular los índices de la página actual
   const indiceUltimoElemento = paginaActual * elementosPorPagina;
   const indicePrimerElemento = indiceUltimoElemento - elementosPorPagina;
   const RolesActuales = rolesFiltrados.slice(indicePrimerElemento, indiceUltimoElemento);
@@ -71,28 +106,39 @@ const Roles = () => {
         <AdminNavbar />
       </header>
       <main>
-        <h1>Lista de Roles</h1>
+        <h1>Gestión de Roles</h1>
         <div className="filtro-container">
-          <FiltroInput 
-            placeholder="Filtrar" 
+          <FiltroInput
+            placeholder="Filtrar roles"
             value={filtro}
-            onChange={(e) => setFiltro(e.target.value)} 
+            onChange={(e) => setFiltro(e.target.value)}
           />
-          <div><i className="fas fa-search search-icon"></i></div>
         </div>
         <div className="lista-roles">
           <table>
             <thead>
               <tr>
                 <th>Rol</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {RolesActuales.map((rol) => (
-                <tr key={rol.id}>
-                  <td>{rol.rol}</td>
+                <tr key={rol.IdRol}>
+                  <td>{rol.nombreRol}</td>
+                  <td>{rol.descripcion}</td>
                   <td>
-                    <Button variant="primary" text="Editar" onClick={handleClick} />
+                    <Button
+                      variant="primary"
+                      text="Editar"
+                      onClick={() => abrirModal(rol)}
+                    />
+                    <Button
+                      variant="danger"
+                      text="Eliminar"
+                      onClick={() => handleEliminarRol(rol.IdRol)}
+                    />
                   </td>
                 </tr>
               ))}
@@ -108,22 +154,25 @@ const Roles = () => {
         />
         <div className="espaciado-botones">
           <ButtonLink variant="secondary" text="Regresar" to="/inicio-admin" />
-          <Button className="crear-rol-btn" variant="primary" text="Crear Rol" onClick={abrirModal} />
+          <Button
+            variant="primary"
+            text="Crear Rol"
+            onClick={() => abrirModal()}
+          />
         </div>
-
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={cerrarModal}
           style={{
             content: {
-              top: '10%',
-              left: '10%',
-              right: '10%',
-              bottom: '10%',
+              top: "10%",
+              left: "10%",
+              right: "10%",
+              bottom: "10%",
             },
           }}
         >
-          <h2>Crear Nuevo Rol</h2>
+          <h2>{rolSeleccionado ? "Editar Rol" : "Crear Nuevo Rol"}</h2>
           <div>
             <label className="nombre-rol-label">Nombre del Rol:</label>
             <input
@@ -132,20 +181,20 @@ const Roles = () => {
               onChange={(e) => setNuevoRol(e.target.value)}
             />
           </div>
-          <div className="permisos-container">
-            <h3>Permisos</h3>
-            {Object.keys(permisos).map((permiso, index) => (
-              <div key={index}>
-                <label className="permiso-label">{`Permiso ${index + 1}`}</label>
-                <input
-                  type="checkbox"
-                  checked={permisos[permiso]}
-                  onChange={() => handlePermisoChange(permiso)}
-                />
-              </div>
-            ))}
+          <div>
+            <label className="descripcion-rol-label">Descripción del Rol:</label>
+            <input
+              type="text"
+              value={descripcionRol}
+              onChange={(e) => setDescripcionRol(e.target.value)}
+            />
           </div>
-          <Button className="guardar-rol-btn" variant="primary" size="medium" text="Guardar Rol" onClick={handleGuardarRol} />
+          <Button
+            className="guardar-rol-btn"
+            variant="primary"
+            text="Guardar"
+            onClick={handleGuardarRol}
+          />
         </Modal>
       </main>
       <footer>
