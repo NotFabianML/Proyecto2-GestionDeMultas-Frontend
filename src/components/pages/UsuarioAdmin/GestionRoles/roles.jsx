@@ -32,6 +32,7 @@ const Roles = () => {
     try {
       const rolesObtenidos = await getRoles();
       setRoles(rolesObtenidos);
+      console.log("Roles obtenidos:", rolesObtenidos);
     } catch (error) {
       console.error("Error al obtener roles:", error);
     }
@@ -54,11 +55,20 @@ const Roles = () => {
     setModalIsOpen(false);
   };
 
-  const handleGuardarRol = async () => {
+  const handleGuardarRol = async (e) => {
+    e.preventDefault();
     try {
       if (rolSeleccionado) {
+        // Actualizamos el rol con los valores correctos
+        const rolData = { 
+          IdRol: rolSeleccionado.idRol,  // Asegúrate de que el ID es correcto
+          NombreRol: nuevoRol,  // Usamos `nuevoRol` que es el estado actualizado
+          Descripcion: descripcionRol  // Usamos `descripcionRol` que es el estado actualizado
+        };
+        console.log("Rol Seleccionado: ", rolSeleccionado);
         // Si rolSeleccionado existe, se actualiza el rol
-        await updateRol(rolSeleccionado.IdRol, { nombreRol: nuevoRol, descripcion: descripcionRol });
+        console.log("Actualizando rol con id:", rolSeleccionado.idRol); 
+        await updateRol(rolSeleccionado.idRol, rolData);  // Enviamos los datos correctos
         alert("Rol actualizado exitosamente.");
       } else {
         // Si no existe rolSeleccionado, se crea un nuevo rol
@@ -74,7 +84,7 @@ const Roles = () => {
   };
 
   const handleEliminarRol = async (idRol) => {
-    console.log("Eliminando rol con id:", idRol); // Agrega un log para ver el id
+    console.log("Eliminando rol con id:", idRol);
     try {
       await deleteRol(idRol);
       alert("Rol eliminado exitosamente.");
@@ -88,7 +98,7 @@ const Roles = () => {
   const rolesFiltrados = roles.filter(
     (rol) =>
       rol.nombreRol.toLowerCase().includes(filtro.toLowerCase()) ||
-      rol.IdRol.toString().includes(filtro)
+      rol.idRol.toString().includes(filtro)
   );
 
   const indiceUltimoElemento = paginaActual * elementosPorPagina;
@@ -125,7 +135,7 @@ const Roles = () => {
             </thead>
             <tbody>
               {RolesActuales.map((rol) => (
-                <tr key={rol.IdRol}>
+                <tr key={rol.idRol}>
                   <td>{rol.nombreRol}</td>
                   <td>{rol.descripcion}</td>
                   <td>
@@ -137,7 +147,7 @@ const Roles = () => {
                     <Button
                       variant="danger"
                       text="Eliminar"
-                      onClick={() => handleEliminarRol(rol.IdRol)}
+                      onClick={() => handleEliminarRol(rol.idRol)}
                     />
                   </td>
                 </tr>
@@ -205,3 +215,4 @@ const Roles = () => {
 };
 
 export default Roles;
+

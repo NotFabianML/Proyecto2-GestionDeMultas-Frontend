@@ -89,6 +89,7 @@ const ListaUsuarios = () => {
         telefono: "",
         roleName: "",
         estado: true,
+        roles: [] // Aseguramos que roles esté presente
       }
     );
     setModalIsOpen(true);
@@ -333,56 +334,31 @@ const ListaUsuarios = () => {
                 </select>
               </div>
               <div className="filas">
-              <label>Rol</label>
-                    <select
-                    value=""
-                    onChange={async (e) => {
-                        try {
-                        const rolId = e.target.value;
-                        await asignarRolAUsuario(usuarioSeleccionado.idUsuario, rolId);
-                        alert("Rol asignado exitosamente.");
-                        fetchUsuarios(); // Actualizar la lista de usuarios
-                        } catch (error) {
-                        alert("Error al asignar el rol.");
-                        }
-                    }}
-                    >
-                    <option value="">Seleccionar rol</option>
-                    {roles.map((rol) => (
-                        <option key={rol.idRol} value={rol.idRol}>
-                        {rol.nombreRol}
-                        </option>
-                    ))}
-                    </select>
-                </div>
-                <div className="filas">
-                <label>Eliminar Rol</label>
-    <select
-      defaultValue=""
-      onChange={async (e) => {
-        const rolId = e.target.value;
-        if (!rolId) {
-          alert("Selecciona un rol válido para eliminar.");
-          return;
-        }
+  <label>Rol</label>
+  <select
+    value={usuarioSeleccionado?.roles?.[0]?.idRol || ""}
+    onChange={async (e) => {
+      const rolId = e.target.value;
+      if (rolId) {
         try {
-          await deleteRolDeUsuario(usuarioSeleccionado.idUsuario, rolId);
-          alert("Rol eliminado exitosamente.");
-          fetchUsuarios(); // Actualizar la lista de usuarios
+          await asignarRolAUsuario(usuarioSeleccionado.idUsuario, rolId);
+          alert("Rol asignado exitosamente.");
+          fetchUsuarios(); // Refresca la lista de usuarios
         } catch (error) {
-          console.error("Error al eliminar el rol:", error);
-          alert("Error al eliminar el rol.");
+          alert("Error al asignar el rol.");
         }
-      }}
-    >
-      <option value="">Seleccionar rol para eliminar</option>
-      {usuarioSeleccionado.roles?.map((rol) => (
-        <option key={rol.idRol} value={rol.idRol}>
-          {rol.nombreRol}
-        </option>
-      ))}
-    </select>
+      }
+    }}
+  >
+    <option value="">Seleccionar rol</option>
+    {roles.map((rol) => (
+      <option key={rol.idRol} value={rol.idRol}>
+        {rol.nombreRol}
+      </option>
+    ))}
+  </select>
 </div>
+
               <div className="botones-modal">
                 <Button
                   type="submit"
