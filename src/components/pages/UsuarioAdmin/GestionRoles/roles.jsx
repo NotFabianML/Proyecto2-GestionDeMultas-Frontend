@@ -12,6 +12,7 @@ import {
   updateRol,
   deleteRol,
 } from "../../../../services/rolService";
+import { getPermisos, getPermisosPorRolNombre, asignarPermisoARol, deletePermisoDeRol  } from "../../../../services/permisoService";
 import "./roles.css";
 
 const Roles = () => {
@@ -22,6 +23,8 @@ const Roles = () => {
   const [nuevoRol, setNuevoRol] = useState("");
   const [descripcionRol, setDescripcionRol] = useState("");
   const [rolSeleccionado, setRolSeleccionado] = useState(null);
+  const [permisosDisponibles, setPermisosDisponibles] = useState([]);
+  const [permisosAsignados, setPermisosAsignados] = useState([]);
   const elementosPorPagina = 10;
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const Roles = () => {
     }
   };
 
-  const abrirModal = (rol = null) => {
+  const abrirModal = async (rol = null) => {
     if (rol) {
       setRolSeleccionado(rol);
       setNuevoRol(rol.nombreRol);
@@ -49,10 +52,58 @@ const Roles = () => {
       setDescripcionRol("");
     }
     setModalIsOpen(true);
+    try {
+      // Obtener todos los permisos disponibles
+      const todosLosPermisos = await getPermisos();
+      setPermisosDisponibles(todosLosPermisos);
+
+      // Obtener permisos asignados al rol si está en modo edición
+      if (rol) {
+        const permisosAsignados = await getPermisosPorRolNombre(rol.nombreRol);
+        setPermisosAsignados(permisosAsignados);
+      } else {
+        setPermisosAsignados([]);
+      }
+    } catch (error) {
+      console.error("Error al cargar permisos:", error);
+    }
   };
 
   const cerrarModal = () => {
     setModalIsOpen(false);
+    setPermisosDisponibles([]);
+    setPermisosAsignados([]);
+  };
+  const agregarPermiso = async (permisoId) => {
+    if (!rolSeleccionado) {
+      alert("Primero debe guardar el rol antes de asignarle permisos.");
+      return;
+    }
+    try {
+      await asignarPermisoARol(rolSeleccionado.idRol, permisoId);
+      const permisoAgregado = permisosDisponibles.find((p) => p.idPermiso === permisoId);
+      setPermisosAsignados((prev) => [...prev, permisoAgregado]);
+      setPermisosDisponibles((prev) => prev.filter((p) => p.idPermiso !== permisoId));
+    } catch (error) {
+      console.error("Error al asignar permiso:", error);
+      alert("Error al asignar permiso.");
+    }
+  };
+
+  const eliminarPermiso = async (permisoId) => {
+    if (!rolSeleccionado) {
+      alert("Primero debe guardar el rol antes de eliminar permisos.");
+      return;
+    }
+    try {
+      await deletePermisoDeRol(rolSeleccionado.idRol, permisoId);
+      const permisoEliminado = permisosAsignados.find((p) => p.idPermiso === permisoId);
+      setPermisosDisponibles((prev) => [...prev, permisoEliminado]);
+      setPermisosAsignados((prev) => prev.filter((p) => p.idPermiso !== permisoId));
+    } catch (error) {
+      console.error("Error al eliminar permiso:", error);
+      alert("Error al eliminar permiso.");
+    }
   };
 
   const handleGuardarRol = async (e) => {
@@ -198,6 +249,34 @@ const Roles = () => {
               value={descripcionRol}
               onChange={(e) => setDescripcionRol(e.target.value)}
             />
+          </div>
+          <div className="permisos-container">
+            <h3>Permisos Asignados</h3>
+            <ul>
+              {permisosAsignados.map((permiso) => (
+                <li key={permiso.idPermiso}>
+                  {permiso.nombrePermiso}
+                  <Button
+                    variant="danger"
+                    text="Eliminar"
+                    onClick={() => eliminarPermiso(permiso.idPermiso)}
+                  />
+                </li>
+              ))}
+              </ul>
+            <h3>Permisos Disponibles</h3>
+            <ul>
+              {permisosDisponibles.map((permiso) => (
+                <li key={permiso.idPermiso}>
+                  {permiso.nombrePermiso}
+                  <Button
+                    variant="primary"
+                    text="Agregar"
+                    onClick={() => agregarPermiso(permiso.idPermiso)}
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
           <Button
             className="guardar-rol-btn"
