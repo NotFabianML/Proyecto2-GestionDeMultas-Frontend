@@ -34,7 +34,7 @@ import ResolverDisputa from "../components/pages/UsuarioJuez/ResolverDisputa.jsx
 
 export const MainRouter = () => {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <Routes>
         <Route path="/home" element={<Home />} />
         {/* Usuario invitado */}
@@ -73,6 +73,6 @@ export const MainRouter = () => {
         <Route path="/resolver-disputa" element={<ResolverDisputa />} />
 
       </Routes>
-    </BrowserRouter>
+    // </BrowserRouter>
   );
 };
