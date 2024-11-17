@@ -14,6 +14,7 @@ import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
 import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
 import MisVehiculos from "../components/pages/UsuarioFinal/MisVehiculos.jsx";
+import Factura from "../components/pages/UsuarioFinal/Factura.jsx";
 
 import InicioAdmin from "../components/pages/UsuarioAdmin/InicioAdmin.jsx";
 import RegistrarUsuarioAdmin from "../components/pages/UsuarioAdmin/GestionUsuarios/registrarUsuarioAdmin.jsx";
@@ -51,6 +52,7 @@ export const MainRouter = () => {
         <Route path="/mis-multas" element={<MisMultas />} />
         <Route path="/mis-disputas" element={<MisDisputas />} />
         <Route path="/mis-vehiculos" element={<MisVehiculos />} />
+        <Route path="/factura" element={<Factura />} />
 
         {/* Administrador */}
         <Route path="/inicio-admin" element={<InicioAdmin />} />

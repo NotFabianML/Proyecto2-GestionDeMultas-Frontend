@@ -2,7 +2,7 @@ import axiosInstance from './axiosInstance';
 
 // Obtener todas las multas
 export const getMultas = async () => {
-  const response = await axiosInstance.get('/multas');
+  const response = await axiosInstance.get('/Multas');
   return response.data;
 };
 
@@ -14,19 +14,19 @@ export const getMultaById = async (id) => {
 
 // Obtener multas por estado
 export const getMultasPorEstado = async (estado) => {
-  const response = await axiosInstance.get(`/multas/estado/${estado}`);
+  const response = await axiosInstance.get(`/Multas/estado/${estado}`);
   return response.data;
 };
 
 // Obtener multas por número de placa
 export const getMultasPorPlaca = async (numeroPlaca) => {
-  const response = await axiosInstance.get(`/multas/placa/${numeroPlaca}`);
+  const response = await axiosInstance.get(`/Multas/placa/${numeroPlaca}`);
   return response.data;
 };
 
 // Obtener multas por infracción
 export const getMultasPorInfraccion = async (infraccionId) => {
-  const response = await axiosInstance.get(`/multas/${infraccionId}/multas-por-infraccion`);
+  const response = await axiosInstance.get(`/Multas/${infraccionId}/multas-por-infraccion`);
   return response.data;
 };
 
@@ -53,7 +53,7 @@ export const updateMulta = async (id, multaData) => {
 
 // Cambiar estado de la multa
 export const cambiarEstadoMulta = async (id, estado) => {
-  await axiosInstance.post(`/multas/${id}/cambiar-estado/${estado}`);
+  await axiosInstance.post(`/Multas/${id}/cambiar-estado/${estado}`);
 };
 
 // Obtener multas por ID de usuario final
@@ -64,7 +64,7 @@ export const getMultasPorUsuarioId = async (usuarioId) => {
 
 // Obtener multas por cédula de usuario final
 export const getMultasPorCedulaUsuario = async (cedula) => {
-  const response = await axiosInstance.get(`/multas/usuario/cedula/${cedula}`);
+  const response = await axiosInstance.get(`/Multas/usuario/cedula/${cedula}`);
   return response.data;
 };
 
@@ -81,7 +81,7 @@ export const deleteMulta = async (multaId) => {
 
 // Inicializar multas
 export const inicializarMultas = async () => {
-  const response = await axiosInstance.post('/multas/inicializar');
+  const response = await axiosInstance.post('/Multas/inicializar');
   return response.data;
 };
 
