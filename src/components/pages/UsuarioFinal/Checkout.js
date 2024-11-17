@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Button from '../../atoms/Button';
+import { cambiarEstadoMulta } from '../../../services/multaServices';
 
-const Checkout = ({ amount }) => {
+
+const Checkout = ({ amount, multaId }) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState("USD");
+    const [error, setError] = useState(null);
     
     const onCurrencyChange = ({ target: { value } }) => {
         setCurrency(value);
@@ -22,7 +25,7 @@ const Checkout = ({ amount }) => {
             purchase_units: [
                 {
                     amount: {
-                        value: amount.toString(), // Convertir 'amount' a cadena si es necesario
+                        value: (amount / 515).toFixed(2).toString(), // Convertir 'amount' a cadena si es necesario
                     },
                 },
             ],
@@ -30,9 +33,14 @@ const Checkout = ({ amount }) => {
     };
 
     const onApproveOrder = (data, actions) => {
-        return actions.order.capture().then((details) => {
+        return actions.order.capture().then(async (details) => {
             const name = details.payer.name.given_name;
-            alert(`Transaction completed by ${name}`);
+            try {
+                await cambiarEstadoMulta(multaId, 2);
+                alert(`Transaction completed by ${name}`);
+            } catch (error) {
+                setError(`Error al pagar la multa: ${error.message}`);
+            }
         });
     };
 
@@ -40,17 +48,18 @@ const Checkout = ({ amount }) => {
         <div className="checkout">
             {isPending ? <p>LOADING...</p> : (
                 <>
-                    <Button 
+                    {/* <Button 
                         onClick={() => console.log('Pago con Sinpe')} 
                         variant="primary" 
                         size="medium" 
                         text="Pagar con Sinpe"  
                         style={{ backgroundColor: '#18AEBF', color: '#181D23', width: '250px', marginLeft:0, marginRight:0, marginBottom:10 }} 
-                    />
+                    /> */}
                     <PayPalButtons 
                         style={{ layout: "vertical" }}
                         createOrder={(data, actions) => onCreateOrder(data, actions)}
                         onApprove={(data, actions) => onApproveOrder(data, actions)}
+                        
                     />
                 </>
             )}

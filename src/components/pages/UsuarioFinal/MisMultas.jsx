@@ -3,7 +3,8 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
-import { getMultasPorUsuarioId } from '../../../services/multaServices.js';
+import { getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
+import { getUsuarioById } from '../../../services/usuarioService.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
@@ -41,19 +42,27 @@ const MisMultas = () => {
     // Desestructurar funciones de UserContext
     const { userId } = useUserContext();
 
+
     console.log(userId);
 
-    useEffect(() => {
-        getMultasPorUsuarioId(userId)
-        .then((data) => {
-            setMultas(data);
-        })
-        .catch((error) => {
-            setError(`Error: ${error.message}`);
-        });
-    }, [userId]);
-
-
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const userData = await getUsuarioById(userId);
+                    if (!userData.cedula) { 
+                        setError("Error: El usuario no tiene cédula registrada.");
+                        return;
+                    }
+                    const multas = await getMultasPorCedulaUsuario(userData.cedula);
+                    setMultas(multas);
+                } catch (error) {
+                    setError(`Error: ${error.message}`);
+                }
+            };
+        
+            fetchData();
+        }, [userId]);
+    
     function openPopup(type) {
         setPopupContent({
             type,
@@ -200,7 +209,7 @@ const MisMultas = () => {
                     <div className="button-row">
     
                         <PayPalScriptProvider options={initialOptions}>
-                            <Checkout amount={multa.montoTotal || 1} />
+                        <Checkout amount={multa.montoTotal || 1} multaId={multa.idMulta} />
                         </PayPalScriptProvider>
                     
                     </div>
