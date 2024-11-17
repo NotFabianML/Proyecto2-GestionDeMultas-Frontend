@@ -14,6 +14,7 @@ import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
 import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
 import MisVehiculos from "../components/pages/UsuarioFinal/MisVehiculos.jsx";
+import DashboardUser from "../components/pages/UsuarioFinal/DashboardUser.jsx";
 
 import InicioAdmin from "../components/pages/UsuarioAdmin/InicioAdmin.jsx";
 import RegistrarUsuarioAdmin from "../components/pages/UsuarioAdmin/GestionUsuarios/registrarUsuarioAdmin.jsx";
@@ -22,6 +23,7 @@ import Roles from "../components/pages/UsuarioAdmin/GestionRoles/roles.jsx";
 import GestionMultas from "../components/pages/UsuarioOficialTransito/GestionMultas.jsx";
 import MultasGrafico from "../components/pages/UsuarioAdmin/EstadoMultas/multasGrafico.jsx";
 import Infraccion from "../components/pages/UsuarioAdmin/CatalogoInfracciones/infraccion.jsx";
+import DashboardAdmin from "../components/pages/UsuarioAdmin/DashboardAdmin.jsx";
 
 import PaginaOficialTransito from "../components/pages/UsuarioOficialTransito/index.jsx";
 import CrearMulta from "../components/pages/UsuarioOficialTransito/CrearMulta.jsx";
@@ -30,6 +32,7 @@ import MultasTabla from "../components/pages/UsuarioAdmin/EstadoMultas/multasTab
 import PaginaJuez from "../components/pages/UsuarioJuez/index.jsx";
 import DisputasJuez from "../components/pages/UsuarioJuez/DisputasJuez.jsx";
 import ResolverDisputa from "../components/pages/UsuarioJuez/ResolverDisputa.jsx";
+
 
 
 export const MainRouter = () => {
@@ -51,6 +54,7 @@ export const MainRouter = () => {
         <Route path="/mis-multas" element={<MisMultas />} />
         <Route path="/mis-disputas" element={<MisDisputas />} />
         <Route path="/mis-vehiculos" element={<MisVehiculos />} />
+        <Route path="/dashboard-user" element={<DashboardUser />} />
 
         {/* Administrador */}
         <Route path="/inicio-admin" element={<InicioAdmin />} />
@@ -61,6 +65,7 @@ export const MainRouter = () => {
         <Route path="/multas-grafico" element={<MultasGrafico />} />
         <Route path="/infraccion" element={<Infraccion />} />
         <Route path="/administrar-perfil" element={<AdministrarPerfil />} />
+        <Route path="/dashboard-admin" element={<DashboardAdmin />} />
 
         {/* Oficial de Tránsito */}
         <Route path="/pagina-oficial" element={<PaginaOficialTransito />} />
