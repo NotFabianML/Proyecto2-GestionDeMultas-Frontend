@@ -1,32 +1,47 @@
-import { createContext, useContext, useState, useCallback } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-// Paso 1: Crear el contexto
+// Crear el contexto
 const UserContext = createContext({
-  userId: "",
-  token: "",
-  role: "",
+  userId: null,
+  token: null,
+  role: null,
   setUserId: () => {},
   setToken: () => {},
   setRole: () => {},
   logout: () => {},
 });
 
-// Paso 2: Crear el provider
+// Provider
 export const UserContextProvider = ({ children }) => {
-  // Estados para userId, token y role
-  const [userId, setUserId] = useState("");
-  const [token, setToken] = useState("");
-  const [role, setRole] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
 
-  // Función para cerrar sesión y limpiar el contexto
-  const logout = useCallback(() => {
-    setUserId("");
-    setToken("");
-    setRole("");
-    localStorage.removeItem("authToken");
+  const logout = () => {
+    setUserId(null);
+    setToken(null);
+    setRole(null);
+    sessionStorage.clear();
+  };
+
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("authToken");
+    const storedUserId = sessionStorage.getItem("userId");
+    const storedRole = sessionStorage.getItem("role");
+
+    if (storedToken && storedUserId && storedRole) {
+      setToken(storedToken);
+      setUserId(storedUserId);
+      setRole(storedRole);
+    }
   }, []);
 
-  // Configuración del valor del contexto
+  useEffect(() => {
+    if (token) sessionStorage.setItem("authToken", token);
+    if (userId) sessionStorage.setItem("userId", userId);
+    if (role) sessionStorage.setItem("role", role);
+  }, [token, userId, role]);
+
   const contextValue = {
     userId,
     token,
@@ -37,12 +52,8 @@ export const UserContextProvider = ({ children }) => {
     logout,
   };
 
-  return (
-    <UserContext.Provider value={contextValue}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;
 };
 
-// Hook para consumir el contexto
+// Hook para usar el contexto
 export const useUserContext = () => useContext(UserContext);

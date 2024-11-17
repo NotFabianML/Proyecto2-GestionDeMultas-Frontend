@@ -7,7 +7,7 @@ import ButtonLink from '../../atoms/ButtonLink.jsx';
 import FiltroInput from '../../layouts/FiltroInput.jsx';
 import '@fortawesome/fontawesome-free/css/all.css';
 import Paginador from '../../layouts/Paginador.jsx';
-import { getDisputasPorUsuario } from '../../../services/disputaService.js';
+import { getMultasAsignadasAJuez } from '../../../services/disputaService.js';
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';
 import Button from '../../atoms/Button.jsx';
@@ -19,22 +19,23 @@ const Disputas = () => {
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
     const navigate = useNavigate();
+    const { userId } = useUserContext();
 
-
-    const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
 
     useEffect(() => {
-        getDisputasPorUsuario(usuarioId)
+        getMultasAsignadasAJuez(userId)
             .then((data) => {
-                setDisputas(data);
+                const disputasEstado1 = data.filter(disputa => disputa.estado === 1);
+                setDisputas(disputasEstado1);
             })
             .catch((error) => {
                 setError(`Error: ${error.message}`);
             });
-    }, [usuarioId]);
+    }, [userId]);
+        
 
     const handleDispute = (disputa) => {
-        navigate(`/resolver-disputa`, { state: { motivo: disputa.motivoReclamo, idMulta: disputa.multaId  } });
+        navigate(`/resolver-disputa`, { state: { motivo: disputa.motivoReclamo, idMulta: disputa.multaId, idDisputa: disputa.idDisputa } });
     };
 
 

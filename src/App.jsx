@@ -1,14 +1,16 @@
 import "./styles/App.css";
 import { UserContextProvider } from "./contexts/UserContext";
-// import { Perfil } from "./components/organism/Perfil";
 import { MainRouter } from "./routes";
-import React from 'react'
+import { BrowserRouter } from "react-router-dom";
+
 
 function App() {
   return (
-    <UserContextProvider>
-      <MainRouter />
-    </UserContextProvider>
+    <BrowserRouter>
+      <UserContextProvider>
+        <MainRouter />
+      </UserContextProvider>
+    </BrowserRouter>
   );
 }
 

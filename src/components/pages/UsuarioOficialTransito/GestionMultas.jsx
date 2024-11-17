@@ -11,10 +11,9 @@ import { useUserContext } from '../../../contexts/UserContext.jsx';
 const GestionMultas = () => {
     const [multas, setMultas] = useState([]);
     const [selectedMulta, setSelectedMulta] = useState(null);
-    const [multaDetalles, setMultaDetalles] = useState(null); // Nuevo estado para los detalles de la multa
+    const [multaDetalles, setMultaDetalles] = useState(null);
     const { userId } = useUserContext();
 
-    console.log(userId);
     useEffect(() => {
         // Obtener las multas para el oficial con el ID especificado
         const fetchMultas = async () => {

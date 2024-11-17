@@ -14,6 +14,7 @@ import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
 import MisDisputas from "../components/pages/UsuarioFinal/MisDisputas.jsx";
 import MisVehiculos from "../components/pages/UsuarioFinal/MisVehiculos.jsx";
+import Factura from "../components/pages/UsuarioFinal/Factura.jsx";
 import DashboardUser from "../components/pages/UsuarioFinal/DashboardUser.jsx";
 
 import InicioAdmin from "../components/pages/UsuarioAdmin/InicioAdmin.jsx";
@@ -37,7 +38,7 @@ import ResolverDisputa from "../components/pages/UsuarioJuez/ResolverDisputa.jsx
 
 export const MainRouter = () => {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <Routes>
         <Route path="/home" element={<Home />} />
         {/* Usuario invitado */}
@@ -54,6 +55,7 @@ export const MainRouter = () => {
         <Route path="/mis-multas" element={<MisMultas />} />
         <Route path="/mis-disputas" element={<MisDisputas />} />
         <Route path="/mis-vehiculos" element={<MisVehiculos />} />
+        <Route path="/factura" element={<Factura />} />
         <Route path="/dashboard-user" element={<DashboardUser />} />
 
         {/* Administrador */}
@@ -73,11 +75,11 @@ export const MainRouter = () => {
         <Route path="/multas-tabla" element={<MultasTabla />} />
 
         {/* Juez de Tránsito */}
-        <Route path="/pagina-juez" element={<PaginaJuez />} />
+        <Route path="/pagina-juez" element={<DisputasJuez />} />
         <Route path="/disputas-juez" element={<DisputasJuez />} />
         <Route path="/resolver-disputa" element={<ResolverDisputa />} />
 
       </Routes>
-    </BrowserRouter>
+    // </BrowserRouter>
   );
 };

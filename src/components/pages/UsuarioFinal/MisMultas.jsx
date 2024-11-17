@@ -3,10 +3,20 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
-import { getMultasPorUsuarioId } from '../../../services/multaServices';
+import { getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
+import { getUsuarioById } from '../../../services/usuarioService.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
+import '../../../styles/index.css';
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Checkout from './Checkout';
+
+const initialOptions = {
+  "client-id": "Adoww9KeExfepE0evtSMzMHBZqgFYTOitCqUjfQaLt1Np1V7gY9P-v-kPO-FzrBeMt4IsCDw0qC9tzqQ",
+  currency: "USD",
+  intent: "capture",
+};
 
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
@@ -28,36 +38,31 @@ const MisMultas = () => {
         montoTotal: 0,
         montoMora: 0
     });
-
-       //Solo para pruebas
-       const usuarioId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
-       useEffect(() => {
-        getMultasPorUsuarioId(usuarioId)
-               .then((data) => {
-                   setMultas(data);
-               })
-               .catch((error) => {
-                   setError(`Error: ${error.message}`);
-               });
-       }, [usuarioId]);
-
-
-
+  
     // Desestructurar funciones de UserContext
-    //const { UserId } = useUserContext();
-    const UserId = "8BE6F45C-7ACB-4AED-8A38-7B3A87C969B8"; // Id quemado - Hacerlo dinámico
-
-    // useEffect(() => {
-    //     getMultaByUsuarioId(UserId)
-    //     .then((data) => {
-    //         setMultas(data);
-    //     })
-    //     .catch((error) => {
-    //         setError(`Error: ${error.message}`);
-    //     });
-    // }, [UserId]);
+    const { userId } = useUserContext();
 
 
+    console.log(userId);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const userData = await getUsuarioById(userId);
+                    if (!userData.cedula) { 
+                        setError("Error: El usuario no tiene cédula registrada.");
+                        return;
+                    }
+                    const multas = await getMultasPorCedulaUsuario(userData.cedula);
+                    setMultas(multas);
+                } catch (error) {
+                    setError(`Error: ${error.message}`);
+                }
+            };
+        
+            fetchData();
+        }, [userId]);
+    
     function openPopup(type) {
         setPopupContent({
             type,
@@ -77,7 +82,7 @@ const MisMultas = () => {
             ...disputeDataRef.current,
             [name]: value,
             multaId: multa.idMulta,
-            usuarioId: UserId
+            usuarioId: userId
         };
     }
 
@@ -202,46 +207,52 @@ const MisMultas = () => {
                         </tbody>
                     </table>
                     <div className="button-row">
-                        <Button onClick={() => console.log('Pago con Sinpe')} variant="primary" size="small" text="Pagar con Sinpe" />
-                        <Button onClick={() => console.log('Pago con PayPal')} variant="outline" size="small" text="Pagar con Paypal" />
+    
+                        <PayPalScriptProvider options={initialOptions}>
+                        <Checkout amount={multa.montoTotal || 1} multaId={multa.idMulta} />
+                        </PayPalScriptProvider>
+                    
                     </div>
                 </form>
             </div>
         </div>
     );
 
+        
     return (
         <div className="container">
             <UsuarioNavbar />
             <h1>Mis Multas</h1>
             <p className="textoIn">Selecciona una multa ...</p>
+            
+            <div className='main-container'>
+                <div className="grid-container">
+                    {multas.map((multa) => (
+                        <div key={multa.id} className="card">
+                            <div className="infoMulta">
+                                <p><strong>ID Multa:</strong> {multa.idMulta}</p>
+                                <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
+                                <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
+                                <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
+                            </div>
 
-            <div className="grid-container">
-                {multas.map((multa) => (
-                    <div key={multa.id} className="card">
-                        <div className="infoMulta">
-                            <p><strong>ID Multa:</strong> {multa.idMulta}</p>
-                            <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
-                            <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
-                            <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
+                            <div className="button-container">
+                                <Button 
+                                    onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
+                                    variant="outline" 
+                                    size="small" 
+                                    text="Abrir Disputa" 
+                                />
+                                <Button 
+                                    onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
+                                    variant="primary" 
+                                    size="small" 
+                                    text="Pagar Multa" 
+                                />
+                            </div>
                         </div>
-
-                        <div className="button-container">
-                            <Button 
-                                onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
-                                variant="outline" 
-                                size="small" 
-                                text="Abrir Disputa" 
-                            />
-                            <Button 
-                                onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
-                                variant="primary" 
-                                size="small" 
-                                text="Pagar Multa" 
-                            />
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {popupVisible && popupContent.type === 'dispute' && <DisputePopup />}

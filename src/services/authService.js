@@ -1,16 +1,12 @@
 import axiosInstance from './axiosInstance';
 import { jwtDecode } from 'jwt-decode';
 
-// Login: realiza la autenticación y guarda el token en localStorage
 // export const login = async (userData) => {
 //   try {
 //     const response = await axiosInstance.post('/Auth/Login', userData);
-//     const { token } = response.data;
-
-//     // Almacena el token en localStorageF
-//     localStorage.setItem('authToken', token);
-
-//     return response.data;
+//     const { token, userId, role } = response.data;
+//     localStorage.setItem("authToken", token);
+//     return { userId, token, role };
 //   } catch (error) {
 //     throw new Error('Error al iniciar sesión');
 //   }
@@ -18,12 +14,23 @@ import { jwtDecode } from 'jwt-decode';
 
 export const login = async (userData) => {
   try {
-    const response = await axiosInstance.post('/Auth/Login', userData);
+    const response = await axiosInstance.post(
+      '/Auth/Login',
+      {
+        Email: userData.Email,
+        Password: userData.Password,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     const { token, userId, role } = response.data;
-    localStorage.setItem("authToken", token);
-    return { userId, token, role };
+    return { token, userId, role };
   } catch (error) {
-    throw new Error('Error al iniciar sesión');
+    console.error("Error en el login:", error.response?.data || error.message);
+    throw new Error(error.response?.data || "Error al iniciar sesión");
   }
 };
 
@@ -57,6 +64,19 @@ export const register = async (newUser) => {
   } catch (error) {
     console.error('Error al registrar usuario:', error);
     throw new Error('Error al registrar usuario');
+  }
+};
+
+// Validar token: verifica si el token es válido y no ha expirado
+export const validateToken = async (token) => {
+  try {
+    const response = await axiosInstance.get(`/auth/ValidateToken`, {
+      params: { token }, // Envía el token como query parameter
+    });
+    return response.data; // Devuelve el userId y role
+  } catch (error) {
+    console.error("Error al validar el token:", error);
+    throw new Error("Token inválido o expirado.");
   }
 };
 

@@ -10,35 +10,36 @@ const InicioSesion = () => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Desestructurar funciones de UserContext
+  const navigate = useNavigate();
   const { setUserId, setToken, setRole } = useUserContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
     if (!correo || !contrasena) {
       setError("Por favor, llena ambos campos.");
+      setIsSubmitting(false);
       return;
     }
 
     try {
-      const userData = {
-        Email: correo,
-        Password: contrasena,
-      };
+      const userData = { Email: correo, Password: contrasena };
 
-      // Llamar a login y obtener los valores
+      // Llamar al service login
       const { userId, token, role } = await login(userData);
-      
+
       if (userId && token && role) {
         // Actualizar el contexto
         setUserId(userId);
         setToken(token);
         setRole(role);
 
-        // Redirigir según el rol
+        // Navegar según el rol
         switch (role) {
           case "Administrador":
             navigate("/inicio-admin");
@@ -53,13 +54,15 @@ const InicioSesion = () => {
             navigate("/pagina-usuario");
             break;
           default:
-            console.log("Rol no reconocido");
+            setError("Rol no reconocido.");
         }
       } else {
         setError("Error al obtener la información de usuario.");
       }
     } catch (err) {
-      setError("Credenciales incorrectas o error al iniciar sesión");
+      setError("Credenciales incorrectas o error al iniciar sesión.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -89,7 +92,7 @@ const InicioSesion = () => {
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
               required
-              placeholder="example@email"
+              placeholder="example@email.com"
             />
             <label>Contraseña</label>
             <input
@@ -100,8 +103,8 @@ const InicioSesion = () => {
               placeholder="Contraseña"
             />
             {error && <p className="error">{error}</p>}
-            <button type="submit" className="boton-iniciar-sesion">
-              Iniciar Sesión
+            <button type="submit" className="boton-iniciar-sesion" disabled={isSubmitting}>
+              {isSubmitting ? "Iniciando..." : "Iniciar Sesión"}
             </button>
           </form>
         </div>

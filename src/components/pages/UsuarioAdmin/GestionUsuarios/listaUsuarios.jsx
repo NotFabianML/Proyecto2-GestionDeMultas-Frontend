@@ -7,7 +7,7 @@ import {
   updateUsuario,
   deleteUsuario,
 } from "../../../../services/usuarioService";
-import { getRoles } from "../../../../services/rolService";
+import { getRoles, asignarRolAUsuario, deleteRolDeUsuario } from "../../../../services/rolService";
 import { formatFechaNacimiento } from "../../../../utils/dateUtils";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import Footer from "../../../layouts/Footer";
@@ -89,6 +89,7 @@ const ListaUsuarios = () => {
         telefono: "",
         roleName: "",
         estado: true,
+        roles: [] // Aseguramos que roles esté presente
       }
     );
     setModalIsOpen(true);
@@ -332,6 +333,32 @@ const ListaUsuarios = () => {
                   <option value="Inactivo">Inactivo</option>
                 </select>
               </div>
+              <div className="filas">
+  <label>Rol</label>
+  <select
+    value={usuarioSeleccionado?.roles?.[0]?.idRol || ""}
+    onChange={async (e) => {
+      const rolId = e.target.value;
+      if (rolId) {
+        try {
+          await asignarRolAUsuario(usuarioSeleccionado.idUsuario, rolId);
+          alert("Rol asignado exitosamente.");
+          fetchUsuarios(); // Refresca la lista de usuarios
+        } catch (error) {
+          alert("Error al asignar el rol.");
+        }
+      }
+    }}
+  >
+    <option value="">Seleccionar rol</option>
+    {roles.map((rol) => (
+      <option key={rol.idRol} value={rol.idRol}>
+        {rol.nombreRol}
+      </option>
+    ))}
+  </select>
+</div>
+
               <div className="botones-modal">
                 <Button
                   type="submit"
