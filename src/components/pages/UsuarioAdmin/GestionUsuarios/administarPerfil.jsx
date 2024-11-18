@@ -1,154 +1,203 @@
 import React, { useState, useEffect } from "react";
-import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
-import Button from "../../../atoms/Button";
+import "./administrarPerfil.css";
+import UsuarioNavbar from "../../../layouts/Navbar/UsuarioNavbar";
 import Footer from "../../../layouts/Footer";
-import ButtonLink from "../../../atoms/ButtonLink";
-import './administrarPerfil.css';
-import axios from "axios";
-import { Cloudinary } from '@cloudinary/url-gen';
-import { fill } from "@cloudinary/url-gen/actions/resize";
+import { getUsuarioById, updateUsuario } from "../../../../services/usuarioService";
+import Button from "../../../atoms/Button";
+import { useUserContext } from "../../../../contexts/UserContext";
 
-const AdministrarPerfil = () => {
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'dekwvhxog'
-    }
-  });
+const Perfil = () => {
+  const { userId } = useUserContext();
+  const [usuario, setUsuario] = useState({});
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [fotoPerfil, setFotoPerfil] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const usuario = {
-    fotoPerfil: '',
-    userName: 'Santiago',
-    apellidos: 'Pérez',
-    id: '1',
-    estado: 'Activo',
-    correo: 'santiago@example.com',
-    numeroPlaca: 'ABC1234',
-    rol: 'Administrador'
+  useEffect(() => {
+    const fetchUsuario = async () => {
+      try {
+        const data = await getUsuarioById(userId);
+        setUsuario(data);
+        setFormData(data);
+        setFotoPerfil(data.fotoPerfil || "");
+      } catch (error) {
+        console.error("Error al cargar el perfil:", error);
+      }
+    };
+    fetchUsuario();
+  }, [userId]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const [nombre, setNombre] = useState(usuario.userName);
-  const [apellidos, setApellidos] = useState(usuario.apellidos);
-  const [correo, setCorreo] = useState(usuario.correo);
-  const [numeroPlaca, setNumeroPlaca] = useState(usuario.numeroPlaca);
-  const [rol, setRol] = useState(usuario.rol);
-  const [fotoPerfil, setFotoPerfil] = useState(cld.image('user_iiwdqq').resize(fill().width(100).height(100)).toURL());
-
-  const handleImageUpload = (result) => {
-    if (result.event === 'success') {
-      setFotoPerfil(result.info.secure_url); // Guarda la URL de la imagen cargada
-    }
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
   };
 
   const openUploadWidget = () => {
     window.cloudinary.openUploadWidget(
       {
-        cloudName: 'dekwvhxog',
-        uploadPreset: 'preset_NexTek',
-        sources: ['local', 'url'],
+        cloudName: "dekwvhxog",
+        uploadPreset: "preset_NexTek",
+        sources: ["local", "url", "camera"],
+        multiple: false,
+        cropping: true,
+        croppingAspectRatio: 1,
+        resourceType: "image",
+        maxImageFileSize: 2000000, // Limitar a 2MB
       },
       (error, result) => {
-        if (result && result.event === 'success') {
-          handleImageUpload(result);
+        if (!error && result?.event === "success") {
+          const imageUrl = result.info.secure_url;
+          setFotoPerfil(imageUrl);
+          setFormData((prev) => ({ ...prev, fotoPerfil: imageUrl }));
+        } else if (error) {
+          console.error("Error al subir la imagen:", error);
         }
       }
     );
   };
 
-  const [showModal, setShowModal] = useState(false);
-  const [roles] = useState(['Administrador', 'Oficial', 'Juez', 'Usuario Normal']);
-
-  const handleRoleSelect = (selectedRole) => {
-    setRol(selectedRole);
-    setShowModal(false);
-  };
-
-  const handleClick = async () => {
-    const formData = new FormData();
-    formData.append("nombre", nombre);
-    formData.append("apellidos", apellidos);
-    formData.append("correo", correo);
-    formData.append("numeroPlaca", numeroPlaca);
-    formData.append("rol", rol);
-
-    if (fotoPerfil) {
-      formData.append("fotoPerfil", fotoPerfil); // Agregar la imagen solo si fue seleccionada
-    }
-    
+  const handleSubmit = async () => {
     try {
-      await axios.post("/api/guardarPerfil", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const updatedData = {
+        idUsuario: usuario.idUsuario,
+        nombre: formData.nombre,
+        apellido1: formData.apellido1,
+        apellido2: formData.apellido2,
+        email: formData.email,
+        telefono: formData.telefono,
+        fechaNacimiento: formData.fechaNacimiento,
+        fotoPerfil: fotoPerfil || usuario.fotoPerfil,
+        estado: usuario.estado, // Mantener el estado actual
+      };
+
+      await updateUsuario(usuario.idUsuario, updatedData);
+      setUsuario(updatedData);
+      setEditMode(false);
       alert("Perfil actualizado exitosamente");
     } catch (error) {
-      console.error("Error al guardar el perfil", error);
-      alert("Hubo un error al guardar el perfil");
+      console.error("Error al guardar el perfil:", error);
+      alert("Hubo un error al actualizar el perfil");
     }
   };
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
-    script.type = "text/javascript";
-    script.async = true;
-    script.onload = () => {
-      console.log('Cloudinary widget script cargado');
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
-    <div className="pagina-editar-perfil">
+    <div className="pagina-perfil">
       <header>
-        <AdminNavbar />
+        <UsuarioNavbar />
       </header>
-      <main >
-        <h1>Editar Perfil</h1>
-
+      <main>
+        <h1>Mi Perfil</h1>
         <div className="perfil-container">
-          <img 
-            src={fotoPerfil} 
-            alt={`Perfil de ${nombre}`} 
-            className="user-photo" 
-          />
-          <Button className="btn-foto" variant="secondary" size="medium" text="Subir Foto" onClick={openUploadWidget} />
+          <div className="foto-container">
+            <img
+              src={fotoPerfil || "/placeholder-profile.png"}
+              alt="Foto de perfil"
+              className="foto-perfil"
+            />
+            {/* {editMode && (
+              <Button
+                text="Subir Foto"
+                onClick={openUploadWidget}
+                variant="secondary"
+                size="medium"
+                disabled={loading}
+              />
+            )} */}
+          </div>
+          <div className="informacion-perfil">
+            <div className="campo">
+              <label>Cédula</label>
+              <input
+                type="text"
+                value={usuario.cedula || ""}
+                readOnly
+                disabled
+              />
+            </div>
+            <div className="campo">
+              <label>Nombre</label>
+              <input
+                type="text"
+                name="nombre"
+                value={formData.nombre || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+            <div className="campo">
+              <label>Primer Apellido</label>
+              <input
+                type="text"
+                name="apellido1"
+                value={formData.apellido1 || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+            <div className="campo">
+              <label>Segundo Apellido</label>
+              <input
+                type="text"
+                name="apellido2"
+                value={formData.apellido2 || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+            <div className="campo">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+            <div className="campo">
+              <label>Teléfono</label>
+              <input
+                type="text"
+                name="telefono"
+                value={formData.telefono || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+            <div className="campo">
+              <label>Fecha de Nacimiento</label>
+              <input
+                type="date"
+                name="fechaNacimiento"
+                value={formData.fechaNacimiento || ""}
+                onChange={handleInputChange}
+                readOnly={!editMode}
+              />
+            </div>
+          </div>
+          {/* <div className="acciones">
+            <Button
+              text={editMode ? "Guardar Cambios" : "Editar Perfil"}
+              onClick={editMode ? handleSubmit : toggleEditMode}
+              variant="primary"
+              size="medium"
+            />
+            {editMode && (
+              <Button
+                text="Cancelar"
+                onClick={toggleEditMode}
+                variant="secondary"
+                size="medium"
+              />
+            )}
+          </div> */}
         </div>
-
-        <div className="perfil-info">
-          <div className="columna-izquierda">
-            <div>
-              <label>Nombre:</label>
-              <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-            </div>
-            <div>
-              <label>Apellidos:</label>
-              <input type="text" value={apellidos} onChange={(e) => setApellidos(e.target.value)} />
-            </div>
-            <div>
-              <label>Correo:</label>
-              <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
-            </div>
-          </div>
-
-          <div className="columna-derecha">
-            <div>
-          
-            </div>
-          </div>
-
-          <div className="guardar-cambios">
-            <Button variant="alternative" text="Guardar Cambios" onClick={handleClick} />
-          </div>
-        </div>
-
-        <ButtonLink variant="outline" text="Regresar" to="/lista-usuarios" />
       </main>
-
       <footer>
         <Footer />
       </footer>
@@ -156,4 +205,4 @@ const AdministrarPerfil = () => {
   );
 };
 
-export default AdministrarPerfil;
+export default Perfil;
