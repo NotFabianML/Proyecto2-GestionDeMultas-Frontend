@@ -44,9 +44,6 @@ const MisMultas = () => {
     // Desestructurar funciones de UserContext
     const { userId } = useUserContext();
 
-
-    console.log(userId);
-
         useEffect(() => {
             const fetchData = async () => {
                 try {
@@ -179,7 +176,7 @@ const MisMultas = () => {
                     <div className="form-row">
                         <label>
                             ID Multa:
-                            <input type="text" name="idMulta" value={multa.idMulta} readOnly required />
+                            <input type="text" name="idMulta" value={formatId(multa.idMulta)}  readOnly required />
                         </label>
                         <label>
                             Fecha:
@@ -247,12 +244,14 @@ const MisMultas = () => {
                                     size="small" 
                                     text="Abrir Disputa" 
                                 />
-                                <Button 
-                                    onClick={() => {openPopup('payment'); setDataMulta(multa);}} 
-                                    variant="primary" 
-                                    size="small" 
-                                    text="Pagar Multa" 
-                                />
+                                {multa.estado !== 3 && (
+                                    <Button 
+                                        onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
+                                        variant="primary" 
+                                        size="small" 
+                                        text="Pagar Multa" 
+                                    />
+                                )}
                             </div>
                         </div>
                     ))}

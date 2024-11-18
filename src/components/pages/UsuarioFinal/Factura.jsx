@@ -1,77 +1,93 @@
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import { format } from "date-fns";
+import { formatId } from "../../../utils/idFormatUtils";
+import "./Factura.css";
+import { useLocation } from 'react-router-dom';
+import Button from "../../atoms/Button";
+import { useNavigate } from 'react-router-dom';
 
-const Factura = ({ multa, user }) => {
+const Factura = () => {
+    const location = useLocation();
+    const { multa, user } = location.state || {};
+    const numeroFacturaInicial = 20241124;
+    const navigate = useNavigate();
+
+    const getNextFacturaNumber = () => {
+        const lastFacturaNumber = parseInt(localStorage.getItem('lastFacturaNumber')) || numeroFacturaInicial;
+        const nextFacturaNumber = lastFacturaNumber + 1;
+        localStorage.setItem('lastFacturaNumber', nextFacturaNumber); // Guardar el número actualizado
+        return nextFacturaNumber;
+    };
+
     const facturaData = {
-        idFactura: 1,
+        idFactura: getNextFacturaNumber(),
         nombreUsuario: `${user?.nombre} ${user?.apellido1} ${user?.apellido2}`,
         identificacion: user?.cedula,
         email: user?.email,
         telefono: user?.telefono,
         fechaFactura: format(new Date(), "yyyy-MM-dd"),
-
         idMulta: multa?.idMulta,
         infracciones: multa?.infracciones,
         montoTotal: multa?.montoTotal,
     };
 
+    const formattedFacturaNumber = facturaData.idFactura.toString().padStart(7, '0');
+
     const generarPDF = () => {
         const doc = new jsPDF();
-
-        // Encabezado
         doc.setFontSize(18);
         doc.text('Factura Electrónica', 105, 20, { align: 'center' });
-
-        // Información del usuario
         doc.setFontSize(12);
         doc.text(`Usuario: ${facturaData.nombreUsuario}`, 10, 50);
         doc.text(`Identificación: ${facturaData.identificacion}`, 10, 60);
         doc.text(`Teléfono: ${facturaData.telefono}`, 10, 70);
         doc.text(`Correo Electrónico: ${facturaData.email}`, 10, 80);
-
-        // Información de la factura
-        doc.text(`No de Factura: ${facturaData.idFactura}`, 150, 50);
+        doc.text(`No de Factura: ${formattedFacturaNumber}`, 150, 50);
         doc.text(`Fecha de factura: ${facturaData.fechaFactura}`, 150, 60);
 
-        // Formatear infracciones para la tabla
         const infraccionesTexto = facturaData.infracciones
-            .map((infraccion, index) => `${infraccion.titulo}`)
+            .map(infraccion => `• ${infraccion.titulo}`)
             .join("\n");
 
-        // Tabla de resumen con infracciones
-        const columns = ["#", "ID Multa", "Infracciones", "Monto Total"];
+        const columns = ["#", "ID Multa", "Infracciones", "Monto"];
         const data = [
-            ["1", facturaData.idMulta, infraccionesTexto, `₡ ${facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}`],
+            ["1", formatId(facturaData.idMulta), infraccionesTexto, `CRC ${facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}`],
         ];
+
+        data.push(["", "", "Monto", `CRC ${facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}`]);
 
         doc.autoTable({
             startY: 100,
             head: [columns],
             body: data,
             theme: 'grid',
-            foot: [['', '', 'Total', `₡ ${facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}`]], // Total en la esquina inferior derecha
-            footStyles: { halign: 'right' },
+            styles: { fontSize: 10 },
+            bodyStyles: { font: "helvetica", textColor: [0, 0, 0] },
+            columnStyles: {
+                3: { halign: 'right' },
+            },
+            didParseCell: function (data) {
+                if (data.row.index === data.table.body.length - 1) {
+                    data.cell.styles.fontStyle = 'bold';
+                    data.cell.styles.halign = 'right';
+                }
+            },
         });
 
-        // Guardar el PDF
-        doc.save(`factura_${facturaData.idFactura}.pdf`);
+        doc.save(`factura_${formattedFacturaNumber}.pdf`);
     };
 
     const generarXML = () => {
         const infraccionesXML = facturaData.infracciones
-            .map(infraccion => `
-                <Infraccion>
-                    <Codigo>${infraccion.codigo}</Codigo>
-                    <Descripcion>${infraccion.descripcion}</Descripcion>
-                    <Monto>₡ ${infraccion.monto.toFixed(2)}</Monto>
-                </Infraccion>
-            `)
+            .map(infraccion => 
+                `<Infraccion><Titulo>${infraccion.titulo}</Titulo></Infraccion>`
+            )
             .join("");
 
         const xmlContent = `
         <FacturaElectronica>
-            <NoFactura>${facturaData.idFactura}</NoFactura>
+            <NoFactura>${formattedFacturaNumber}</NoFactura>
             <FechaFactura>${facturaData.fechaFactura}</FechaFactura>
             <Usuario>
                 <Nombre>${facturaData.nombreUsuario}</Nombre>
@@ -88,17 +104,71 @@ const Factura = ({ multa, user }) => {
 
         const link = document.createElement("a");
         link.href = url;
-        link.download = `factura_${facturaData.idFactura}.xml`;
+        link.download = `factura_${formattedFacturaNumber}.xml`;
         link.click();
 
         URL.revokeObjectURL(url);
     };
 
+    const handleClose = () => {
+        navigate("/mis-multas");
+    };
+
     return (
-        <div>
-            <h1>Factura</h1>
-            <button onClick={generarPDF}>Generar PDF</button>
-            <button onClick={generarXML}>Descargar XML</button>
+        <div className="factura-container">
+
+            <h1>Factura Electrónica</h1>
+
+            <div className="factura-header">
+                <div className="header-left">
+                    <div><strong>Usuario:</strong> {facturaData.nombreUsuario}</div>
+                    <div><strong>Identificación:</strong> {facturaData.identificacion}</div>
+                    <div><strong>Teléfono:</strong> {facturaData.telefono}</div>
+                    <div><strong>Correo Electrónico:</strong> {facturaData.email}</div>
+                </div>
+                <div className="header-right">
+                    <div><strong>No de Factura:</strong> {formattedFacturaNumber}</div>
+                    <div><strong>Fecha de Factura:</strong> {facturaData.fechaFactura}</div>
+                </div>
+            </div>
+            <div className="factura-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID Multa</th>
+                            <th>Infracciones</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>{formatId(facturaData.idMulta)}</td>
+                            <td>
+                                {facturaData?.infracciones
+                                    .map(infraccion => infraccion.titulo)
+                                    .join(", ")
+                                }
+                            </td>
+                            <td>CRC {facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}</td>
+                        </tr>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td  colSpan="3"><strong>Total</strong></td>
+                            <td><strong>CRC {facturaData.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 })}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div className="factura-actions">
+
+                <Button onClick={generarPDF} variant="outline" text="Decargar PDF" />
+                <Button onClick={generarXML} variant="primary" text="Decargar XML" />
+                <Button onClick={handleClose} variant="danger" text="Cerrar" />
+            </div>
         </div>
     );
 };

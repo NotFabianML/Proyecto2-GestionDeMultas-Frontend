@@ -3,6 +3,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Button from '../../atoms/Button';
 import { cambiarEstadoMulta } from '../../../services/multaServices';
 import Factura from '../../../components/pages/UsuarioFinal/Factura';
+import { useNavigate } from 'react-router-dom';
 
 
 const Checkout = ({ multa, user }) => {
@@ -10,6 +11,7 @@ const Checkout = ({ multa, user }) => {
     const [currency, setCurrency] = useState("USD");
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const navigate = useNavigate();
 
     console.log('viene');
     console.log(JSON.stringify(user));
@@ -34,7 +36,7 @@ const Checkout = ({ multa, user }) => {
             purchase_units: [
                 {
                     amount: {
-                        value: (amount / 515).toFixed(2), // Convierte colones a USD si es necesario
+                        value: (amount / 515).toFixed(2),
                     },
                 },
             ],
@@ -47,11 +49,13 @@ const Checkout = ({ multa, user }) => {
             try {
                 await cambiarEstadoMulta(multaId, 2);
                 alert(`Transacción completada exitosamente por ${name}.`);
+                navigate(`/Factura`, { state: { multa, user } });
             } catch (error) {
                 setError(`Error al actualizar el estado de la multa: ${error.message}`);
             }
         });
     };
+    
     <Factura multa={multa} user={user} />
     return (
         <div className="checkout">
@@ -71,9 +75,6 @@ const Checkout = ({ multa, user }) => {
                         createOrder={(data, actions) => onCreateOrder(data, actions)}
                         onApprove={(data, actions) => onApproveOrder(data, actions)}
                     />
-
-                    <Factura multa={multa} user={user} />
-
                 </>
             )}
         </div>

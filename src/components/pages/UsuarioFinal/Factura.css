@@ -1,0 +1,88 @@
+.factura-container h1 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+
+.factura-container {
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  max-width: 800px;
+  margin: auto;
+  border: 2px solid #000;
+  box-sizing: border-box; 
+  width: 210mm; 
+  height: 180mm; 
+  background-color: white;
+  position: relative;
+}
+
+.factura-header {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.factura-header div {
+  margin-bottom: 10px;
+}
+
+.factura-header .header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.factura-header .header-right {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.factura-table table{
+  width: 100%;
+  margin-bottom: 50px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.factura-table th,
+.factura-table td {
+  border: 1px solid #ddd;
+}
+
+.factura-table th {
+  background-color: #75e9b9;
+  padding: 8px;
+}
+
+.factura-table td {
+  text-align: center;
+  padding: 8px;
+}
+
+.factura-table tfoot td {
+  text-align: right;
+  padding: 8px;
+  padding-right: 20px;
+}
+
+.factura-actions {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+.factura-actions button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.factura-actions button:hover {
+  background-color: #0056b3;
+}
