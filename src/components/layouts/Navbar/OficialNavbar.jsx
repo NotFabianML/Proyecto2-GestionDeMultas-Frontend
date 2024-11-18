@@ -29,16 +29,13 @@ const OficialNavbar = () => {
           <Link to="/consulta-publica">Consulta Publica</Link>
         </li>
         <li>
-          <Link to="/about">Mapa de Calor</Link>
+          <Link to="/mapa-calor">Mapa de Calor</Link>
         </li>
         <li>
           <Link to="/crear-multa">Crear Multa</Link>
         </li>
         <li>
           <Link to="/gestion-multas">Gestionar Multas</Link>
-        </li>
-        <li>
-          <Link to="/administrar-perfil">Ver Perfil</Link>
         </li>
       </ul>
 

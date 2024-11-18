@@ -38,14 +38,14 @@ form {
 
 .consulta-publica .input-placa {
     margin-bottom: 20px;
-    width: 150px; 
+    width: 150px;
     border-radius: 30px;
     text-align: center;
 }
 
 .btnConsultaMulta {
     padding: 10px;
-    width: 200px; 
+    width: 200px;
     cursor: pointer;
 }
 
@@ -53,14 +53,16 @@ form {
     background-color: #555555;
 }
 
-.consulta-publica  .tabla-multas {
+.consulta-publica .tabla-multas {
     margin-top: 20px;
-    width: 80%;
-    max-width: 500px;
+    width: 90%; /* Aumentamos el ancho de la tabla a 90% */
+    max-width: 800px; /* Opcional: limita el ancho máximo de la tabla */
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
-    background-color: #ffffff;
+    background-color: #003366; /* Azul marino */
+    color: white; /* Texto en blanco */
+    border-radius: 10px; /* Bordes redondeados */
     overflow: hidden;
 }
 
@@ -69,10 +71,22 @@ form {
     padding: 10px;
     border: 1px solid #dddddd;
     text-align: center;
+    word-wrap: break-word; /* Permite que el texto largo se ajuste al tamaño de la celda */
 }
 
 .consulta-publica .tabla-multas th {
     background-color: #f2f2f2;
     font-weight: bold;
+    color: #181D23; /* Cambiar color de texto de los encabezados a azul marino */
 }
 
+.consulta-publica .tabla-multas td {
+    background-color: #ffffff;
+    color: black; /* Color de texto negro para las celdas */
+}
+
+.consulta-publica .tabla-multas th:nth-child(3), /* Seleccionamos la tercera columna: Infracciones */
+.consulta-publica .tabla-multas td:nth-child(3) {
+    width: 500px; /* Le damos más espacio a la columna de infracciones */
+    max-width: 400px; /* Establecemos un límite máximo para que no se haga demasiado ancha */
+}

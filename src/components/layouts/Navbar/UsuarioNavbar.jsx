@@ -29,7 +29,7 @@ const UsuarioNavbar = () => {
           <Link to="/consulta-publica">Consulta Publica</Link>
         </li>
         <li>
-          <Link to="/about">Mapa de Calor</Link>
+          <Link to="/mapa-calor">Mapa de Calor</Link>
         </li>
         <li>
           <Link to="/mis-multas">Multas</Link>
