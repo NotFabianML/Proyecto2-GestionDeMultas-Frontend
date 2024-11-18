@@ -9,6 +9,7 @@ import { asignarInfraccionAMulta, getInfracciones } from "../../../services/infr
 import { createMulta } from "../../../services/multaServices.js";
 import MapPopup from "../MapPopUp.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
+import { formatId } from '../../../utils/idFormatUtils.js';
 
 const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta, placaImagen}) => {
 
@@ -205,7 +206,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
     <div className="formulario-container">
       <form className="formulario-multa" onSubmit={handlePrimaryClick}>
         {mostrarNumMulta && (
-          <h2>{"Multa N°: " + (multa?.idMulta || "Nueva")}</h2>
+          <h2>{"Multa N°: " + (formatId(multa?.idMulta) || "Nueva")}</h2>
         )}
 
   	    <div className="fila">
