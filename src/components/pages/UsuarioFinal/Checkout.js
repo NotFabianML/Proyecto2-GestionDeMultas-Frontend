@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Button from '../../atoms/Button';
 import { cambiarEstadoMulta } from '../../../services/multaServices';
+import Factura from '../../../components/pages/UsuarioFinal/Factura';
 
 
-const Checkout = ({ amount, multaId }) => {
+const Checkout = ({ multa, user }) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState("USD");
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+
+    console.log('viene');
+    console.log(JSON.stringify(user));
     
+    // Extraer amount y multaId desde la prop 'multa'
+    const amount = multa.montoTotal;
+    const multaId = multa.idMulta;
+   
     const onCurrencyChange = ({ target: { value } }) => {
         setCurrency(value);
         dispatch({
@@ -25,7 +34,7 @@ const Checkout = ({ amount, multaId }) => {
             purchase_units: [
                 {
                     amount: {
-                        value: (amount / 515).toFixed(2).toString(), // Convertir 'amount' a cadena si es necesario
+                        value: (amount / 515).toFixed(2), // Convierte colones a USD si es necesario
                     },
                 },
             ],
@@ -37,17 +46,18 @@ const Checkout = ({ amount, multaId }) => {
             const name = details.payer.name.given_name;
             try {
                 await cambiarEstadoMulta(multaId, 2);
-                alert(`Transaction completed by ${name}`);
+                alert(`Transacción completada exitosamente por ${name}.`);
             } catch (error) {
-                setError(`Error al pagar la multa: ${error.message}`);
+                setError(`Error al actualizar el estado de la multa: ${error.message}`);
             }
         });
     };
-
+    <Factura multa={multa} user={user} />
     return (
         <div className="checkout">
             {isPending ? <p>LOADING...</p> : (
                 <>
+
                     {/* <Button 
                         onClick={() => console.log('Pago con Sinpe')} 
                         variant="primary" 
@@ -55,12 +65,15 @@ const Checkout = ({ amount, multaId }) => {
                         text="Pagar con Sinpe"  
                         style={{ backgroundColor: '#18AEBF', color: '#181D23', width: '250px', marginLeft:0, marginRight:0, marginBottom:10 }} 
                     /> */}
+
                     <PayPalButtons 
                         style={{ layout: "vertical" }}
                         createOrder={(data, actions) => onCreateOrder(data, actions)}
                         onApprove={(data, actions) => onApproveOrder(data, actions)}
-                        
                     />
+
+                    <Factura multa={multa} user={user} />
+
                 </>
             )}
         </div>

@@ -21,6 +21,7 @@ const initialOptions = {
 const MisMultas = () => {
     const [multas, setMultas] = useState([]);
     const [error, setError] = useState(null);
+    const [userData, setUserData] = useState(null);
     const [popupVisible, setPopupVisible] = useState(false);
     const [popupContent, setPopupContent] = useState({ type: '', title: '', message: '' });
     const disputeDataRef = useRef({
@@ -49,12 +50,14 @@ const MisMultas = () => {
             const fetchData = async () => {
                 try {
                     const userData = await getUsuarioById(userId);
+                    setUserData(userData);
                     if (!userData.cedula) { 
                         setError("Error: El usuario no tiene cédula registrada.");
                         return;
                     }
                     const multas = await getMultasPorCedulaUsuario(userData.cedula);
                     setMultas(multas);
+                    
                 } catch (error) {
                     setError(`Error: ${error.message}`);
                 }
@@ -209,7 +212,7 @@ const MisMultas = () => {
                     <div className="button-row">
     
                         <PayPalScriptProvider options={initialOptions}>
-                        <Checkout amount={multa.montoTotal || 1} multaId={multa.idMulta} />
+                            <Checkout multa={multa} user={userData} />
                         </PayPalScriptProvider>
                     
                     </div>
