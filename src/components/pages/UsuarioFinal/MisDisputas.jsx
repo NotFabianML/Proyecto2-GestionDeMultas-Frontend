@@ -67,7 +67,7 @@ const MisDisputas = () => {
                             <div key={disputa.idDisputa} className="card">
                                 <div className="infoDisputa">
                                     <p><strong>ID Disputa:</strong> {formatId(disputa.idDisputa)}</p>
-                                    <p><strong>Multa ID:</strong> {formatId(disputa.multaId)}</p>
+                                    <p><strong>ID Multa:</strong> {formatId(disputa.multaId)}</p>
                                     <p><strong>Juez Asignado:</strong> {juezNombres[disputa.juezId] || 'No asignado'}</p>
                                     <p><strong>Fecha de Creación:</strong> {new Date(disputa.fechaCreacion).toLocaleDateString()}</p>
                                     <p><strong>Motivo:</strong> {disputa.motivoReclamo}</p>
