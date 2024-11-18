@@ -5,7 +5,8 @@ import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
 import { getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
 import { getUsuarioById } from '../../../services/usuarioService.js';
-import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
+import { isoToDateFormatter } from '../../../utils/dateUtils.js';
+import { formatId } from '../../../utils/idFormatUtils.js'; 
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { createDisputa } from '../../../services/disputaService';
 import '../../../styles/index.css';
@@ -107,7 +108,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="idMulta"
-                                value={multa.idMulta}
+                                value={formatId(multa.idMulta)}
                                 readOnly
                                 required
                             />
@@ -230,7 +231,7 @@ const MisMultas = () => {
                     {multas.map((multa) => (
                         <div key={multa.id} className="card">
                             <div className="infoMulta">
-                                <p><strong>ID Multa:</strong> {multa.idMulta}</p>
+                                <p><strong>ID Multa:</strong> {formatId(multa.idMulta)}</p>
                                 <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
                                 <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
                                 <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
