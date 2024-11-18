@@ -6,6 +6,7 @@ import FormularioMulta from '../../organism/Formulario/FormularioMulta.jsx';
 import Select from 'react-select';
 import { getMultasPorOficialId, getMultaById, updateMulta, deleteMulta} from '../../../services/multaServices.js'; // Asegúrate de tener la función getMultaPorId
 import { useUserContext } from '../../../contexts/UserContext.jsx';
+import { formatId } from '../../../utils/idFormatUtils.js';
 
 
 const GestionMultas = () => {
@@ -93,7 +94,7 @@ const GestionMultas = () => {
                         <Select
                             id="numeroMulta"
                             name="numeroMulta"
-                            options={multas.map(multa => ({ value: multa.idMulta, label: `Multa N°: ${multa.idMulta}` }))}
+                            options={multas.map(multa => ({ value: multa.idMulta, label: `Multa N°: ${formatId(multa.idMulta)}` }))}
                             value={selectedMulta}
                             onChange={handleSelectChange}
                             placeholder="Seleccione una multa"

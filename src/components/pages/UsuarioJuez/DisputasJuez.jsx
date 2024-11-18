@@ -11,6 +11,8 @@ import { getMultasAsignadasAJuez } from '../../../services/disputaService.js';
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';
 import Button from '../../atoms/Button.jsx';
+import { formatId } from '../../../utils/idFormatUtils.js';
+import { getEstadoDisputa } from '../../../utils/disputaUtils.js';
 
 const Disputas = () => {
     const [disputas, setDisputas] = useState([]);
@@ -88,10 +90,10 @@ const Disputas = () => {
                             {disputasFiltradas.length > 0 ? (
                                 disputasActuales.map((disputa) => (
                                     <tr key={disputa.id}>
-                                        <td>{disputa.idDisputa}</td>
+                                        <td>{formatId(disputa.idDisputa)}</td>
                                         <td>{disputa.numeroPlaca}</td>
                                         <td>{isoToDateFormatter(disputa.fechaCreacion)}</td>
-                                        <td>{disputa.estado}</td>
+                                        <td>{getEstadoDisputa(disputa.estado)}</td>
                                         <td className="buttonLink">
                                             <Button 
                                                // to={ `/resolver-disputa/${disputa.multaId}` }
