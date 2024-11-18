@@ -77,6 +77,7 @@ const ConsultaPublica = () => {
                             <tr>
                                 <th>Fecha</th>
                                 <th>Estado</th>
+                                <th>Infracciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,6 +85,15 @@ const ConsultaPublica = () => {
                                 <tr key={index}>
                                     <td>{isoToDateFormatter(multa.fechaHora)}</td>
                                     <td>{traducirEstado(multa.estado)}</td>
+                                    <td>
+                                        {multa.infracciones && multa.infracciones.length > 0
+                                            ? multa.infracciones.map((infraccion, infraccionIndex) => (
+                                                <div key={infraccionIndex}>
+                                                    {infraccion.titulo} - {infraccion.monto ? `$${infraccion.monto}` : 'Sin monto'}
+                                                </div>
+                                            ))
+                                            : 'N/A'}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
