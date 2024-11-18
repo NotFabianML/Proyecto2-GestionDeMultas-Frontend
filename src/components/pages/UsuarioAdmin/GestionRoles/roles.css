@@ -1,31 +1,42 @@
 .espaciado-botones {
-  margin-top: 20px; 
+  margin-top: 20px;
   row-gap: 40px;
   gap: 40px;
 }
 
 .crear-rol-btn {
-  padding: 10px 20px; 
-  width: auto; 
-  max-width: 150px; 
+  padding: 10px 20px;
+  width: auto;
+  max-width: 150px;
   margin-right: 40px;
 }
 
 .guardar-rol-btn {
-  padding: 15px 25px; 
-  width: auto; 
-  max-width: 200px; 
-  margin-top: 25px; 
+  padding: 15px 25px;
+  width: auto;
+  max-width: 200px;
+  margin-top: 25px;
   margin-left: 460px;
 }
 
 .lista-roles table tbody tr td {
-  padding-bottom: 15px; 
+  margin-top: 40px;
+  padding-bottom: 15px;
   padding-right: 15px;
 }
 
+/* Espaciado entre las columnas de la tabla */
+.lista-roles table tbody tr td:first-child {
+  padding-left: 30px; /* Espaciado a la izquierda de la primera columna */
+}
+
+.lista-roles table tbody tr td:nth-child(2) {
+  padding-left: 30px; /* Espaciado a la izquierda de la columna de Descripción */
+}
+
 .lista-roles table tbody tr td:last-child {
-  padding-right: 15px; 
+  margin-top: 40px;
+  padding-right: 15px;
 }
 
 button.primary {
@@ -34,22 +45,114 @@ button.primary {
 }
 
 .nombre-label {
-  color: #000000; 
+  color: #000000;
 }
 
 .permiso-label {
-  color: #000000; 
+  color: #000000;
 }
 
 .nombre-rol-label {
   font-size: 17px;
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #000; 
+  color: #000;
+}
+
+.descripcion-rol-label {
+  font-size: 17px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #000; /* Cambié el color a negro */
 }
 
 .permisos-container h3 {
   margin-top: 15px;
-  margin-bottom: 25px; 
+  margin-bottom: 25px;
 }
 
+/* Espaciado entre los botones de permisos disponibles */
+.permisos-container ul {
+  list-style-type: none;
+  padding-left: 3px;
+}
+
+.permisos-container ul li {
+  margin-bottom: 10px; /* Espaciado vertical entre cada permiso */
+}
+
+.permisos-container ul li button {
+  margin-left: 90px; /* Espaciado horizontal entre el texto y el botón */
+  justify-content: right;
+  align-items: right;
+}
+
+/* Alineación de todos los botones en el modal al centro */
+.modal .espaciado-botones {
+  display: flex;
+  justify-content: center; /* Centra todos los botones en el modal */
+  gap: 20px; /* Espaciado entre los botones */
+  align-items: center;
+  margin-top: 20px; /* Añadido un pequeño margen superior */
+}
+
+/* Aseguramos que todos los botones del modal estén alineados al centro */
+.modal button {
+  display: inline-block;
+  margin: 0 10px 10px 10px; /* Espaciado entre los botones */
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modificar botón de guardar para que esté centrado también */
+.modal .guardar-rol-btn {
+  display: inline-block;
+  margin-left: 0; /* Centrado sin margen extra */
+  margin-right: 10px;
+  margin-top: 20px;
+  padding: 15px 25px;
+  align-self: center; /* Asegura que el botón de guardar esté centrado */
+  justify-content: center;
+}
+
+/* Alineación de los botones en la misma línea al centro */
+.modal .guardar-rol-btn,
+.modal button.primary,
+.modal button.danger {
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Espaciado entre los campos en el modal: "Editar Rol", "Nombre del Rol:", y "Descripción del Rol:" */
+.modal .form-group {
+  margin-bottom: 20px; /* Añadido espaciado entre los campos */
+}
+
+.modal .form-group label {
+  font-size: 17px;
+  color: #000;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.modal .form-group input,
+.modal .form-group textarea {
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.modal .form-group textarea {
+  height: 100px;
+}
+
+/* Centrar el título "Editar Rol" */
+.modal .modal-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
