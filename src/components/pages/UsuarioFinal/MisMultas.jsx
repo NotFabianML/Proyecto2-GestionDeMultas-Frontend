@@ -11,6 +11,7 @@ import { createDisputa } from '../../../services/disputaService';
 import '../../../styles/index.css';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Checkout from './Checkout';
+import { formatId } from '../../../utils/idFormatUtils.js';
 
 const initialOptions = {
   "client-id": "Adoww9KeExfepE0evtSMzMHBZqgFYTOitCqUjfQaLt1Np1V7gY9P-v-kPO-FzrBeMt4IsCDw0qC9tzqQ",
