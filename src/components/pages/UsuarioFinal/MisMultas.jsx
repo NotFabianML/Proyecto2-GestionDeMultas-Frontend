@@ -91,7 +91,7 @@ const MisMultas = () => {
     function handleSubmit(event) {
         event.preventDefault();
         console.log(disputeDataRef.current);
-        createDisputa(disputeDataRef.current).then(() => {
+        createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(() => {
             closePopup();
         });
     }
