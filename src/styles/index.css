@@ -7,7 +7,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh; 
 }
 
 code {
@@ -17,16 +16,21 @@ code {
 
 .indexUsuarios {
   background-color: #dadada;
-  min-height: 100vh; 
   display: flex; 
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenedorIndex {
+  min-height: 100vh;
+  flex: 1;
 }
 
 .indexUsuarios .header {
   margin-bottom: 30px;
 }
 
-.indexUsuarios h1 {
+.conenedorIndex h1 {
   color: #181D23;
   font-size: 36px;
   margin-top: 8%;
@@ -34,13 +38,14 @@ code {
   text-align: center;
 }
 
-.indexUsuarios p {
+.conenedorIndex p {
   margin: 7px auto;
   font-size: medium;
   color: #181D23;
+  text-align: center;
 }
 
-.indexUsuarios .botones {
+.conenedorIndex .botones {
   display: flex;
   justify-content: center;
   flex-direction: row; 

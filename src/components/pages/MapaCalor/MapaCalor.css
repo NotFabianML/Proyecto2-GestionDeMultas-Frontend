@@ -1,18 +1,8 @@
-* { 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .mapa-calor-page {
     display: flex;
     flex-direction: column;
     height: 100vh;
     font-family: Arial, sans-serif;
-}
-
-header, footer {
-    flex-shrink: 0;
 }
 
 .mapa-calor-content {

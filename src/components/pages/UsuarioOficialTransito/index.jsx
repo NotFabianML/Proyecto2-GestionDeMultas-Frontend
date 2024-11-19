@@ -11,15 +11,17 @@ const PaginaOficialTransito = () => {
                 <OficialNavbar />
             </header>
 
-            <h1>Módulo del Oficial de Tránsito</h1>
+                <div className="conenedorIndex">
+                    <h1>Módulo del Oficial de Tránsito</h1>
 
-            <p className="texto">Aquí puedes crear nuevas multas y consultar multas registradas</p>
-            <div className="botones">
-                
-                <br />
-                <ButtonLink to="/crear-multa" id="btnCrearMulta" className="btnCrearMulta" variant= "primary" size="medium" text="Crear Multa"/>
-                <ButtonLink to="/gestion-multas" id="btnGestionarMultas" className="btnGestionarMultas" variant= "primary" size="medium" text="Gestionar Multas"/>
-            </div>
+                    <p className="texto">Aquí puedes crear nuevas multas y consultar multas registradas</p>
+                    <div className="botones">
+                        
+                        <br />
+                        <ButtonLink to="/crear-multa" id="btnCrearMulta" className="btnCrearMulta" variant= "primary" size="medium" text="Crear Multa"/>
+                        <ButtonLink to="/gestion-multas" id="btnGestionarMultas" className="btnGestionarMultas" variant= "primary" size="medium" text="Gestionar Multas"/>
+                    </div>
+                </div>
 
             <footer>
                 <Footer />

@@ -11,16 +11,18 @@ const PaginaJuez = () => {
                 <JuezNavbar />
             </header>
 
-            <h1>Módulo del Juez de Tránsito</h1>
+                <div className="conenedorIndex">
+                    <h1>Módulo del Juez de Tránsito</h1>
 
-            <p className="texto">Aquí puedes consultar y resolver disputas asignadas</p>
-            <div className="botones">
+                    <p className="texto">Aquí puedes consultar y resolver disputas asignadas</p>
+                    <div className="botones">
+                        
+                        <br />
+                        <ButtonLink to="" id="btnDisputaAsignada" className="btnDisputaAsignada" variant= "primary" size="medium" text="Disputas Asignadas"/>
+                        <ButtonLink to="" id="btnResolverDisputa" className="btnResolverDisputa" variant="primary" size="medium" text="Resolver Disputas"/>
+                    </div>
+                </div>
                 
-                <br />
-                <ButtonLink to="" id="btnDisputaAsignada" className="btnDisputaAsignada" variant= "primary" size="medium" text="Disputas Asignadas"/>
-                <ButtonLink to="" id="btnResolverDisputa" className="btnResolverDisputa" variant="primary" size="medium" text="Resolver Disputas"/>
-            </div>
-
             <footer>
                 <Footer />
             </footer>

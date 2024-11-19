@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: #DADADA; 
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-}
+} */
 
 .pagina-registro {
     flex: 1;
@@ -81,13 +81,13 @@ body {
     margin-bottom: 20px;
 }
 
-.input-group {
+.formulario-derecha .input-group {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.input-group label {
+.formulario-derecha .input-group label {
     font-size: 16px;
     color: #333333;
     margin-bottom: 8px;

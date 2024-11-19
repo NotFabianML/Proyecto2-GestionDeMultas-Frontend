@@ -11,7 +11,7 @@ const InicioAdmin = () => {
   };
 
   return (
-    <div>
+    <div className="contenedor-principal">
       <header>
         <AdminNavbar />
       </header>
@@ -23,6 +23,7 @@ const InicioAdmin = () => {
         <ButtonLink variant="secondary" text="Gestionar Catálogo de Infracciones" to="/infraccion" />
         <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/multas-tabla" />
       </div>
+
       <footer>
         <Footer />
       </footer>

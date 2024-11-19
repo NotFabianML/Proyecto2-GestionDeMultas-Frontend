@@ -51,7 +51,7 @@
     flex-direction: column;
 }
 
-input, textarea {
+.formulario-multa input, textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -67,7 +67,7 @@ input, textarea {
 }
 
 
-textarea {
+.formulario-multa textarea {
     height: 100px;
     resize: none;
 }

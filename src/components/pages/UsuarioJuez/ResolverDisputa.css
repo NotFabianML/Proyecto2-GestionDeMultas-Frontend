@@ -5,10 +5,6 @@
     min-height: 100vh;    
 }
 
-* {
-    box-sizing: border-box;
-}
-
 .resolver-disputa h1 {
     color: #181D23;
     text-align: left;
