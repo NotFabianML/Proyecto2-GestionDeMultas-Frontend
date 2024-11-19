@@ -122,7 +122,7 @@ const ConsultaPublica = () => {
                             <div key={infraccionIndex}>
                               {infraccion.titulo} -{" "}
                               {infraccion.monto
-                                ? `$${infraccion.monto}`
+                                ? `₡${infraccion.monto}`
                                 : "Sin monto"}
                             </div>
                           )
