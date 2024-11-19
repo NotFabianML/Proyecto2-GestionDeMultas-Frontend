@@ -34,9 +34,6 @@ const JuezNavbar = () => {
         <li>
           <Link to="/disputas-juez">Disputas Asignadas</Link>
         </li>
-        <li>
-          <Link to="/administrar-perfil">Ver Perfil</Link>
-        </li>
       </ul>
 
       {/* Botones */}
