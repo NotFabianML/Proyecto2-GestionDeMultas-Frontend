@@ -21,7 +21,7 @@ const InicioAdmin = () => {
         <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/lista-usuarios" />
         <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/roles" />
         <ButtonLink variant="secondary" text="Gestionar Catálogo de Infracciones" to="/infraccion" />
-        <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/multas-tabla" />
+        <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/dashboard-admin" />
       </div>
       <footer>
         <Footer />

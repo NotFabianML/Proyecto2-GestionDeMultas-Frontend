@@ -41,7 +41,7 @@ const AdminNavbar = () => {
           <Link to="/infraccion">Catalogo de Infracciones</Link>
         </li>
         <li>
-          <Link to="/multas-tabla">Estadistica de Multas</Link>
+          <Link to="/dashboard-admin">Estadistica de Multas</Link>
         </li>
       </ul>
 
