@@ -44,7 +44,7 @@ const PasswordReset = () => {
       await resetPassword(email, token, password);
       // setMessage("La contraseña se ha restablecido correctamente.");
       alert("La contraseña se ha restablecido correctamente.");
-      navigate("/iniciar-sesion");
+      navigate("/inicio-sesion");
       // setPassword("");
       // setConfirmPassword("");
     } catch (err) {
