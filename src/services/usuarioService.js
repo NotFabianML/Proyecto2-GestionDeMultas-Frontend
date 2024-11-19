@@ -20,8 +20,30 @@ export const getUsuarioPorCedula = async (cedula) => {
 
 export const verificarCorreoUnico = async (email) => {
   const response = await axiosInstance.get(`/usuarios/verificar-correo/${email}`);
-  return response.data;
+  return response.data; // Retorna { Existe: true/false, IdUsuario: <guid o null> }
 };
+
+
+// export const verificarCorreoUnico = async (email) => {
+//   try {
+//     const response = await axiosInstance.get(`/usuarios/verificar-correo/${email}`);
+//     return { disponible: true, idUsuario: null }; // Si no hay conflicto, el correo está disponible
+//   } catch (error) {
+//     if (error.response?.status === 409) {
+//       // Si el servidor devuelve conflicto, extraer el mensaje y el IdUsuario
+//       return {
+//         disponible: false,
+//         idUsuario: error.response.data?.idUsuario || null,
+//         mensaje: error.response.data?.message || "El correo ya existe."
+//       };
+//     }
+//     // En caso de otro error, lanzar una excepción
+//     throw new Error(
+//       error.response?.data || "Error al verificar la disponibilidad del correo."
+//     );
+//   }
+// };
+
 
 // Obtener usuarios por rol ID
 export const getUsuariosPorRol = async (rolId) => {
