@@ -7,6 +7,7 @@ import AdministrarPerfil from "../components/pages/UsuarioAdmin/GestionUsuarios/
 import InicioSesion from "../components/pages/InicioSesion/InicioSesion.jsx";
 import RegistroUsuario from "../components/pages/RegistroUsuario/RegistroUsuario.jsx";
 import PasswordRecovery from "../components/pages/PasswordRecovery/PasswordRecovery.jsx";
+import PasswordReset from "../components/pages/PasswordReset/PasswordReset.jsx";
 import ConsultaPublica from "../components/pages/ConsultaPublica/ConsultaPublica.jsx";
 import MapaCalor from "../components/pages/MapaCalor/MapaCalor.jsx";
 
@@ -46,7 +47,8 @@ export const MainRouter = () => {
         <Route path="/administrar-perfil" element={<AdministrarPerfil />} />
         <Route path="/inicio-sesion" element={<InicioSesion />} />
         <Route path="/registro-usuario" element={<RegistroUsuario />} />
-        <Route path="/password-recovery" element={<PasswordRecovery />} />
+        <Route path="/recuperar-contraseña" element={<PasswordRecovery />} />
+        <Route path="/resetear-contraseña" element={<PasswordReset />} />
         <Route path="/consulta-publica" element={<ConsultaPublica />} />
         <Route path="/mapa-calor" element={<MapaCalor />} />
 

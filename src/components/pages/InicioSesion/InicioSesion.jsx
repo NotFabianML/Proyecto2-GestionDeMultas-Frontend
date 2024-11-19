@@ -80,7 +80,7 @@ const InicioSesion = () => {
             corresponda al rol ingresado en el registro.
           </p>
           <div className="links-inicio-sesion">
-            <Link to="/password-recovery">¿Olvidaste tu contraseña?</Link>
+            <Link to="/recuperar-contraseña">¿Olvidaste tu contraseña?</Link>
             <Link to="/registro-usuario">¿No tienes una cuenta aún?</Link>
           </div>
         </div>
