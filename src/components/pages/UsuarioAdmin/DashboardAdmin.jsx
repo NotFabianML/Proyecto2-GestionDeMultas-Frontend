@@ -9,6 +9,7 @@ import 'jspdf-autotable'; // Importa el complemento
 import { getMultas } from '../../../services/multaServices'; 
 import { getDisputas } from '../../../services/disputaService'; // Asegúrate de tener estos servicios correctamente configurados para hacer los requests
 import { formatId } from '../../../utils/idFormatUtils.js';
+import { isoToDateFormatter } from '../../../utils/dateUtils.js';
 
 const DashboardAdmin = () => {
     const [multas, setMultas] = useState([]);
@@ -187,7 +188,7 @@ const DashboardAdmin = () => {
                                 multasActuales.map((multa) => (
                                     <tr key={multa.idMulta}>
                                         <td>{formatId(multa.idMulta)}</td>
-                                        <td>{new Date(multa.fechaHora).toLocaleDateString()}</td>
+                                        <td>{isoToDateFormatter(multa.fechaHora)}</td>
                                         <td>{multa.numeroPlaca}</td>
                                         <td>{"₡ " + multa.montoTotal}</td>
                                         <td>{multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'}</td>
@@ -267,8 +268,8 @@ const DashboardAdmin = () => {
                             {disputasFiltradas.length > 0 ? (
                                 disputasFiltradas.map((disputa) => (
                                     <tr key={disputa.idDisputa}>
-                                        <td>{disputa.idDisputa}</td>
-                                        <td>{new Date(disputa.fechaHora).toLocaleDateString()}</td>
+                                        <td>{formatId(disputa.idDisputa)}</td>
+                                        <td>{isoToDateFormatter(disputa.fechaHora)}</td>
                                         <td>{disputa.estado === 1 ? 'Pendiente' : disputa.estado === 2 ? 'Resuelta' : 'Rechazada'}</td>
                                     </tr>
                                 ))
