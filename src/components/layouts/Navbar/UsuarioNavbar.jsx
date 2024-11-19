@@ -41,6 +41,9 @@ const UsuarioNavbar = () => {
           <Link to="/mis-vehiculos">Vehiculos</Link>
         </li>
         <li>
+          <Link to="/dashboard-user">Dashboard</Link>
+        </li>
+        <li>
           <Link to="/administrar-perfil">Ver Perfil</Link>
         </li>
       </ul>

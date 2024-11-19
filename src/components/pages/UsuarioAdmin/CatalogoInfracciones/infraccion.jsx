@@ -26,6 +26,17 @@ const Infracciones = () => {
   const elementosPorPagina = 10;
   const [ocultarBtnEliminar, setOcultarBtn] = useState(false);
  
+  const fetchInfracciones = () => {
+    getInfracciones()
+      .then((data) => {
+        const infraccionesActivas = data.filter(infraccion => infraccion.estado === true);
+        setInfracciones(infraccionesActivas);
+      })
+      .catch((error) => {
+        setError(`Error: ${error.message}`);
+      });
+  };
+
   useEffect(() => {
     getInfracciones()
       .then((data) => {
@@ -82,22 +93,26 @@ const Infracciones = () => {
       updateInfraccion(nuevaInfraccion.idInfraccion, nuevaInfraccion).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
         alert("Infracción actualizada");
+        fetchInfracciones();
       });
     } else {
       const { idInfraccion, ...infraccionSinId } = nuevaInfraccion;
       createInfraccion(infraccionSinId).then((result) => {
         setNuevaInfraccion({ ...nuevaInfraccion });
         alert("Infracción creada");
+        fetchInfracciones();
       });
     }
     cerrarModal();
+
   };
 
   const handleEliminarInfraccion = () => {
     cambiarEstadoInfraccion(infraccionSeleccionada.idInfraccion, 0).then((result) => {  
       alert("Infracción eliminada");
     });
-    cerrarModal();    
+    cerrarModal();   
+    fetchInfracciones(); 
   };
 
   return (
