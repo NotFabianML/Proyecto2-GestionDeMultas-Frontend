@@ -11,6 +11,7 @@ import {
   getRoles,
   asignarRolAUsuario,
   deleteRolDeUsuario,
+  getRolesPorUsuario,
 } from "../../../../services/rolService";
 import { formatFechaNacimiento } from "../../../../utils/dateUtils";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
@@ -81,10 +82,22 @@ const ListaUsuarios = () => {
     setPaginaActual(numeroPagina);
   };
 
-  const abrirModal = (usuario = null) => {
+  const abrirModal = async (usuario = null) => {
     setIsEditing(!!usuario);
-    setUsuarioSeleccionado(
-      usuario || {
+  
+    if (usuario) {
+      try {
+        const rolesAsignados = await getRolesPorUsuario(usuario.idUsuario); // Obtiene roles del backend
+        setUsuarioSeleccionado({
+          ...usuario,
+          roles: rolesAsignados, // Asigna los roles obtenidos
+        });
+      } catch (error) {
+        console.error("Error al obtener roles del usuario:", error);
+        alert("No se pudieron cargar los roles asignados.");
+      }
+    } else {
+      setUsuarioSeleccionado({
         cedula: "",
         nombre: "",
         apellido1: "",
@@ -93,11 +106,13 @@ const ListaUsuarios = () => {
         telefono: "",
         roleName: "",
         estado: true,
-        roles: [], // Aseguramos que roles esté presente
-      }
-    );
+        roles: [], // Asegura que roles esté inicializado
+      });
+    }
+  
     setModalIsOpen(true);
   };
+  
 
   const cerrarModal = () => {
     setModalIsOpen(false);
@@ -365,6 +380,43 @@ const ListaUsuarios = () => {
                   ))}
                 </select>
               </div>
+              <div className="filas">
+  <label>Roles Asignados</label>
+  <ul>
+    {usuarioSeleccionado?.roles.map((rol) => (
+      <li key={rol.idRol}>
+        {rol.nombreRol}
+        <Button
+          variant="danger"
+          size="small"
+          text="Eliminar"
+          onClick={async () => {
+            if (
+              window.confirm(
+                `¿Estás seguro de que deseas eliminar el rol "${rol.nombreRol}" del usuario?`
+              )
+            ) {
+              try {
+                await deleteRolDeUsuario(usuarioSeleccionado.idUsuario, rol.idRol);
+                alert(`Rol "${rol.nombreRol}" eliminado con éxito.`);
+                // Vuelve a cargar los roles del usuario
+                const rolesActualizados = await getRolesPorUsuario(usuarioSeleccionado.idUsuario);
+                setUsuarioSeleccionado({
+                  ...usuarioSeleccionado,
+                  roles: rolesActualizados,
+                });
+              } catch (error) {
+                console.error("Error al eliminar el rol:", error);
+                alert("No se pudo eliminar el rol. Inténtalo de nuevo.");
+              }
+            }
+          }}
+        />
+      </li>
+    ))}
+  </ul>
+</div>
+
 
               <div className="botones-modal">
                 <Button

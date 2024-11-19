@@ -251,33 +251,42 @@ const Roles = () => {
             />
           </div>
           <div className="permisos-container">
-            <h3>Permisos Asignados</h3>
-            <ul>
-              {permisosAsignados.map((permiso) => (
-                <li key={permiso.idPermiso}>
-                  {permiso.nombrePermiso}
-                  <Button
-                    variant="danger"
-                    text="Eliminar"
-                    onClick={() => eliminarPermiso(permiso.idPermiso)}
-                  />
-                </li>
-              ))}
-              </ul>
-            <h3>Permisos Disponibles</h3>
-            <ul>
-              {permisosDisponibles.map((permiso) => (
-                <li key={permiso.idPermiso}>
-                  {permiso.nombrePermiso}
-                  <Button
-                    variant="primary"
-                    text="Agregar"
-                    onClick={() => agregarPermiso(permiso.idPermiso)}
-                  />
-                </li>
-              ))}
-            </ul>
-          </div>
+  <h3>Permisos Asignados</h3>
+  <ul>
+    {permisosAsignados.map((permiso) => (
+      <li key={permiso.idPermiso}>
+        {permiso.nombrePermiso}
+        <Button
+          variant="danger"
+          text="Eliminar"
+          onClick={() => eliminarPermiso(permiso.idPermiso)}
+        />
+      </li>
+    ))}
+  </ul>
+  <h3>Permisos Disponibles</h3>
+  <ul>
+    {permisosDisponibles
+      .filter(
+        (permisoDisponible) =>
+          !permisosAsignados.some(
+            (permisoAsignado) =>
+              permisoAsignado.idPermiso === permisoDisponible.idPermiso
+          )
+      )
+      .map((permiso) => (
+        <li key={permiso.idPermiso}>
+          {permiso.nombrePermiso}
+          <Button
+            variant="primary"
+            text="Agregar"
+            onClick={() => agregarPermiso(permiso.idPermiso)}
+          />
+        </li>
+      ))}
+  </ul>
+</div>
+
           <Button
             className="guardar-rol-btn"
             variant="primary"
