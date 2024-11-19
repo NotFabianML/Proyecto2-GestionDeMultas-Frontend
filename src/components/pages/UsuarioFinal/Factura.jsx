@@ -165,8 +165,8 @@ const Factura = () => {
             </div>
             <div className="factura-actions">
 
-                <Button onClick={generarPDF} variant="outline" text="Decargar PDF" />
-                <Button onClick={generarXML} variant="primary" text="Decargar XML" />
+                <Button onClick={generarPDF} variant="outline" text="Descargar PDF" />
+                <Button onClick={generarXML} variant="primary" text="Descargar XML" />
                 <Button onClick={handleClose} variant="danger" text="Cerrar" />
             </div>
         </div>
