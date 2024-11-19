@@ -41,11 +41,14 @@ const FormAdminCrearUsuario = ({ usuario, onChange, roles, onSuccess }) => {
   };
 
   const handleGenerateEmail = async () => {
-    const email = `${usuario.nombre?.charAt(0).toLowerCase() || ""}${usuario.apellido1?.toLowerCase() || ""}${usuario.apellido2?.charAt(0).toLowerCase() || ""}@nextek.com`;
+    const email = `${usuario.nombre?.charAt(0).toLowerCase() || ""}${
+      usuario.apellido1?.toLowerCase() || ""
+    }${usuario.apellido2?.charAt(0).toLowerCase() || ""}@nextek.com`;
     setCorreoGenerado(email);
 
-    const isEmailUnique = await verificarCorreoUnico(email);
-    if (!isEmailUnique) {
+    const result = await verificarCorreoUnico(email);
+    if (result.Existe) {
+      console.log(`ID del usuario existente: ${result.IdUsuario}`);
       setError(
         "El correo ya está en uso, intente con un nombre o apellido diferente."
       );
