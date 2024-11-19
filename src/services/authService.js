@@ -178,9 +178,9 @@ export const forgotPassword = async (email, resetUrl) => {
 export const resetPassword = async (email, token, password) => {
   try {
     const response = await axiosInstance.post("/auth/resetpassword", {
-      email,
-      token,
-      password,
+      Email: email,
+      Token: token,
+      Password: password,
     });
     return response.data;
   } catch (error) {
