@@ -13,6 +13,7 @@ import {
   deleteRolDeUsuario,
   getRolesPorUsuario,
 } from "../../../../services/rolService";
+import { sendEmail } from "../../../../services/authService";
 import { formatFechaNacimiento } from "../../../../utils/dateUtils";
 import AdminNavbar from "../../../layouts/Navbar/AdminNavbar";
 import Footer from "../../../layouts/Footer";
@@ -135,16 +136,34 @@ const ListaUsuarios = () => {
       ),
       telefono: usuarioSeleccionado.telefono,
       fotoPerfil: usuarioSeleccionado.fotoPerfil || null,
+      estado: usuarioSeleccionado.estado,
     };
 
     try {
       await updateUsuario(usuarioSeleccionado.idUsuario, usuarioData);
       alert("Usuario actualizado con éxito");
+      const rolesUsuario = await getRolesPorUsuario(usuarioSeleccionado.idUsuario);
+      const rolesNombres = rolesUsuario.map((rol) => rol.nombreRol).join(", ");
+      const message = `
+      Hola ${usuarioSeleccionado.nombre},
+
+      Se han actualizado los datos de tu perfil. A continuación, te presentamos los datos actuales de tu perfil:
+
+      - Cédula: ${usuarioData.cedula}\n
+      - Nombre Completo: ${usuarioData.nombre} ${usuarioData.apellido1} ${usuarioData.apellido2 || ""}\n
+      - Correo: ${usuarioData.email}\n
+      - Fecha de Nacimiento: ${usuarioData.fechaNacimiento}\n
+      - Teléfono: ${usuarioData.telefono}\n
+      - Estado: ${usuarioData.estado ? "Activo" : "Inactivo"}\n
+      - Roles: ${rolesNombres || "Sin roles asignados"}
+    `;
+    await sendEmail(usuarioData.email, message);
+    alert("Correo Enviado con exito");
       cerrarModal();
       await fetchUsuarios();
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
-      alert("Error al actualizar el usuario");
+      console.error("Error al actualizar usuario o enviar correo:", error);
+      alert("Error al actualizar el usuario o enviar correo");
     }
   };
 

@@ -189,3 +189,18 @@ export const resetPassword = async (email, token, password) => {
     );
   }
 };
+
+// Enviar notificacion por correo
+export const sendEmail = async (email, message) => {
+  try {
+    const response = await axiosInstance.post("/auth/sendemail", {
+      email,
+      message,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data || "Error al enviar notificación por correo"
+    );
+  }
+}
