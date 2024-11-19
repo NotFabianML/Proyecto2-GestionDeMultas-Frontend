@@ -87,11 +87,10 @@ const MisMultas = () => {
         };
     }
 
-
     function handleSubmit(event) {
         event.preventDefault();
         console.log(disputeDataRef.current);
-        createDisputa(disputeDataRef.current).then(() => {
+        createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(() => {
             closePopup();
         });
     }
@@ -108,7 +107,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="idMulta"
-                                value={multa.idMulta}
+                                value={formatId(multa.idMulta)}
                                 readOnly
                                 required
                             />
@@ -227,35 +226,38 @@ const MisMultas = () => {
             <p className="textoIn">Selecciona una multa ...</p>
             
             <div className='main-container'>
-                <div className="grid-container">
-                    {multas.map((multa) => (
-                        <div key={multa.id} className="card">
-                            <div className="infoMulta">
-                                <p><strong>ID Multa:</strong> {multa.idMulta}</p>
-                                <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
-                                <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
-                                <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
-                            </div>
-
-                            <div className="button-container">
-                                <Button 
-                                    onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
-                                    variant="outline" 
-                                    size="small" 
-                                    text="Abrir Disputa" 
-                                />
-                                {multa.estado !== 3 && (
-                                    <Button 
-                                        onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
-                                        variant="primary" 
-                                        size="small" 
-                                        text="Pagar Multa" 
-                                    />
-                                )}
-                            </div>
-                        </div>
-                    ))}
+            <div className="grid-container">
+    {multas
+        .filter((multa) => multa.estado !== 3) // Filtra multas con estado diferente de 3
+        .map((multa) => (
+            <div key={multa.id} className="card">
+                <div className="infoMulta">
+                    <p><strong>ID Multa:</strong> {formatId(multa.idMulta)}</p>
+                    <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
+                    <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
+                    <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
                 </div>
+
+                <div className="button-container">
+                    <Button 
+                        onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
+                        variant="outline" 
+                        size="small" 
+                        text="Abrir Disputa" 
+                    />
+
+                    <Button 
+                        onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
+                        variant="primary" 
+                        size="small" 
+                        text="Pagar Multa" 
+                    />
+                    
+                </div>
+            </div>
+        ))
+        }
+        </div>
             </div>
 
             {popupVisible && popupContent.type === 'dispute' && <DisputePopup />}
@@ -267,3 +269,5 @@ const MisMultas = () => {
 };
 
 export default MisMultas;
+
+

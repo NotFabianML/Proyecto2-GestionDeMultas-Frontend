@@ -7,6 +7,8 @@ import Button from '../../atoms/Button.jsx';
 import Paginador from '../../layouts/Paginador.jsx';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable'; // Importa el complemento
+import { useUserContext } from "../../../contexts/UserContext.jsx";
+import { formatId } from '../../../utils/idFormatUtils.js';
 
 const DashboardUser = () => {
     const [multas, setMultas] = useState([]);
@@ -17,18 +19,21 @@ const DashboardUser = () => {
     const [filtroEstado, setFiltroEstado] = useState('');
     const [paginaActual, setPaginaActual] = useState(1);
     const elementosPorPagina = 10;
-    const usuarioId = "5318886d-4d6c-4820-aa56-6b9d687e0cdf";
+
+    const { userId, token } = useUserContext();
 
     useEffect(() => {
-        // Obtener las multas del usuario
-        getMultasPorUsuarioId(usuarioId)
-            .then((data) => {
-                setMultas(data);
-            })
-            .catch((error) => {
-                setError(`Error: ${error.message}`);
-            });
-    }, [usuarioId]);
+    if (!userId || !token) {
+      setError("Sesión expirada o usuario no autenticado.");
+      return;
+    }
+
+    getMultasPorUsuarioId(userId)
+      .then((data) => setMultas(data))
+      .catch((error) =>
+        setError(`Error al obtener vehículos: ${error.message}`)
+      );
+    }, [userId, token]);
 
     const multasFiltradas = multas.filter((multa) => {
         const matchesFiltro = multa.idMulta.toString().includes(filtro);
@@ -148,7 +153,7 @@ const DashboardUser = () => {
                             {multasFiltradas.length > 0 ? (
                                 multasActuales.map((multa) => (
                                     <tr key={multa.idMulta}>
-                                        <td>{multa.idMulta}</td>
+                                        <td>{formatId(multa.idMulta)}</td>
                                         <td>{new Date(multa.fechaHora).toLocaleDateString()}</td>
                                         <td>{multa.numeroPlaca}</td>
                                         <td>{"₡ " + multa.montoTotal}</td>

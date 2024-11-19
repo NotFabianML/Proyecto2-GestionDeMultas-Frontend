@@ -8,6 +8,7 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable'; // Importa el complemento
 import { getMultas } from '../../../services/multaServices'; 
 import { getDisputas } from '../../../services/disputaService'; // Asegúrate de tener estos servicios correctamente configurados para hacer los requests
+import { formatId } from '../../../utils/idFormatUtils.js';
 
 const DashboardAdmin = () => {
     const [multas, setMultas] = useState([]);
@@ -185,7 +186,7 @@ const DashboardAdmin = () => {
                             {multasFiltradas.length > 0 ? (
                                 multasActuales.map((multa) => (
                                     <tr key={multa.idMulta}>
-                                        <td>{multa.idMulta}</td>
+                                        <td>{formatId(multa.idMulta)}</td>
                                         <td>{new Date(multa.fechaHora).toLocaleDateString()}</td>
                                         <td>{multa.numeroPlaca}</td>
                                         <td>{"₡ " + multa.montoTotal}</td>
