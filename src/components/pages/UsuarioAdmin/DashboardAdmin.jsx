@@ -10,6 +10,9 @@ import { getMultas } from '../../../services/multaServices';
 import { getDisputas } from '../../../services/disputaService'; // Asegúrate de tener estos servicios correctamente configurados para hacer los requests
 import { formatId } from '../../../utils/idFormatUtils.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { formatFechaNacimiento, getDateFromISO } from '../../../utils/dateUtils.js';
+import { format } from 'date-fns';
 
 const DashboardAdmin = () => {
     const [multas, setMultas] = useState([]);
@@ -42,6 +45,27 @@ const DashboardAdmin = () => {
                 setError(`Error al obtener las disputas: ${error.message}`);
             });
     }, []);
+
+    const handleFechaInicioChange = (e) => {
+        const isoDate = e.target.value; // formato ISO (yyyy-MM-dd)
+        if (isoDate) {
+            const formattedDate = format(new Date(isoDate), 'dd-MM-yyyy');
+            setFiltroFechaInicioMulta(formattedDate);
+        } else {
+            setFiltroFechaInicioMulta('');
+        }
+    };
+    
+    const handleFechaFinChange = (e) => {
+        const isoDate = e.target.value;
+        if (isoDate) {
+            const formattedDate = format(new Date(isoDate), 'dd-MM-yyyy');
+            setFiltroFechaFinMulta(formattedDate);
+        } else {
+            setFiltroFechaFinMulta('');
+        }
+    };
+
 
     const multasFiltradas = multas.filter((multa) => {
         const matchesFiltro = multa.idMulta.toString().includes(filtroMulta);
@@ -83,19 +107,22 @@ const DashboardAdmin = () => {
 
     const exportarPDF = () => {
         const doc = new jsPDF();
+        const fechaActual = new Date().toLocaleDateString();
 
         doc.setFontSize(16);
         doc.text("Informe de Multas y Disputas", 14, 20);
+        doc.setFontSize(12);
+        doc.text(`Fecha: ${formatFechaNacimiento(fechaActual)}`, 160, 20);
 
         // Agregar la tabla de multas
         doc.setFontSize(12);
         doc.autoTable({
             head: [['ID Multa', 'Fecha', 'Vehículo', 'Monto', 'Estado']],
             body: multasFiltradas.map(multa => [
-                multa.idMulta,
-                new Date(multa.fechaHora).toLocaleDateString(),
+                formatId(multa.idMulta),
+                (isoToDateFormatter(multa.fechaHora)),
                 multa.numeroPlaca,
-                "₡ " + multa.montoTotal,
+                "CRC " + multa.montoTotal + ",00",
                 multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'
             ]),
             startY: 30,
@@ -105,7 +132,7 @@ const DashboardAdmin = () => {
         doc.autoTable({
             head: [['ID Disputa', 'Fecha', 'Estado']],
             body: disputasFiltradas.map(disputa => [
-                disputa.idDisputa,
+                formatId(disputa.idDisputa),
                 new Date(disputa.fechaHora).toLocaleDateString(),
                 disputa.estado === 1 ? 'Pendiente' : disputa.estado === 2 ? 'Resuelta' : 'Rechazada'
             ]),
@@ -147,16 +174,22 @@ const DashboardAdmin = () => {
                     />
                     <input
                         type="date"
-                        value={filtroFechaInicioMulta}
-                        onChange={(e) => setFiltroFechaInicioMulta(e.target.value)}
-                        placeholder="Fecha de Inicio"
+                        value={
+                            filtroFechaInicioMulta
+                                ? format(new Date(filtroFechaInicioMulta.split('-').reverse().join('-')), 'yyyy-MM-dd')
+                                : ''
+                        }
+                        onChange={handleFechaInicioChange}
                         id="filtro-fecha-inicio-multa"
                     />
                     <input
                         type="date"
-                        value={filtroFechaFinMulta}
-                        onChange={(e) => setFiltroFechaFinMulta(e.target.value)}
-                        placeholder="Fecha de Fin"
+                        value={
+                            filtroFechaFinMulta
+                                ? format(new Date(filtroFechaFinMulta.split('-').reverse().join('-')), 'yyyy-MM-dd')
+                                : ''
+                        }
+                        onChange={handleFechaFinChange}
                         id="filtro-fecha-fin-multa"
                     />
                     <select
@@ -190,7 +223,7 @@ const DashboardAdmin = () => {
                                         <td>{formatId(multa.idMulta)}</td>
                                         <td>{isoToDateFormatter(multa.fechaHora)}</td>
                                         <td>{multa.numeroPlaca}</td>
-                                        <td>{"₡ " + multa.montoTotal}</td>
+                                        <td>{formatCurrency(multa.montoTotal)}</td>
                                         <td>{multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'}</td>
                                     </tr>
                                 ))

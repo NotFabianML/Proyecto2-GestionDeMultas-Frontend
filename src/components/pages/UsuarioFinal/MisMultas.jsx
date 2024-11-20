@@ -7,11 +7,13 @@ import { getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
 import { getUsuarioById } from '../../../services/usuarioService.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
-import { createDisputa } from '../../../services/disputaService';
+import { createDisputa, getDisputas } from '../../../services/disputaService';
 import '../../../styles/index.css';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Checkout from './Checkout';
 import { formatId } from '../../../utils/idFormatUtils.js';
+import { set } from 'date-fns';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 const initialOptions = {
   "client-id": "Adoww9KeExfepE0evtSMzMHBZqgFYTOitCqUjfQaLt1Np1V7gY9P-v-kPO-FzrBeMt4IsCDw0qC9tzqQ",
@@ -40,6 +42,7 @@ const MisMultas = () => {
         montoTotal: 0,
         montoMora: 0
     });
+    const [disputas, setDisputas] = useState([]);
   
     // Desestructurar funciones de UserContext
     const { userId } = useUserContext();
@@ -63,6 +66,18 @@ const MisMultas = () => {
         
             fetchData();
         }, [userId]);
+
+        useEffect(() => {
+            const obtenerDisputas = async () => {
+                try {
+                    const disputas = await getDisputas();
+                    setDisputas(disputas);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            obtenerDisputas();
+        }, []);
     
     function openPopup(type) {
         setPopupContent({
@@ -91,7 +106,11 @@ const MisMultas = () => {
         event.preventDefault();
         console.log(disputeDataRef.current);
         createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(() => {
+            alert('Disputa presentada exitosamente');
             closePopup();
+            window.location.reload();
+        }).catch((error) => {
+            alert('Hubo un error al presentar la disputa: ' + error.message);
         });
     }
 
@@ -139,7 +158,7 @@ const MisMultas = () => {
                             <input
                                 type="text"
                                 name="monto"
-                                value={"₡ " + multa.montoTotal}
+                                value={formatCurrency(multa.montoTotal)}
                                 readOnly
                                 required
                                 min="0"
@@ -194,15 +213,15 @@ const MisMultas = () => {
                             </tr>
                             <tr>
                                 <td>Monto Multas</td>
-                                <td>{"₡ "} {multa.montoTotal}</td>
+                                <td>{formatCurrency(multa.montoTotal)}</td>
                             </tr>
                             <tr>
                                 <td>Monto Mora</td>
-                                <td>{"₡ "} {(multa?.montoMora || 0)}</td>
+                                <td>{formatCurrency(multa?.montoMora || 0)}</td>
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td> {"₡ "}{multa.montoTotal + (multa?.montoMora || 0)}</td>
+                                <td>{formatCurrency(multa.montoTotal + (multa?.montoMora || 0))}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -218,7 +237,13 @@ const MisMultas = () => {
         </div>
     );
 
-        
+    const filteredMultas = multas.filter((multa) => multa.estado !== 3);
+
+    const showAbrirDisputa = (multa) => {
+        return disputas.find(disputa => disputa.multaId === multa.idMulta) ? false : true;
+    };
+
+
     return (
         <div className="container">
             <UsuarioNavbar />
@@ -226,38 +251,38 @@ const MisMultas = () => {
             <p className="textoIn">Selecciona una multa ...</p>
             
             <div className='main-container'>
-            <div className="grid-container">
-    {multas
-        .filter((multa) => multa.estado !== 3) // Filtra multas con estado diferente de 3
-        .map((multa) => (
-            <div key={multa.id} className="card">
-                <div className="infoMulta">
-                    <p><strong>ID Multa:</strong> {formatId(multa.idMulta)}</p>
-                    <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
-                    <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
-                    <p><strong>Monto:</strong> {"₡ " + multa.montoTotal}</p>
-                </div>
-
-                <div className="button-container">
-                    <Button 
-                        onClick={() => {openPopup('dispute'); setDataMulta(multa);}}
-                        variant="outline" 
-                        size="small" 
-                        text="Abrir Disputa" 
-                    />
-
-                    <Button 
-                        onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
-                        variant="primary" 
-                        size="small" 
-                        text="Pagar Multa" 
-                    />
+                <div className="grid-container">
+                    {filteredMultas.length === 0 ? (
+                        <p className="no-multas-message">No hay multas disponibles.</p>
+                    ) : (
+                        filteredMultas.map((multa) => (
+                            <div key={multa.id} className="card">
+                                <div className="infoMulta">
+                                    <p><strong>ID Multa:</strong> {formatId(multa.idMulta)}</p>
+                                    <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
+                                    <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
+                                    <p><strong>Monto:</strong> {formatCurrency(multa.montoTotal)}</p>
+                                </div>
+                        
+                                <div className="button-container">
+                                    { showAbrirDisputa(multa) && <Button 
+                                        onClick={() => { openPopup('dispute'); setDataMulta(multa); }}
+                                        variant="outline" 
+                                        size="small" 
+                                        text="Abrir Disputa" 
+                                    /> }
                     
+                                    <Button 
+                                        onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
+                                        variant="primary" 
+                                        size="small" 
+                                        text="Pagar Multa" 
+                                    />
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
-            </div>
-        ))
-        }
-        </div>
             </div>
 
             {popupVisible && popupContent.type === 'dispute' && <DisputePopup />}

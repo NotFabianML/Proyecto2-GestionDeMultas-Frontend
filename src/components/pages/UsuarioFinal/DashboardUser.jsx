@@ -9,6 +9,8 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable'; // Importa el complemento
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 import { formatId } from '../../../utils/idFormatUtils.js';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { formatFechaNacimiento, getDateFromISO, isoToDateFormatter} from '../../../utils/dateUtils.js';
 
 const DashboardUser = () => {
     const [multas, setMultas] = useState([]);
@@ -24,7 +26,7 @@ const DashboardUser = () => {
 
     useEffect(() => {
     if (!userId || !token) {
-      setError("Sesión expirada o usuario no autenticado.");
+      setError("");
       return;
     }
 
@@ -64,19 +66,22 @@ const DashboardUser = () => {
 
     const exportarPDF = () => {
         const doc = new jsPDF();
+        const fechaActual = new Date().toLocaleDateString();
 
         doc.setFontSize(16);
         doc.text("Informe de Multas", 14, 20);
+        doc.setFontSize(12);
+        doc.text(`Fecha: ${formatFechaNacimiento(fechaActual)}`, 160, 20);
 
         // Agregar la tabla de multas
         doc.setFontSize(12);
         doc.autoTable({
             head: [['ID Multa', 'Fecha', 'Vehículo', 'Monto', 'Estado']],
             body: multasFiltradas.map(multa => [
-                multa.idMulta,
-                new Date(multa.fechaHora).toLocaleDateString(),
+                formatId(multa.idMulta),
+                ((isoToDateFormatter(multa.fechaHora))),
                 multa.numeroPlaca,
-                "₡ " + multa.montoTotal,
+                "CRC " + multa.montoTotal + ",00",
                 multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'
             ]),
             startY: 30,
@@ -154,9 +159,9 @@ const DashboardUser = () => {
                                 multasActuales.map((multa) => (
                                     <tr key={multa.idMulta}>
                                         <td>{formatId(multa.idMulta)}</td>
-                                        <td>{new Date(multa.fechaHora).toLocaleDateString()}</td>
+                                        <td>{isoToDateFormatter(multa.fechaHora)}</td>
                                         <td>{multa.numeroPlaca}</td>
-                                        <td>{"₡ " + multa.montoTotal}</td>
+                                        <td>{formatCurrency(multa.montoTotal)}</td>
                                         <td>{multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'}</td>
                                     </tr>
                                 ))
