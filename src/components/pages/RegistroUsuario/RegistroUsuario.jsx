@@ -25,6 +25,7 @@ const RegistroUsuario = () => {
     const [cedulaTexto, setCedulaTexto] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleFileChange = async (event, setFile) => {
         const file = event.target.files[0];
@@ -152,7 +153,20 @@ const RegistroUsuario = () => {
                             </div>
                             <div className="input-group">
                                 <label htmlFor="password">Contraseña</label>
-                                <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
+                                {/* <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" /> */}
+                                <div className="password-input-container">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Contraseña"
+                                    />
+                                    <i
+                                        className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    ></i>
+                                </div>
                             </div>
                         </div>
                         <div className="fila-inputs">
