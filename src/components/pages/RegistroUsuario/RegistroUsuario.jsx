@@ -133,7 +133,7 @@ const RegistroUsuario = () => {
                             </div>
                             <div className="input-group">
                                 <label htmlFor="telefono">Teléfono</label>
-                                <input type="text" id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Teléfono" />
+                                <input type="text" id="telefono" maxLength="8" value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Teléfono" />
                             </div>
                         </div>
                         <div className="fila-inputs">
@@ -158,6 +158,7 @@ const RegistroUsuario = () => {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         id="password"
+                                        maxLength="16"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         placeholder="Contraseña"
