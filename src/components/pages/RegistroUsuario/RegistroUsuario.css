@@ -135,3 +135,24 @@ body {
     background-color: #333333;
 }
 
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-container input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-input-container i {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #888;
+}
+
+.password-input-container i:hover {
+    color: #333;
+}

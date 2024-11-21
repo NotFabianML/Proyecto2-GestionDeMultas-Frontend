@@ -10,6 +10,7 @@ import { createMulta } from "../../../services/multaServices.js";
 import MapPopup from "../MapPopUp.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 import { formatId } from '../../../utils/idFormatUtils.js';
+import { formatCurrency } from '../../../utils/formatCurrency.js';
 
 const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta, placaImagen}) => {
 
@@ -34,7 +35,11 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
     estado: 1,
     infracciones: [],
   };
+
+ 
   const [nuevaMulta, setNuevaMulta] = useState(initialMultaState);
+
+  console.log(nuevaMulta)
 
   useEffect(() => {
     if (!soloLectura) {
@@ -49,7 +54,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
         latitud: multa.latitud || 0,
         longitud: multa.longitud || 0
     });
-        setSelectedOptions(multa.infracciones?.map((infraccion) => ({ value: infraccion, label: infraccion.titulo + " - monto: " + infraccion.monto })));
+        setSelectedOptions(multa.infracciones?.map((infraccion) => ({ value: infraccion, label: infraccion.titulo + " - monto: " + formatCurrency(infraccion.monto) })));
         setMontoTotal(multa.montoTotal);
         setPosition({ lat: multa.latitud, lng: multa.longitud });
     }
@@ -176,14 +181,6 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
     }
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("es-CR", {
-      style: "currency",
-      currency: "CRC",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   const limpiarFormulario = () => {
     const multaVacia =  {
       numeroPlaca: "",
@@ -288,7 +285,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
           />
         )}
 
-        <div className="fila">
+        {/* <div className="fila">
           <div className="input-group">
             <label htmlFor="hora">Hora:</label>
             <DropdownHora
@@ -309,7 +306,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
               fecha={getDateFromISO(multa?.fechaHora || nuevaMulta?.fechaHora)}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="fila">
           <div className="input-group">
@@ -317,7 +314,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
             <Select
               options={infracciones.map((infraccion) => ({
                 value: infraccion,
-                label: `${infraccion.titulo} - monto: ${infraccion.monto}`,
+                label: `${infraccion.titulo} - monto: ${formatCurrency(infraccion.monto)}`,
               }))}
               isMulti
               value={selectedOptions}

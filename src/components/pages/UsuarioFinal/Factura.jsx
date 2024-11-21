@@ -26,7 +26,7 @@ const Factura = () => {
         identificacion: user?.cedula,
         email: user?.email,
         telefono: user?.telefono,
-        fechaFactura: format(new Date(), "yyyy-MM-dd"),
+        fechaFactura: format(new Date(), "dd-MM-yyyy"),
         idMulta: multa?.idMulta,
         infracciones: multa?.infracciones,
         montoTotal: multa?.montoTotal,

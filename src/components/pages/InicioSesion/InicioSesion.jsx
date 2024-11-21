@@ -9,6 +9,7 @@ import { useUserContext } from "../../../contexts/UserContext.jsx";
 const InicioSesion = () => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,7 +31,7 @@ const InicioSesion = () => {
     try {
       const userData = { Email: correo, Password: contrasena };
 
-      // Llamar al service login
+      // Llamar al servicio de inicio de sesión
       const { userId, token, role } = await login(userData);
 
       if (userId && token && role) {
@@ -95,13 +96,19 @@ const InicioSesion = () => {
               placeholder="example@email.com"
             />
             <label>Contraseña</label>
-            <input
-              type="password"
-              value={contrasena}
-              onChange={(e) => setContrasena(e.target.value)}
-              required
-              placeholder="Contraseña"
-            />
+            <div className="password-input-container-login">
+              <input
+                type={showPassword ? "text" : "password"}
+                value={contrasena}
+                onChange={(e) => setContrasena(e.target.value)}
+                required
+                placeholder="Contraseña"
+              />
+              <i
+                className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                onClick={() => setShowPassword(!showPassword)}
+              ></i>
+            </div>
             {error && <p className="error">{error}</p>}
             <button type="submit" className="boton-iniciar-sesion" disabled={isSubmitting}>
               {isSubmitting ? "Iniciando..." : "Iniciar Sesión"}

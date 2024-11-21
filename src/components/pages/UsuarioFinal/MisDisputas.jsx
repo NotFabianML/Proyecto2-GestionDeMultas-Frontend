@@ -32,7 +32,7 @@ const MisDisputas = () => {
         getDisputasPorUsuario(userId)
             .then(async (data) => {
                 setDisputas(data);
-
+                setError(null);
                 // Obtener nombres de jueces
                 const nombres = {};
                 for (const disputa of data) {
@@ -48,6 +48,7 @@ const MisDisputas = () => {
                 setJuezNombres(nombres);
             })
             .catch((error) => {
+                console.error('Error al obtener disputas:', error);
                 setError(`Error: ${error.message}`);
             });
     }, [userId]);
