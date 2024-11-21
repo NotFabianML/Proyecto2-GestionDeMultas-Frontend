@@ -117,12 +117,12 @@ const DashboardAdmin = () => {
         // Agregar la tabla de multas
         doc.setFontSize(12);
         doc.autoTable({
-            head: [['ID Multa', 'Fecha', 'Vehículo', 'Monto', 'Estado']],
+            head: [['ID Multa', 'Fecha / Hora', 'Vehículo', 'Monto', 'Estado']],
             body: multasFiltradas.map(multa => [
                 formatId(multa.idMulta),
                 (isoToDateFormatter(multa.fechaHora)),
                 multa.numeroPlaca,
-                "CRC " + multa.montoTotal + ",00",
+                "CRC " + multa.montoTotal.toLocaleString("es-CR", { minimumFractionDigits: 2 }),
                 multa.estado === 1 ? 'Pendiente' : multa.estado === 2 ? 'En disputa' : 'Pagada'
             ]),
             startY: 30,
@@ -130,7 +130,7 @@ const DashboardAdmin = () => {
 
         // Agregar la tabla de disputas
         doc.autoTable({
-            head: [['ID Disputa', 'Fecha', 'Estado']],
+            head: [['ID Disputa', 'Fecha / Hora', 'Estado']],
             body: disputasFiltradas.map(disputa => [
                 formatId(disputa.idDisputa),
                 new Date(disputa.fechaHora).toLocaleDateString(),

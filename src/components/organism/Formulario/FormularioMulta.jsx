@@ -35,7 +35,11 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
     estado: 1,
     infracciones: [],
   };
+
+ 
   const [nuevaMulta, setNuevaMulta] = useState(initialMultaState);
+
+  console.log(nuevaMulta)
 
   useEffect(() => {
     if (!soloLectura) {
@@ -281,7 +285,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
           />
         )}
 
-        <div className="fila">
+        {/* <div className="fila">
           <div className="input-group">
             <label htmlFor="hora">Hora:</label>
             <DropdownHora
@@ -302,7 +306,7 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
               fecha={getDateFromISO(multa?.fechaHora || nuevaMulta?.fechaHora)}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="fila">
           <div className="input-group">
