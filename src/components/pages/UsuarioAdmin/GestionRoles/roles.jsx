@@ -162,20 +162,20 @@ const Roles = () => {
   };
 
   return (
-    <div>
+    <div id="roles">
       <header>
         <AdminNavbar />
       </header>
-      <main>
+      <main id="roles-main">
         <h1>Gestión de Roles</h1>
-        <div className="filtro-container">
+        <div className="roles-filtro-container">
           <FiltroInput
             placeholder="Filtrar roles"
             value={filtro}
             onChange={(e) => setFiltro(e.target.value)}
           />
         </div>
-        <div className="lista-roles">
+        <div className="roles-lista-roles">
           <table>
             <thead>
               <tr>
@@ -191,7 +191,7 @@ const Roles = () => {
                   <td>{rol.descripcion}</td>
                   <td>
                     <Button
-                      variant="primary"
+                      variant="secondary"
                       text="Editar"
                       onClick={() => abrirModal(rol)}
                     />
@@ -213,7 +213,7 @@ const Roles = () => {
           paginaActual={paginaActual}
           totalPaginas={totalPaginas}
         />
-        <div className="espaciado-botones">
+        <div className="roles-espaciado-botones">
           <ButtonLink variant="secondary" text="Regresar" to="/inicio-admin" />
           <Button
             variant="primary"
@@ -235,7 +235,7 @@ const Roles = () => {
         >
           <h2>{rolSeleccionado ? "Editar Rol" : "Crear Nuevo Rol"}</h2>
           <div>
-            <label className="nombre-rol-label">Nombre del Rol:</label>
+            <label className="roles-nombre-rol-label">Nombre del Rol:</label>
             <input
               type="text"
               value={nuevoRol}
@@ -243,52 +243,52 @@ const Roles = () => {
             />
           </div>
           <div>
-            <label className="descripcion-rol-label">Descripción del Rol:</label>
+            <label className="roles-descripcion-rol-label">Descripción del Rol:</label>
             <input
               type="text"
               value={descripcionRol}
               onChange={(e) => setDescripcionRol(e.target.value)}
             />
           </div>
-          <div className="permisos-container">
-  <h3>Permisos Asignados</h3>
-  <ul>
-    {permisosAsignados.map((permiso) => (
-      <li key={permiso.idPermiso}>
-        {permiso.nombrePermiso}
-        <Button
-          variant="danger"
-          text="Eliminar"
-          onClick={() => eliminarPermiso(permiso.idPermiso)}
-        />
-      </li>
-    ))}
-  </ul>
-  <h3>Permisos Disponibles</h3>
-  <ul>
-    {permisosDisponibles
-      .filter(
-        (permisoDisponible) =>
-          !permisosAsignados.some(
-            (permisoAsignado) =>
-              permisoAsignado.idPermiso === permisoDisponible.idPermiso
-          )
-      )
-      .map((permiso) => (
-        <li key={permiso.idPermiso}>
-          {permiso.nombrePermiso}
-          <Button
-            variant="primary"
-            text="Agregar"
-            onClick={() => agregarPermiso(permiso.idPermiso)}
-          />
-        </li>
-      ))}
-  </ul>
-</div>
+          <div className="roles-permisos-container">
+            <h3>Permisos Asignados</h3>
+            <ul>
+              {permisosAsignados.map((permiso) => (
+                <li key={permiso.idPermiso}>
+                  {permiso.nombrePermiso}
+                  <Button
+                    variant="danger"
+                    text="Eliminar"
+                    onClick={() => eliminarPermiso(permiso.idPermiso)}
+                  />
+                </li>
+              ))}
+            </ul>
+            <h3>Permisos Disponibles</h3>
+            <ul>
+              {permisosDisponibles
+                .filter(
+                  (permisoDisponible) =>
+                    !permisosAsignados.some(
+                      (permisoAsignado) =>
+                        permisoAsignado.idPermiso === permisoDisponible.idPermiso
+                    )
+                )
+                .map((permiso) => (
+                  <li key={permiso.idPermiso}>
+                    {permiso.nombrePermiso}
+                    <Button
+                      variant="primary"
+                      text="Agregar"
+                      onClick={() => agregarPermiso(permiso.idPermiso)}
+                    />
+                  </li>
+                ))}
+            </ul>
+          </div>
 
           <Button
-            className="guardar-rol-btn"
+            className="roles-guardar-rol-btn"
             variant="primary"
             text="Guardar"
             onClick={handleGuardarRol}

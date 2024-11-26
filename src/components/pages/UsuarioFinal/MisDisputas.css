@@ -1,31 +1,30 @@
-.container-disputas {
-    min-height: 100vh; 
+.MisDisputas-container-disputas {
+    min-height: 80vh;  /* Reducir altura mínima del contenedor */
     display: flex; 
     flex-direction: column;
     background-color: #dadada;
 }
 
-.main-container {
+.MisDisputas-main-container {
     display: grid;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-
-.container-disputas h1 {
+.MisDisputas-container-disputas h1 {
     margin-top: 3%;
     text-align: center;
     color: #181D23;
 }
 
-.container-disputas .textoIn {
+.MisDisputas-container-disputas .MisDisputas-textoIn {
     text-align: center;
 }
 
-.container-disputas .grid-container {
+.MisDisputas-container-disputas .MisDisputas-grid-container {
     background-color: #dadada;
-    min-height: 60vh; 
+    min-height: 250px;  /* Reducir la altura mínima de este contenedor */
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: left;
@@ -35,12 +34,22 @@
     max-width: 1600px;
 }
 
-.card {
+.MisDisputas-card {
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    text-align: left;
+    text-align: left; /* Alinear texto a la izquierda */
     border: 2.7px solid #181D23; 
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
+    color: #000000; /* Color de texto azul por defecto */
+}
+
+.MisDisputas-infoDisputa p {
+    margin: 8px 0;
+}
+
+.MisDisputas-infoDisputa strong {
+    color: #172331; /* Color para texto en negrita */
+    text-decoration: underline;
 }

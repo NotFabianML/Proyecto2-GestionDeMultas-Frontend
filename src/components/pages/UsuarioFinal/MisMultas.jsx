@@ -47,38 +47,38 @@ const MisMultas = () => {
     // Desestructurar funciones de UserContext
     const { userId } = useUserContext();
 
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const userData = await getUsuarioById(userId);
-                    setUserData(userData);
-                    if (!userData.cedula) { 
-                        setError("Error: El usuario no tiene cédula registrada.");
-                        return;
-                    }
-                    const multas = await getMultasPorCedulaUsuario(userData.cedula);
-                    setMultas(multas);
-                    
-                } catch (error) {
-                    setError(`Error: ${error.message}`);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userData = await getUsuarioById(userId);
+                setUserData(userData);
+                if (!userData.cedula) { 
+                    setError("Error: El usuario no tiene cédula registrada.");
+                    return;
                 }
-            };
-        
-            fetchData();
-        }, [userId]);
-
-        useEffect(() => {
-            const obtenerDisputas = async () => {
-                try {
-                    const disputas = await getDisputas();
-                    setDisputas(disputas);
-                } catch (error) {
-                    console.log(error);
-                }
+                const multas = await getMultasPorCedulaUsuario(userData.cedula);
+                setMultas(multas);
+                
+            } catch (error) {
+                setError(`Error: ${error.message}`);
             }
-            obtenerDisputas();
-        }, []);
+        };
     
+        fetchData();
+    }, [userId]);
+
+    useEffect(() => {
+        const obtenerDisputas = async () => {
+            try {
+                const disputas = await getDisputas();
+                setDisputas(disputas);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        obtenerDisputas();
+    }, []);
+  
     function openPopup(type) {
         setPopupContent({
             type,
@@ -115,12 +115,12 @@ const MisMultas = () => {
     }
 
     const DisputePopup = () => (
-        <div className="popup">
-            <div className="popup-content">
-                <span className="close" onClick={closePopup}>&times;</span>
+        <div className="misMultas-popup">
+            <div className="misMultas-popup-content">
+                <span className="misMultas-close" onClick={closePopup}>&times;</span>
                 <h2>{popupContent.title}</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-row">
+                    <div className="misMultas-form-row">
                         <label>
                             ID Multa:
                             <input
@@ -142,7 +142,7 @@ const MisMultas = () => {
                             />
                         </label>
                     </div>
-                    <div className="form-row">
+                    <div className="misMultas-form-row">
                         <label>
                             Vehículo:
                             <input
@@ -166,7 +166,7 @@ const MisMultas = () => {
                             />
                         </label>
                     </div>
-                    <div className="form-row">
+                    <div className="misMultas-form-row">
                         <label>
                             Motivo:
                             <textarea
@@ -177,8 +177,8 @@ const MisMultas = () => {
                             />
                         </label>
                     </div>
-                    <div className="button-row">
-                        <Button className="button" type="submit" variant="primary" size="small" text="Enviar" />
+                    <div className="misMultas-button-row">
+                        <Button className="misMultas-button" type="submit" variant="primary" size="small" text="Enviar" />
                     </div>
                 </form>
             </div>
@@ -186,12 +186,12 @@ const MisMultas = () => {
     );
 
     const PaymentPopup = () => (
-        <div className="popup">
-            <div className="popup-content">
-                <span className="close" onClick={closePopup}>&times;</span>
+        <div className="misMultas-popup">
+            <div className="misMultas-popup-content">
+                <span className="misMultas-close" onClick={closePopup}>&times;</span>
                 <h2>{popupContent.title}</h2>
                 <form>
-                    <div className="form-row">
+                    <div className="misMultas-form-row">
                         <label>
                             ID Multa:
                             <input type="text" name="idMulta" value={formatId(multa.idMulta)}  readOnly required />
@@ -205,7 +205,7 @@ const MisMultas = () => {
                             <input type="text" name="numeroPlaca" value={multa.numeroPlaca} readOnly required />
                         </label>
                     </div>
-                    <table className="payment-summary">
+                    <table className="misMultas-payment-summary">
                         <tbody>
                             <tr>
                                 <td>Resumen</td>
@@ -225,12 +225,10 @@ const MisMultas = () => {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="button-row">
-    
+                    <div className="misMultas-button-row">
                         <PayPalScriptProvider options={initialOptions}>
                             <Checkout multa={multa} user={userData} />
                         </PayPalScriptProvider>
-                    
                     </div>
                 </form>
             </div>
@@ -243,35 +241,32 @@ const MisMultas = () => {
         return disputas.find(disputa => disputa.multaId === multa.idMulta) ? false : true;
     };
 
-
     return (
-        <div className="container">
+        <div className="misMultas-container">
             <UsuarioNavbar />
             <h1>Mis Multas</h1>
-            <p className="textoIn">Selecciona una multa ...</p>
+            <p className="misMultas-textoIn">Selecciona una multa ...</p>
             
-            <div className='main-container'>
-                <div className="grid-container">
+            <div className='misMultas-main-container'>
+                <div className="misMultas-grid-container">
                     {filteredMultas.length === 0 ? (
-                        <p className="no-multas-message">No hay multas disponibles.</p>
+                        <p className="misMultas-no-multas-message">No hay multas disponibles.</p>
                     ) : (
                         filteredMultas.map((multa) => (
-                            <div key={multa.id} className="card">
-                                <div className="infoMulta">
+                            <div key={multa.id} className="misMultas-card">
+                                <div className="misMultas-infoMulta">
                                     <p><strong>ID Multa:</strong> {formatId(multa.idMulta)}</p>
                                     <p><strong>Vehículo:</strong> {multa.numeroPlaca}</p>
                                     <p><strong>Fecha:</strong> {isoToDateFormatter(multa.fechaHora)}</p>
                                     <p><strong>Monto:</strong> {formatCurrency(multa.montoTotal)}</p>
                                 </div>
-                        
-                                <div className="button-container">
-                                    { showAbrirDisputa(multa) && <Button 
+                                <div className="misMultas-button-container">
+                                    {showAbrirDisputa(multa) && <Button 
                                         onClick={() => { openPopup('dispute'); setDataMulta(multa); }}
                                         variant="outline" 
                                         size="small" 
                                         text="Abrir Disputa" 
-                                    /> }
-                    
+                                    />}
                                     <Button 
                                         onClick={() => { openPopup('payment'); setDataMulta(multa); }} 
                                         variant="primary" 

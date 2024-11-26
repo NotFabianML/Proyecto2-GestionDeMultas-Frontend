@@ -1,158 +1,207 @@
-.espaciado-botones {
+
+#main-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #DADADA;
+  min-height: 100vh;
   margin-top: 20px;
-  row-gap: 40px;
-  gap: 40px;
 }
 
-.crear-rol-btn {
+/* Estilos de #roles */
+#roles {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#roles-main {
+  margin-top: 20px;
+}
+
+.roles-filtro-container {
+  margin-bottom: 20px;
+}
+
+.roles-lista-roles {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #181D23; 
+  border-radius: 25px;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: white; 
+}
+
+table th {
+  background-color: #181D23; 
+  border-radius: 25px;
+}
+
+.roles-espaciado-botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.roles-espaciado-botones button {
+  margin-left: 10px;
+}
+
+.roles-nombre-rol-label,
+.roles-descripcion-rol-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #000; 
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.roles-permisos-container {
+  margin-top: 20px;
+}
+
+.roles-permisos-container h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #000; 
+}
+
+.roles-permisos-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.roles-permisos-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.roles-permisos-container li span {
+  flex-grow: 1;
+  color: #000; 
+  padding-right: 20px; 
+}
+
+.roles-botones-permisos {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.roles-botones-guardar {
+  display: flex;
+  justify-content: center; 
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.roles-botones-guardar button {
   padding: 10px 20px;
-  width: auto;
-  max-width: 150px;
-  margin-right: 40px;
+  border-radius: 4px;
 }
 
-.guardar-rol-btn {
-  padding: 15px 25px;
-  width: auto;
-  max-width: 200px;
-  margin-top: 25px;
-  margin-left: 460px;
+button {
+  cursor: pointer;
 }
 
-.lista-roles table tbody tr td {
-  margin-top: 40px;
-  padding-bottom: 15px;
-  padding-right: 15px;
-}
-
-/* Espaciado entre las columnas de la tabla */
-.lista-roles table tbody tr td:first-child {
-  padding-left: 30px; /* Espaciado a la izquierda de la primera columna */
-}
-
-.lista-roles table tbody tr td:nth-child(2) {
-  padding-left: 30px; /* Espaciado a la izquierda de la columna de Descripción */
-}
-
-.lista-roles table tbody tr td:last-child {
-  margin-top: 40px;
-  padding-right: 15px;
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 button.primary {
-  padding: 6px 12px;
-  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
 }
 
-.nombre-label {
-  color: #000000;
+button.primary:hover {
+  background-color: #0056b3;
 }
 
-.permiso-label {
-  color: #000000;
+button.secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
 }
 
-.nombre-rol-label {
-  font-size: 17px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #000;
+button.secondary:hover {
+  background-color: #e0e0e0;
 }
 
-.descripcion-rol-label {
-  font-size: 17px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #000; /* Cambié el color a negro */
+button.danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
 }
 
-.permisos-container h3 {
-  margin-top: 15px;
-  margin-bottom: 25px;
+button.danger:hover {
+  background-color: #c82333;
 }
 
-/* Espaciado entre los botones de permisos disponibles */
-.permisos-container ul {
-  list-style-type: none;
-  padding-left: 3px;
+/* Modal Styles */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.permisos-container ul li {
-  margin-bottom: 10px; /* Espaciado vertical entre cada permiso */
+.ReactModal__Content {
+  background-color: white;
+  padding: 30px;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
 }
 
-.permisos-container ul li button {
-  margin-left: 90px; /* Espaciado horizontal entre el texto y el botón */
-  justify-content: right;
-  align-items: right;
-}
-
-/* Alineación de todos los botones en el modal al centro */
-.modal .espaciado-botones {
-  display: flex;
-  justify-content: center; /* Centra todos los botones en el modal */
-  gap: 20px; /* Espaciado entre los botones */
-  align-items: center;
-  margin-top: 20px; /* Añadido un pequeño margen superior */
-}
-
-/* Aseguramos que todos los botones del modal estén alineados al centro */
-.modal button {
-  display: inline-block;
-  margin: 0 10px 10px 10px; /* Espaciado entre los botones */
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modificar botón de guardar para que esté centrado también */
-.modal .guardar-rol-btn {
-  display: inline-block;
-  margin-left: 0; /* Centrado sin margen extra */
-  margin-right: 10px;
-  margin-top: 20px;
-  padding: 15px 25px;
-  align-self: center; /* Asegura que el botón de guardar esté centrado */
-  justify-content: center;
-}
-
-/* Alineación de los botones en la misma línea al centro */
-.modal .guardar-rol-btn,
-.modal button.primary,
-.modal button.danger {
-  display: inline-block;
-  margin-left: 10px;
-  margin-top: 20px;
-  padding: 10px 20px;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Espaciado entre los campos en el modal: "Editar Rol", "Nombre del Rol:", y "Descripción del Rol:" */
-.modal .form-group {
-  margin-bottom: 20px; /* Añadido espaciado entre los campos */
-}
-
-.modal .form-group label {
-  font-size: 17px;
-  color: #000;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.modal .form-group input,
-.modal .form-group textarea {
-  padding: 10px;
-  width: 100%;
-  margin-top: 5px;
-}
-
-.modal .form-group textarea {
-  height: 100px;
-}
-
-/* Centrar el título "Editar Rol" */
-.modal .modal-title {
-  text-align: center;
+.ReactModal__Content h2 {
   margin-bottom: 20px;
+  color: #000; 
+}
+
+.ReactModal__Content input[type="text"] {
+  margin-bottom: 15px;
+}
+
+.ReactModal__Content button {
+  margin-top: 20px;
+}
+
+/* Ajustes adicionales para asegurar que los textos y subtítulos se vean bien */
+.roles-permisos-container h3,
+.roles-nombre-rol-label,
+.roles-descripcion-rol-label {
+  color: #000; 
+}
+
+.roles-permisos-container ul li span {
+  color: #000; 
+}
+
+.roles-permisos-container li {
+  color: #000; 
+}
+
+button.primary,
+button.secondary,
+button.danger {
+  color: #fff;
 }

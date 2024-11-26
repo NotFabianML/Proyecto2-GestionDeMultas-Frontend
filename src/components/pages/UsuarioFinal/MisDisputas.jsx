@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import './MisDisputas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
@@ -18,21 +19,11 @@ const MisDisputas = () => {
 
     console.log(userId);
 
-    // useEffect(() => {
-    //     getDisputasPorUsuario(userId)
-    //     .then((data) => {
-    //         setDisputas(data);
-    //     })
-    //     .catch((error) => {
-    //         setError(`Error: ${error.message}`);
-    //     });
-    // }, [userId]);
-
     useEffect(() => {
         getDisputasPorUsuario(userId)
             .then(async (data) => {
                 setDisputas(data);
-                setError(null);
+
                 // Obtener nombres de jueces
                 const nombres = {};
                 for (const disputa of data) {
@@ -48,25 +39,24 @@ const MisDisputas = () => {
                 setJuezNombres(nombres);
             })
             .catch((error) => {
-                console.error('Error al obtener disputas:', error);
                 setError(`Error: ${error.message}`);
             });
     }, [userId]);
 
     return (
-        <div className="container-disputas">
+        <div className="MisDisputas-container-disputas">
             <UsuarioNavbar />
             <h1>Mis Disputas</h1>
-            <p className="textoIn">Selecciona una disputa ...</p>
+            <p className="MisDisputas-textoIn">Selecciona una disputa ...</p>
 
-            <div className='main-container'>
-                <div className="grid-container">
+            <div className='MisDisputas-main-container'>
+                <div className="MisDisputas-grid-container">
                     {error ? (
-                        <p className="error-message">* No se encontraron disputas para el usuario especificado</p>
+                        <p className="MisDisputas-error-message">* No se encontraron disputas para el usuario especificado</p>
                     ) : disputas.length > 0 ? (
                         disputas.map((disputa) => (
-                            <div key={disputa.idDisputa} className="card">
-                                <div className="infoDisputa">
+                            <div key={disputa.idDisputa} className="MisDisputas-card">
+                                <div className="MisDisputas-infoDisputa">
                                     <p><strong>ID Disputa:</strong> {formatId(disputa.idDisputa)}</p>
                                     <p><strong>ID Multa:</strong> {formatId(disputa.multaId)}</p>
                                     <p><strong>Juez Asignado:</strong> {juezNombres[disputa.juezId] || 'No asignado'}</p>
@@ -78,7 +68,7 @@ const MisDisputas = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="no-disputas-message">El usuario no tiene disputas abiertas.</p>
+                        <p className="MisDisputas-no-disputas-message">El usuario no tiene disputas abiertas.</p>
                     )}
                 </div>
             </div>
@@ -89,3 +79,4 @@ const MisDisputas = () => {
 };
 
 export default MisDisputas;
+
