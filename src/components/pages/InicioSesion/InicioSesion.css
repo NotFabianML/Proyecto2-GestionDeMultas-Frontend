@@ -51,7 +51,7 @@
 }
 
 .contenedor-formulario {
-    background-color: #ffffff;
+    background-color: #181d23;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -67,7 +67,7 @@
 
 .contenedor-formulario label {
     font-size: 14px;
-    color: #000000;
+    color: white;
     text-align: left;
 }
 
@@ -86,11 +86,11 @@
 }
 
 .boton-iniciar-sesion {
-    margin-top: 15px;
+    margin: 15px auto;
+    margin-top: 25px;
     padding: 10px 0;
     width: 200px;
     font-size: 18px;
-    justify-content: center;
     background-color: #ffcc00;
     color: #000000;
     border: none;
@@ -130,3 +130,67 @@
 .password-input-container-login i:hover {
     color: #333;
 }
+
+.link-autenticacion {
+    text-align: center;
+    margin: 10px;
+}
+
+.link-autenticacion a {
+    color: #18AEBF;
+    text-decoration: none;
+
+}
+
+.link-autenticacion a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos del popup */
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    position: relative; /* Necesario para posicionar el botón de cierre */
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .popup-content h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    color: #ff0000;
+  }
+
+  
+  

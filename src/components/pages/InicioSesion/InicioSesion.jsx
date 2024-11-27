@@ -5,6 +5,8 @@ import InvitadoNavbar from "../../layouts/Navbar/InvitadoNavbar.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import { login } from "../../../services/authService";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
+import Button from "../../atoms/Button.jsx";
+import { activarAutenticacion2F } from "../../../services/autenticacion2FService.js";
 
 const InicioSesion = () => {
   const [correo, setCorreo] = useState("");
@@ -12,6 +14,8 @@ const InicioSesion = () => {
   const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); 
+  const [dobleFactorData, setDobleFactorData] = useState({});
 
   const navigate = useNavigate();
   const { setUserId, setToken, setRole } = useUserContext();
@@ -61,10 +65,27 @@ const InicioSesion = () => {
         setError("Error al obtener la información de usuario.");
       }
     } catch (err) {
-      setError("Credenciales incorrectas o error al iniciar sesión.");
+      setError("Credenciales incorrectas");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleActivarAutenticacion2F = () => {
+    activarAutenticacion2F(correo, contrasena)
+    .then((data) => {
+      if (data && data.data) {
+        setDobleFactorData(data.data);
+      } else {
+        setShowPopup(false);
+        setError("Credenciales incorrectas");
+      }
+    })
+    .catch((error) => {
+      setShowPopup(false);
+      setError("Credenciales incorrectas");
+      console.error("Error de autenticación 2F:", error);
+    });
   };
 
   return (
@@ -95,7 +116,7 @@ const InicioSesion = () => {
               required
               placeholder="example@email.com"
             />
-            <label>Contraseña</label>
+            <label>Contraseña / OTP</label>
             <div className="password-input-container-login">
               <input
                 type={showPassword ? "text" : "password"}
@@ -109,13 +130,62 @@ const InicioSesion = () => {
                 onClick={() => setShowPassword(!showPassword)}
               ></i>
             </div>
+
             {error && <p className="error">{error}</p>}
             <button type="submit" className="boton-iniciar-sesion" disabled={isSubmitting}>
               {isSubmitting ? "Iniciando..." : "Iniciar Sesión"}
             </button>
+
+           
           </form>
+
+          <div className="link-autenticacion">
+              {/* Botón para mostrar el pop-up */}
+              {/* <Button
+                variant="primary"
+                className="boton-popup"
+                onClick={() => {
+                  handleActivarAutenticacion2F();
+                  setShowPopup(true);
+                }}
+                text="Activar Verificación en 2 pasos"
+              /> */}
+            </div>
+
+            <div className="link-autenticacion">
+              <Link
+                to="#"
+                className="boton-popup"
+                onClick={(e) => {
+                  e.preventDefault(); // Evita la navegación predeterminada
+                  handleActivarAutenticacion2F();
+                  setShowPopup(true);
+                }}
+              >
+                Activar Verificación en 2 pasos
+              </Link>
+            </div>
+
         </div>
       </div>
+
+      {showPopup && (
+        <div className="popup-container">
+          <div className="popup-content">
+            {/* Botón para cerrar el pop-up */}
+            <button
+              className="close-button"
+              onClick={() => setShowPopup(false)}
+            >
+              &times;
+            </button>
+            <h3>Activar Verificación en 2 Pasos</h3>
+            <p>Para activar la verificación en dos pasos, escanee el siguiente código QR</p>
+            <img src={dobleFactorData?.qrCodeBase64} alt="QR Code" />
+
+          </div>
+        </div>
+      )}
 
       <footer>
         <Footer />

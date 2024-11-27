@@ -10,6 +10,7 @@ import PasswordRecovery from "../components/pages/PasswordRecovery/PasswordRecov
 import PasswordReset from "../components/pages/PasswordReset/PasswordReset.jsx";
 import ConsultaPublica from "../components/pages/ConsultaPublica/ConsultaPublica.jsx";
 import MapaCalor from "../components/pages/MapaCalor/MapaCalor.jsx";
+import Autenticacion2F from "../components/pages/InicioSesion/Autenticacion2F.jsx";
 
 import PaginaUsuarioFinal from "../components/pages/UsuarioFinal/index.jsx";
 import MisMultas from "../components/pages/UsuarioFinal/MisMultas.jsx";
@@ -51,6 +52,7 @@ export const MainRouter = () => {
         <Route path="/resetear-contraseña" element={<PasswordReset />} />
         <Route path="/consulta-publica" element={<ConsultaPublica />} />
         <Route path="/mapa-calor" element={<MapaCalor />} />
+        <Route path="/autenticacion-2f" element={<Autenticacion2F />} /> 
 
         {/* Usuario Final */}
         <Route path="/pagina-usuario" element={<PaginaUsuarioFinal />} />

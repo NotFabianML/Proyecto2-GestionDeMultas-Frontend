@@ -1,9 +1,3 @@
-body {
-    background-color: #EAEAEA;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
 .consulta-publica {
     display: flex;
     flex-direction: column;
@@ -30,7 +24,7 @@ body {
     font-size: 16px;
 }
 
-form {
+.contenido form {
     display: flex;
     flex-direction: column;
     align-items: center;
