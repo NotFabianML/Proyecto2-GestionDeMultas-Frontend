@@ -1,54 +1,64 @@
-.main-container {
+.misMultas-main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.grid-container {
+.misMultas-grid-container {
     background-color: #dadada;
     min-height: 100vh; 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    align-items: center;
+    align-items: start; 
     gap: 16px;
     margin: 3%;
     justify-content: center; 
     max-width: 1500px;
 }
 
-.container p{
+.misMultas-container p {
     font-size: medium;
     text-align: center;
 }
 
-.container h1 {
+.misMultas-container h1 {
     margin-top: 3%;
     text-align: center;
 }
 
-.container .textoIn {
+.misMultas-container .misMultas-textoIn {
     text-align: center;
 }
 
-.grid-container p {
+.misMultas-grid-container p {
     text-align: center;
     font-size: medium;
 }
 
-.card {
+.misMultas-card {
     display: flex;
-    grid-template-columns: 1fr auto; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-between; 
     gap: 16px;
     padding: 16px;
-    border: 1px solid #ccc;
+    border: 2px solid #181D23; 
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
     max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.button-container {
+.misMultas-card .misMultas-texto {
+    text-align: left; 
+    font-size: 1em;
+    flex: 1; 
+}
+
+.misMultas-button-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -56,7 +66,7 @@
     justify-content: center;
 }
 
-.button {
+.misMultas-button {
     padding: 8px 12px;
     background-color: #007BFF;
     color: #fff;
@@ -66,12 +76,12 @@
     transition: background-color 0.3s;
 }
 
-.button:hover {
+.misMultas-button:hover {
     background-color: #0056b3;
 }
 
 /* Pop-up Styles */
-.popup {
+.misMultas-popup {
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -79,20 +89,20 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Fondo con opacidad */
+    background-color: rgba(0, 0, 0, 0.4); 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.popup-content {
+.misMultas-popup-content {
     position: relative;
     background-color: #fefefe;
     padding: 20px 30px;
     border-radius: 8px;
     border: 1px solid #888;
     width: 90%;
-    max-width: 600px; /* Ancho máximo para el popup */
+    max-width: 600px; 
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.3s ease;
     max-height: 100vh;
@@ -104,19 +114,19 @@
     to { opacity: 1; transform: scale(1); }
 }
 
-.popup h2 {
+.misMultas-popup h2 {
     font-size: 1.5em;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.form-row {
+.misMultas-form-row {
     display: flex;
     gap: 20px;
     margin-bottom: 15px;
 }
 
-.form-row label {
+.misMultas-form-row label {
     flex: 1;
     font-weight: bold;
     display: flex;
@@ -125,10 +135,10 @@
     color: #181D23;
 }
 
-.form-row input[type="text"],
-.form-row input[type="date"],
-.form-row input[type="number"],
-.form-row textarea {
+.misMultas-form-row input[type="text"],
+.misMultas-form-row input[type="date"],
+.misMultas-form-row input[type="number"],
+.misMultas-form-row textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -137,40 +147,40 @@
     box-sizing: border-box;
 }
 
-.form-row textarea {
+.misMultas-form-row textarea {
     resize: vertical;
     height: 80px;
 }
 
-.payment-summary {
+.misMultas-payment-summary {
     width: 100%;
     margin: 20px 0;
     border-collapse: collapse;
     font-size: 1em;
 }
 
-.payment-summary td {
+.misMultas-payment-summary td {
     padding: 10px;
     border: 1px solid #ddd;
 }
 
-.payment-summary td:first-child {
+.misMultas-payment-summary td:first-child {
     font-weight: bold;
-    width: 70%; /* Ajusta el ancho de la primera columna */
+    width: 70%; 
 }
 
-.popup-content button {
+.misMultas-popup-content button {
     width: auto;
 }
 
-.button-row {
+.misMultas-button-row {
     display: flex;
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
 }
 
-.close {
+.misMultas-close {
     color: #aaa;
     font-size: 24px;
     font-weight: bold;
@@ -179,8 +189,21 @@
     cursor: pointer;
 }
 
-.close:hover {
+.misMultas-close:hover {
     color: #333;
 }
 
+
+.misMultas-infoMulta p strong {
+    text-decoration: underline;
+    color: #181D23;
+    display: inline-block; 
+    text-align: left; 
+}
+
+.misMultas-infoMulta p {
+    text-align: left; 
+    margin: 0;
+    padding: 0;
+}
 
