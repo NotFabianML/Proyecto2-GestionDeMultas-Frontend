@@ -3,6 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "./MisVehiculos.css";
 import UsuarioNavbar from "../../layouts/Navbar/UsuarioNavbar.jsx";
 import Footer from "../../layouts/Footer.jsx";
+import { getUsuarioById } from '../../../services/usuarioService.js';
 import {
   getVehiculosPorUsuario,
   createVehiculo,
@@ -11,12 +12,15 @@ import FiltroInput from "../../layouts/FiltroInput.jsx";
 import Button from "../../atoms/Button.jsx";
 import Paginador from "../../layouts/Paginador.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
+import { sendEmail } from "../../../services/authService.js";
+import { set } from "date-fns";
 
 const MisVehiculos = () => {
   const [vehiculos, setVehiculos] = useState([]);
   const [error, setError] = useState(null);
   const [filtro, setFiltro] = useState("");
   const [paginaActual, setPaginaActual] = useState(1);
+  const [userData, setUserData] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [nuevoVehiculo, setNuevoVehiculo] = useState({
     numeroPlaca: "",
@@ -76,11 +80,25 @@ const MisVehiculos = () => {
         anno: nuevoVehiculo.anno || null,
         usuarioId: userId,
       };
-
+      const userData = await getUsuarioById(userId);
+      setUserData(userData);
       const vehiculoCreado = await createVehiculo(vehiculoData);
       setVehiculos((prevVehiculos) => [...prevVehiculos, vehiculoCreado]);
       handleCerrarModal();
       alert("Vehículo agregado con éxito.");
+      const message = `
+    Hola,
+
+    Se ha registrado un nuevo vehículo en tu perfil. A continuación, te presentamos los detalles del vehículo agregado:
+
+    - Número de Placa: ${vehiculoCreado.numeroPlaca}
+    - Marca: ${vehiculoCreado.marca}
+    - Año: ${vehiculoCreado.anno || "No especificado"}
+    `;
+
+    // Enviar el correo
+    await sendEmail(userData.email, message);
+    alert("Correo enviado con éxito.");
     } catch (error) {
       console.error("Error al crear vehículo:", error);
       setError("Hubo un problema al crear el vehículo. Intente de nuevo.");

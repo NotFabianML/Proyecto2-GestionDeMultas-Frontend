@@ -7,6 +7,8 @@ import { getUsuarioById } from '../../../services/usuarioService';
 import { useUserContext } from '../../../contexts/UserContext.jsx';
 import { formatId } from '../../../utils/idFormatUtils.js';
 import { getEstadoDisputa } from '../../../utils/disputaUtils.js';
+import { sendEmail } from '../../../services/authService.js';
+
 
 const MisDisputas = () => {
     const [disputas, setDisputas] = useState([]);
@@ -40,6 +42,7 @@ const MisDisputas = () => {
                         try {
                             const juez = await getUsuarioById(disputa.juezId);
                             nombres[disputa.juezId] = `${juez.nombre} ${juez.apellido1} ${juez.apellido2 || ''}`.trim();
+                            await notificarUsuariosDisputa(disputa, juez);
                         } catch (error) {
                             console.error(`Error al obtener juez con ID ${disputa.juezId}:`, error);
                         }
@@ -52,6 +55,36 @@ const MisDisputas = () => {
                 setError(`Error: ${error.message}`);
             });
     }, [userId]);
+
+    // Función para enviar notificación de disputa
+const notificarUsuariosDisputa = async (disputa, juez) => {
+    const usuariosInvolucrados = disputa.usuarios || []; // Lista de usuarios en la disputa
+    const detallesUsuarios = usuariosInvolucrados
+        .map((usuario) => `- ${usuario.nombre} ${usuario.apellido1} ${usuario.apellido2 || ''} (${usuario.email})`)
+        .join('\n');
+
+    const juezNombre = `${juez.nombre} ${juez.apellido1} ${juez.apellido2 || ''}`;
+    const message = `
+    Hola,
+
+    Se te notifica que estás involucrado en una disputa asignada. Aquí tienes los detalles:
+
+    - Número de Disputa: ${disputa.id}
+    - Descripción: ${disputa.descripcion || "No especificada"}
+    - Juez Asignado: ${juezNombre}
+    - Usuarios Involucrados:
+    ${detallesUsuarios}
+    `;
+
+    try {
+        for (const usuario of usuariosInvolucrados) {
+            await sendEmail(usuario.email, message);
+        }
+        console.log('Notificaciones enviadas correctamente.');
+    } catch (error) {
+        console.error('Error al enviar notificaciones:', error);
+    }
+};
 
     return (
         <div className="container-disputas">
