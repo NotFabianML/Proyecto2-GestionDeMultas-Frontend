@@ -160,11 +160,11 @@ const DashboardAdmin = () => {
                 <AdminNavbar />
             </header>
 
-            <main>
+            <div className="dashboard-admin-contenedor">
                 <h1>Dashboard de Administrador</h1>
 
                 {/* Filtros para la tabla de Multas */}
-                <div className="filtro-container">
+                <div className="filtro-container-dashboard">
                     <input
                         type="text"
                         placeholder="Filtrar por ID Multa"
@@ -266,7 +266,7 @@ const DashboardAdmin = () => {
                 </div>
 
                 {/* Filtros para la tabla de Disputas */}
-                <div className="filtro-container">
+                <div className="filtro-container-dashboard">
                     <input
                         type="text"
                         placeholder="Filtrar por ID Disputa"
@@ -326,17 +326,18 @@ const DashboardAdmin = () => {
                 )}
 
                 {/* Botón para exportar el PDF */}
-                <Button 
-                    className="button" 
-                    type="button" 
-                    variant="primary" 
-                    size="small" 
-                    onClick={exportarPDF} 
-                    text="Descargar Informe PDF"
-                />
-
+                <div className="contenedor-boton">
+                    <Button 
+                        className="button" 
+                        type="button" 
+                        variant="primary" 
+                        size="small" 
+                        onClick={exportarPDF} 
+                        text="Descargar Informe PDF"
+                    />
+                </div>
                 {error && <div className="error">{error}</div>}
-            </main>
+            </div>
 
             <footer>
                 <Footer />

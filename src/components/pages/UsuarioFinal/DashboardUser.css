@@ -1,0 +1,42 @@
+.dashboard-user{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.dashboard-user h1{
+    color: #181D23;
+    font-size: 36px;
+    margin-top: 4%;
+    margin-bottom: 3%;
+    text-align: center;
+}
+
+.filtro-container-dashboard {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 15px; 
+    margin: 20px 0; 
+}
+
+.filtro-container-dashboard input,
+.filtro-container-dashboard input[type="text"],
+.filtro-container-dashboard select {
+    width: 200px; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0px;
+}
+
+.contenedor-boton {
+    text-align: center;
+}
+
+.button {
+    width: auto;
+    margin-bottom: 30px;
+}

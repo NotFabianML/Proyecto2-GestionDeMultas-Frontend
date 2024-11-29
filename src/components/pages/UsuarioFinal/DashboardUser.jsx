@@ -108,11 +108,11 @@ const DashboardUser = () => {
                 <UsuarioNavbar />
             </header>
 
-            <main>
+            <div className="dashboard-contenedor">
                 <h1>Dashboard de Multas</h1>
 
                 {/* Filtros de Búsqueda */}
-                <div className="filtro-container">
+                <div className="filtro-container-dashboard">
                     <input
                         type="text"
                         placeholder="Filtrar por ID Multa"
@@ -212,17 +212,18 @@ const DashboardUser = () => {
                 )}
 
                 {/* Botón para exportar el PDF */}
-                <Button 
-                    className="button" 
-                    type="button" 
-                    variant="primary" 
-                    size="small" 
-                    onClick={exportarPDF} 
-                    text="Descargar Informe PDF"
-                />
-
+                <div className="contenedor-boton">
+                    <Button 
+                        className="button" 
+                        type="button" 
+                        variant="primary" 
+                        size="small" 
+                        onClick={exportarPDF} 
+                        text="Descargar Informe PDF"
+                    />
+                </div>
                 {error && <div className="error">{error}</div>}
-            </main>
+            </div>
 
             <footer>
                 <Footer />
