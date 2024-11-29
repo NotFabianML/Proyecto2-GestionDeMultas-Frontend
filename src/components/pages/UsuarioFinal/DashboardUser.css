@@ -1,11 +1,11 @@
-.dashboard-user{
+.dashboard-user {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
 }
 
-.dashboard-user h1{
+.dashboard-user h1 {
     color: #181D23;
     font-size: 36px;
     margin-top: 4%;
@@ -32,6 +32,11 @@
     margin-bottom: 0px;
 }
 
+.filtro-container-dashboard select {
+    background-color: #ffffff; /* Azul marino */
+    color: rgb(0, 0, 0);
+}
+
 .contenedor-boton {
     text-align: center;
 }
@@ -40,3 +45,50 @@
     width: auto;
     margin-bottom: 30px;
 }
+
+.chart-container {
+    width: 48%; /* Reduce el ancho de los gráficos */
+    margin: 0px 1%; /* Reduce el margen entre los gráficos */
+    display: inline-block;
+    max-width: 100%;  /* Asegura que el contenedor no sea más ancho que su contenedor padre */
+    height: 300px; /* Controla la altura fija del gráfico */
+    position: relative;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        width: 100%;
+        height: 250px; /* Ajusta la altura del gráfico en pantallas más pequeñas */
+        margin-left: 50px;
+        margin-right: 0px;
+    }
+}
+
+.chart-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px; /* Espaciado entre los gráficos */
+    margin-top: 20px;
+}
+
+.chart-container {
+    flex: 1; /* Se adapta al 50% del ancho disponible */
+    height: 300px; /* Ajuste de altura fijo */
+    max-width: 48%; /* Limita el tamaño máximo a un 48% */
+    margin-bottom: 20px;
+}
+
+/* Hacer que los gráficos sean completamente responsivos en pantallas pequeñas */
+@media (max-width: 768px) {
+    .chart-row {
+        flex-direction: column; /* Coloca los gráficos en una columna */
+        gap: 10px;
+    }
+
+    .chart-container {
+        max-width: 100%; /* Los gráficos ocupan todo el ancho disponible */
+        height: 250px; /* Ajusta la altura para pantallas pequeñas */
+    }
+}
+
