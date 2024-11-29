@@ -7,6 +7,7 @@ import { login } from "../../../services/authService";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 import Button from "../../atoms/Button.jsx";
 import { activarAutenticacion2F } from "../../../services/autenticacion2FService.js";
+import { getUsuarioById } from "../../../services/usuarioService.js";
 
 const InicioSesion = () => {
   const [correo, setCorreo] = useState("");
@@ -16,6 +17,7 @@ const InicioSesion = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPopup, setShowPopup] = useState(false); 
   const [dobleFactorData, setDobleFactorData] = useState({});
+  const [dobleFactorActivado, setDobleFactorActivado] = useState(false);
 
   const navigate = useNavigate();
   const { setUserId, setToken, setRole } = useUserContext();
@@ -43,23 +45,13 @@ const InicioSesion = () => {
         setUserId(userId);
         setToken(token);
         setRole(role);
-
-        // Navegar según el rol
-        switch (role) {
-          case "Administrador":
-            navigate("/inicio-admin");
-            break;
-          case "Oficial de Tránsito":
-            navigate("/pagina-oficial");
-            break;
-          case "Juez de Tránsito":
-            navigate("/pagina-juez");
-            break;
-          case "Usuario Final":
-            navigate("/pagina-usuario");
-            break;
-          default:
-            setError("Rol no reconocido.");
+        getUsuarioById(userId).then((usuario) => {
+          if (usuario) {
+            setDobleFactorActivado(usuario.dobleFactorActivado);
+          }
+        }); 
+        if (!dobleFactorActivado) {
+          handleNavegarSegunRol(role);
         }
       } else {
         setError("Error al obtener la información de usuario.");
@@ -70,6 +62,26 @@ const InicioSesion = () => {
       setIsSubmitting(false);
     }
   };
+
+  const handleNavegarSegunRol = (role) => {
+    switch (role) {
+      case "Administrador":
+        navigate("/inicio-admin");
+        break;
+      case "Oficial de Tránsito":
+        navigate("/pagina-oficial");
+        break;
+      case "Juez de Tránsito":
+        navigate("/pagina-juez");
+        break;
+      case "Usuario Final":
+        navigate("/pagina-usuario");
+        break;
+      default:
+        setError("Rol no reconocido.");
+    }
+  
+  }
 
   const handleActivarAutenticacion2F = () => {
     activarAutenticacion2F(correo, contrasena)
@@ -106,8 +118,12 @@ const InicioSesion = () => {
             <Link to="/registro-usuario">¿No tienes una cuenta aún?</Link>
           </div>
         </div>
+
         <div className="contenedor-formulario">
           <form onSubmit={handleLogin}>
+
+            {!dobleFactorActivado && (
+            <>
             <label>Correo</label>
             <input
               type="email"
@@ -116,7 +132,7 @@ const InicioSesion = () => {
               required
               placeholder="example@email.com"
             />
-            <label>Contraseña / OTP</label>
+            <label>Contraseña</label>
             <div className="password-input-container-login">
               <input
                 type={showPassword ? "text" : "password"}
@@ -135,8 +151,27 @@ const InicioSesion = () => {
             <button type="submit" className="boton-iniciar-sesion" disabled={isSubmitting}>
               {isSubmitting ? "Iniciando..." : "Iniciar Sesión"}
             </button>
+            </>
+            )}
 
-           
+            {dobleFactorActivado && (
+            <>  
+            <h4>Autenticación en 2 pasos</h4>
+            <label>Código de Autenticación</label>
+            <div className="fila-2FA">
+              <input
+                type="text"
+                value= {""}
+                placeholder="XXXXXX"
+              />
+            
+            </div>
+
+            <button type="submit" className="boton-verificar-OTP" >
+              {isSubmitting ? "Verificando..." : "Verificar"}
+            </button>
+            </>
+            )}
           </form>
 
           <div className="link-autenticacion">

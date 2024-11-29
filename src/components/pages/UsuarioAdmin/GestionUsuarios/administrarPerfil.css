@@ -1,10 +1,10 @@
 .pagina-perfil {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-main {
+.pagina-perfil main {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -23,6 +23,7 @@ main {
 .foto-container {
   position: relative;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .foto-perfil {
@@ -43,21 +44,29 @@ main {
   width: 100%;
 }
 
+.informacion-perfil form {
+  background-color:#181D23;
+  padding: 25px;
+  border-radius: 10px;
+}
+
 .campo {
   display: flex;
   flex-direction: column;
 }
 
-label {
+.informacion-perfil .campo label {
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-input {
+.informacion-perfil .campo input {
   padding: 10px;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .acciones {

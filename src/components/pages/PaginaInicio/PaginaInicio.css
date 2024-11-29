@@ -3,16 +3,11 @@
 .paginainicio-container {
     display: flex;
     justify-content: space-between; 
-    align-items: flex-start; /* Alinea los contenedores hacia la parte superior */
-    width: 100%; 
-    max-width: 1700px; 
+    align-items: center;
     padding: 60px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-right: 10px;
-    margin-left: 10px;
     gap: 40px;
     justify-content: center; 
+    flex-grow: 1;
 }
 
 .paginainicio-text-section {

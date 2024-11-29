@@ -11,16 +11,18 @@ const PaginaUsuarioFinal = () => {
                 <UsuarioNavbar/>
             </header>
 
-            <h1>Bienvenido</h1>
+            <div className="contenido-index">
+                <h1>Bienvenido</h1>
 
-            <p className="texto">Bienvenido a nuestra plataforma. Aquí podrás gestionar y consultar</p>
-            <p className="texto">toda la información relacionada con tus vehículos y multas.</p>
-            
-            <div className="botones">
+                <p className="texto">Bienvenido a nuestra plataforma. Aquí podrás gestionar y consultar</p>
+                <p className="texto">toda la información relacionada con tus vehículos y multas.</p>
                 
-                <br />
-                <ButtonLink to="/mis-vehiculos" id="btnMisVehiculos" className="btnMisVehiculos" variant= "primary" size="medium" text="Ver mis vehículos"/>
-                <ButtonLink to="/mis-multas" id="btnMisMultas" className="btnMisMultas" variant= "primary" size="medium" text="Ver mis multas"/>
+                <div className="botones">
+                    
+                    <br />
+                    <ButtonLink to="/mis-vehiculos" id="btnMisVehiculos" className="btnMisVehiculos" variant= "primary" size="medium" text="Ver mis vehículos"/>
+                    <ButtonLink to="/mis-multas" id="btnMisMultas" className="btnMisMultas" variant= "primary" size="medium" text="Ver mis multas"/>
+                </div>
             </div>
 
             <footer>

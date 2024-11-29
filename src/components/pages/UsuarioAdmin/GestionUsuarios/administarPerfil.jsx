@@ -300,7 +300,7 @@ const Perfil = () => {
         <div className="perfil-container">
           <div className="foto-container">
             <img
-              src={fotoPerfil || "/placeholder-profile.png"}
+              src={fotoPerfil || "https://res.cloudinary.com/dekwvhxog/image/upload/user_iiwdqq"}
               alt="Foto de perfil"
               className="foto-perfil"
             />
@@ -315,75 +315,77 @@ const Perfil = () => {
             )}
           </div>
           <div className="informacion-perfil">
-            <div className="campo">
-              <label>Cédula</label>
-              <input
-                type="text"
-                value={usuario.cedula || ""}
-                readOnly
-                disabled
-              />
-            </div>
-            <div className="campo">
-              <label>Nombre</label>
-              <input
-                type="text"
-                name="nombre"
-                value={formData.nombre || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
-            <div className="campo">
-              <label>Primer Apellido</label>
-              <input
-                type="text"
-                name="apellido1"
-                value={formData.apellido1 || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
-            <div className="campo">
-              <label>Segundo Apellido</label>
-              <input
-                type="text"
-                name="apellido2"
-                value={formData.apellido2 || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
-            <div className="campo">
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
-            <div className="campo">
-              <label>Teléfono</label>
-              <input
-                type="text"
-                name="telefono"
-                value={formData.telefono || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
-            <div className="campo">
-              <label>Fecha de Nacimiento</label>
-              <input
-                type="date"
-                name="fechaNacimiento"
-                value={formData.fechaNacimiento || ""}
-                onChange={handleInputChange}
-                readOnly={!editMode}
-              />
-            </div>
+            <form>
+              <div className="campo">
+                <label>Cédula</label>
+                <input
+                  type="text"
+                  value={usuario.cedula || ""}
+                  readOnly
+                  disabled
+                />
+              </div>
+              <div className="campo">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  value={formData.nombre || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+              <div className="campo">
+                <label>Primer Apellido</label>
+                <input
+                  type="text"
+                  name="apellido1"
+                  value={formData.apellido1 || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+              <div className="campo">
+                <label>Segundo Apellido</label>
+                <input
+                  type="text"
+                  name="apellido2"
+                  value={formData.apellido2 || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+              <div className="campo">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+              <div className="campo">
+                <label>Teléfono</label>
+                <input
+                  type="text"
+                  name="telefono"
+                  value={formData.telefono || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+              <div className="campo">
+                <label>Fecha de Nacimiento</label>
+                <input
+                  type="date"
+                  name="fechaNacimiento"
+                  value={formData.fechaNacimiento || ""}
+                  onChange={handleInputChange}
+                  readOnly={!editMode}
+                />
+              </div>
+            </form>
           </div>
           <div className="acciones">
             <Button

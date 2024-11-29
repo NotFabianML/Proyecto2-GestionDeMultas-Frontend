@@ -121,7 +121,9 @@ const Infracciones = () => {
         <AdminNavbar />
       </header>
 
-        <h1>Lista de Infracciones</h1>
+      <h1>Lista de Infracciones</h1>
+
+      <div className="contenedor-principal-infracciones">
         <div className="filtro-container">
           <FiltroInput 
             placeholder="Filtrar" 
@@ -231,6 +233,7 @@ const Infracciones = () => {
           </div>
 
         </Modal>
+      </div>
 
       <footer>
         <Footer />

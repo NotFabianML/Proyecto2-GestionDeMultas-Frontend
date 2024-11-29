@@ -16,6 +16,12 @@
   min-height: calc(100vh - 140px);
 }
 
+.main-content-usuarios h1{
+  color: #181D23;
+  text-align: center;
+  margin: 30px;
+}
+
 /* Contenedor del filtro */
 .filtro-container-usuarios {
   display: flex;
@@ -68,10 +74,9 @@
 
 /* Botones de acción */
 .botones-usuarios {
-  display: flex;
   justify-content: space-between;
-  gap: 30px;
-  margin-top: 20px;
+  gap: 40px;
+  margin: 30px;
 }
 
 button, .ButtonLink {

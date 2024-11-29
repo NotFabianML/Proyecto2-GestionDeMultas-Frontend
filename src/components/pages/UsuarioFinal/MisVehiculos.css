@@ -1,3 +1,16 @@
+.mis-vehiculos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.contenedor-vehiculos h1 {
+  color: #181D23;
+  text-align: center;
+  margin-top: 60px;
+}
+
 /* Contenedor de la tabla de vehículos */
 .vehiculos-tabla-contenedor {
   width: fit-content;
@@ -73,8 +86,16 @@
   cursor: pointer;
 }
 
-.filtro-container input {
+.filtro-container {
   padding-right: 35px; /* Asegúrate de dar espacio para el icono */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 90%;
+}
+
+.filtro-container input {
+  width: 200px;
 }
 
 .modal-vehiculos {

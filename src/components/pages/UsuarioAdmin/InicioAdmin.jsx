@@ -11,18 +11,22 @@ const InicioAdmin = () => {
   };
 
   return (
-    <div>
+    <div className="inicio-admin">
+
       <header>
         <AdminNavbar />
       </header>
 
-      <h1>Opciones de Administrador</h1>
-      <div className="BotonesAdmin">
-        <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/lista-usuarios" />
-        <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/roles" />
-        <ButtonLink variant="secondary" text="Gestionar Catálogo de Infracciones" to="/infraccion" />
-        <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/dashboard-admin" />
+      <div className="contenido-inicio-admin">
+        <h1>Opciones de Administrador</h1>
+        <div className="BotonesAdmin">
+          <ButtonLink variant="secondary" text="Gestionar Usuarios" to="/lista-usuarios" />
+          <ButtonLink variant="secondary" text="Gestionar Roles y Permisos" to="/roles" />
+          <ButtonLink variant="secondary" text="Gestionar Catálogo de Infracciones" to="/infraccion" />
+          <ButtonLink variant="secondary" text="Estadísticas de Multas" to="/dashboard-admin" />
+        </div>
       </div>
+
       <footer>
         <Footer />
       </footer>

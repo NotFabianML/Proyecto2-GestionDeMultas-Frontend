@@ -79,7 +79,7 @@ const ResolverDisputa = () => {
         <JuezNavbar />
       </header>
 
-      <div>
+      <div className="contenido-resolver-disputa">
         <h1>Resolver Disputa</h1>
         <FormularioMulta
           mostrarBotones={false}

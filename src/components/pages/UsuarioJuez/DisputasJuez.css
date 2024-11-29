@@ -1,6 +1,16 @@
+.disputas-juez {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
 
+.cotenedor-disputas-juez {
+    display: flex; 
+    flex-grow: 1; 
+}
 
-.disputas-juez .filtro-container {
+.filtro-container {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -8,7 +18,7 @@
 }
 
 
-.disputas-juez .filtro-container input {
+.filtro-container input {
     max-width: 200px;
 }
 
@@ -34,7 +44,7 @@
 
 .disputas-juez h1 {
     color: #181D23;
-    text-align: left;
+    text-align: center;
     margin: 30px;
 }
 

@@ -15,18 +15,33 @@ code {
     monospace;
 }
 
-.indexUsuarios {
+/* .indexUsuarios {
   background-color: #dadada;
   min-height: 100vh; 
   display: flex; 
   flex-direction: column;
-}
+} */
 
-.indexUsuarios .header {
+/* .indexUsuarios .header {
   margin-bottom: 30px;
+} */
+
+
+.indexUsuarios{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+.contenido-index {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 
-.indexUsuarios h1 {
+.contenido-index h1 {
   color: #181D23;
   font-size: 36px;
   margin-top: 8%;
@@ -34,10 +49,11 @@ code {
   text-align: center;
 }
 
-.indexUsuarios p {
+.contenido-index p {
   margin: 7px auto;
   font-size: medium;
   color: #181D23;
+  text-align: center;
 }
 
 .indexUsuarios .botones {

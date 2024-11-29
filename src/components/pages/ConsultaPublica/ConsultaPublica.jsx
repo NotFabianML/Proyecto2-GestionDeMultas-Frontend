@@ -102,37 +102,39 @@ const ConsultaPublica = () => {
         {error && <p className="error-message">{error}</p>}
 
         {mostrarTabla && multas.length > 0 && (
-          <table className="tabla-multas">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Estado</th>
-                <th>Infracciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {multas.map((multa, index) => (
-                <tr key={index}>
-                  <td>{isoToDateFormatter(multa.fechaHora)}</td>
-                  <td>{traducirEstado(multa.estado)}</td>
-                  <td>
-                    {multa.infracciones && multa.infracciones.length > 0
-                      ? multa.infracciones.map(
-                          (infraccion, infraccionIndex) => (
-                            <div key={infraccionIndex}>
-                              {infraccion.titulo} -{" "}
-                              {infraccion.monto
-                                ? `₡${infraccion.monto}`
-                                : "Sin monto"}
-                            </div>
-                          )
-                        )
-                      : "N/A"}
-                  </td>
+          <div className="contenedor-tabla-multas">
+            <table className="tabla-multas">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Infracciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {multas.map((multa, index) => (
+                  <tr key={index}>
+                    <td>{isoToDateFormatter(multa.fechaHora)}</td>
+                    <td>{traducirEstado(multa.estado)}</td>
+                    <td>
+                      {multa.infracciones && multa.infracciones.length > 0
+                        ? multa.infracciones.map(
+                            (infraccion, infraccionIndex) => (
+                              <div key={infraccionIndex}>
+                                {infraccion.titulo} -{" "}
+                                {infraccion.monto
+                                  ? `₡${infraccion.monto}`
+                                  : "Sin monto"}
+                              </div>
+                            )
+                          )
+                        : "N/A"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {mostrarTabla && multas.length === 0 && !error && (

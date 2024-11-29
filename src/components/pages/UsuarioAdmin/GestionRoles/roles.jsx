@@ -166,6 +166,7 @@ const Roles = () => {
       <header>
         <AdminNavbar />
       </header>
+
       <main id="roles-main">
         <h1>Gestión de Roles</h1>
         <div className="roles-filtro-container">
@@ -189,14 +190,16 @@ const Roles = () => {
                 <tr key={rol.idRol}>
                   <td>{rol.nombreRol}</td>
                   <td>{rol.descripcion}</td>
-                  <td>
+                  <td className="celda-botones">
                     <Button
-                      variant="secondary"
+                      variant="primary"
+                      size="small"
                       text="Editar"
                       onClick={() => abrirModal(rol)}
                     />
                     <Button
                       variant="danger"
+                      size="small"
                       text="Eliminar"
                       onClick={() => handleEliminarRol(rol.idRol)}
                     />

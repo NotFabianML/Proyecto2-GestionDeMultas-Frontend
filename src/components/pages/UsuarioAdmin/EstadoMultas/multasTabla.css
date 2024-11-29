@@ -109,7 +109,7 @@
 }
 
 /* Estilos para los botones */
-button {
+.boton-container button {
     padding: 10px 15px;
     border-radius: 5px;
     border: none;

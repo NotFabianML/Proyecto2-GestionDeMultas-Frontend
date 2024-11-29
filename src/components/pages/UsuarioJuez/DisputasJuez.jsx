@@ -63,7 +63,7 @@ const Disputas = () => {
                 <JuezNavbar />
             </header>
 
-            <main>
+            <div className="contenedor-disputas-juez">
                 <h1>Disputas asignadas</h1>
 
                 <div className="filtro-container">
@@ -123,7 +123,7 @@ const Disputas = () => {
                         cambiarPagina={cambiarPagina} 
                     />
                 )}
-            </main>
+            </div>
 
             <footer>
                 <Footer />

@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100vh; /* Ajusta la altura para llenar toda la pantalla */
-    background-color: #e0e0e0;
 }
 
 .contenedor-principal {
@@ -102,6 +101,22 @@
     background-color: #e6b800;
 }
 
+.boton-verificar-OTP {
+    margin: 15px auto;
+    margin-top: 25px;
+    padding: 10px 0;
+    width: 200px;
+    font-size: 18px;
+    background-color: #ffcc00;
+    color: #000000;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+.boton-verificar-OTP:hover {
+    background-color: #e6b800;
+}
 
 
 .password-input-container-login {
@@ -144,6 +159,13 @@
 
 .link-autenticacion a:hover {
     text-decoration: underline;
+}
+
+.contenedor-formulario h4 {
+    color : white;
+    font-size: 18px;
+    text-align: center;
+    margin: 15px 0;
 }
 
 /* Estilos del popup */

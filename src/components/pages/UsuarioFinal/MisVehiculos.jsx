@@ -114,11 +114,11 @@ const MisVehiculos = () => {
         <UsuarioNavbar />
       </header>
 
-      <main>
+      <div className="contenedor-vehiculos">
         <h1>Mis Vehículos</h1>
         {/* {error && <p className="error">{error}</p>} */}
 
-        <div className="filtro-container">
+        <div className="filtro-container-vehiculos">
           <FiltroInput
             placeholder="Buscar"
             value={filtro}
@@ -251,7 +251,7 @@ const MisVehiculos = () => {
             </div>
           </div>
         )}
-      </main>
+      </div>
 
       <footer>
         <Footer />

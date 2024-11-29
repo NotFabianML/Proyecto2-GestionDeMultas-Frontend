@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: #DADADA; 
     margin: 0;
     padding: 0;
@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-}
+} */
 
 .pagina-registro {
     flex: 1;
