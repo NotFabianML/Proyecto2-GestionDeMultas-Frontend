@@ -49,8 +49,7 @@ const DashboardAdmin = () => {
     const handleFechaInicioChange = (e) => {
         const isoDate = e.target.value; // formato ISO (yyyy-MM-dd)
         if (isoDate) {
-            const formattedDate = format(new Date(isoDate), 'dd-MM-yyyy');
-            setFiltroFechaInicioMulta(formattedDate);
+            setFiltroFechaInicioMulta(e.target.value);
         } else {
             setFiltroFechaInicioMulta('');
         }
@@ -59,8 +58,7 @@ const DashboardAdmin = () => {
     const handleFechaFinChange = (e) => {
         const isoDate = e.target.value;
         if (isoDate) {
-            const formattedDate = format(new Date(isoDate), 'dd-MM-yyyy');
-            setFiltroFechaFinMulta(formattedDate);
+            setFiltroFechaFinMulta(e.target.value);
         } else {
             setFiltroFechaFinMulta('');
         }
@@ -133,7 +131,7 @@ const DashboardAdmin = () => {
             head: [['ID Disputa', 'Fecha / Hora', 'Estado']],
             body: disputasFiltradas.map(disputa => [
                 formatId(disputa.idDisputa),
-                new Date(disputa.fechaHora).toLocaleDateString(),
+                isoToDateFormatter(disputa.fechaHora),
                 disputa.estado === 1 ? 'Pendiente' : disputa.estado === 2 ? 'Resuelta' : 'Rechazada'
             ]),
             startY: doc.autoTable.previous.finalY + 10,

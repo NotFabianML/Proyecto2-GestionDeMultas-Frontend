@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./InicioSesion.css";
-import { Link, useNavigate } from "react-router-dom";
+import { json, Link, useNavigate } from "react-router-dom";
 import InvitadoNavbar from "../../layouts/Navbar/InvitadoNavbar.jsx";
 import Footer from "../../layouts/Footer.jsx";
 import { login } from "../../../services/authService";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 import Button from "../../atoms/Button.jsx";
-import { activarAutenticacion2F } from "../../../services/autenticacion2FService.js";
+import { activarAutenticacion2F, validarAutenticacion2F } from "../../../services/autenticacion2FService.js";
 import { getUsuarioById } from "../../../services/usuarioService.js";
 
 const InicioSesion = () => {
@@ -18,9 +18,11 @@ const InicioSesion = () => {
   const [showPopup, setShowPopup] = useState(false); 
   const [dobleFactorData, setDobleFactorData] = useState({});
   const [dobleFactorActivado, setDobleFactorActivado] = useState(false);
+  const [codigoAutenticacion, setCodigoAutenticacion] = useState("");
 
   const navigate = useNavigate();
   const { setUserId, setToken, setRole } = useUserContext();
+  const { role } = useUserContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,14 +47,16 @@ const InicioSesion = () => {
         setUserId(userId);
         setToken(token);
         setRole(role);
-        getUsuarioById(userId).then((usuario) => {
-          if (usuario) {
-            setDobleFactorActivado(usuario.dobleFactorActivado);
-          }
-        }); 
-        if (!dobleFactorActivado) {
-          handleNavegarSegunRol(role);
+
+        // Verificar si el usuario tiene doble factor activado
+         const usuario = await getUsuarioById(userId);
+
+         if (usuario?.dobleFactorActivo) {
+          setDobleFactorActivado(true); // Activa la sección de doble factor
+        } else {
+          handleNavegarSegunRol(role); // Navega si no tiene doble factor activado
         }
+
       } else {
         setError("Error al obtener la información de usuario.");
       }
@@ -63,8 +67,8 @@ const InicioSesion = () => {
     }
   };
 
-  const handleNavegarSegunRol = (role) => {
-    switch (role) {
+  const handleNavegarSegunRol = (rol) => {
+    switch (rol) {
       case "Administrador":
         navigate("/inicio-admin");
         break;
@@ -100,6 +104,25 @@ const InicioSesion = () => {
     });
   };
 
+  const handleValidarAutenticacion2F = () => {
+    setIsSubmitting(true);
+    validarAutenticacion2F(correo, codigoAutenticacion)
+      .then((data) => {
+        if (data && data.status === 200) {
+          handleNavegarSegunRol(role);
+        } else {
+          setError("Código de autenticación incorrecto.");
+        }
+      })
+      .catch((error) => {
+        setError("Código de autenticación incorrecto.");
+        console.error("Error de autenticación 2F:", error);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
+
   return (
     <div className="pagina-inicio-sesion">
       <header>
@@ -121,7 +144,7 @@ const InicioSesion = () => {
 
         <div className="contenedor-formulario">
           <form onSubmit={handleLogin}>
-
+            {/* Formulario de inicio de sesión */}
             {!dobleFactorActivado && (
             <>
             <label>Correo</label>
@@ -159,47 +182,65 @@ const InicioSesion = () => {
             <h4>Autenticación en 2 pasos</h4>
             <label>Código de Autenticación</label>
             <div className="fila-2FA">
-              <input
-                type="text"
-                value= {""}
-                placeholder="XXXXXX"
-              />
-            
+            <input
+              type="text"
+              className="input-OTP"
+              value={codigoAutenticacion}
+              placeholder="XXXXXX"
+              onChange={(e) => {
+                const valor = e.target.value;
+                if (/^\d*$/.test(valor) && valor.length <= 6) {
+                  setCodigoAutenticacion(valor);
+                }
+              }}
+            />
+
             </div>
 
-            <button type="submit" className="boton-verificar-OTP" >
+            {error && <p className="error">{error}</p>} {/* Mostrar mensaje de error si lo hay */}
+
+            <button
+              type="button" // Cambié de "submit" a "button" para evitar que se recargue el formulario
+              className="boton-verificar-OTP"
+              onClick={handleValidarAutenticacion2F} // Llamamos a la función de verificación OTP
+              disabled={isSubmitting} // Deshabilitar mientras se está verificando
+            >
               {isSubmitting ? "Verificando..." : "Verificar"}
             </button>
             </>
             )}
           </form>
 
+          {!dobleFactorActivado && (
+          <>
+          {/* Botón para activar la autenticación en 2 pasos */}
           <div className="link-autenticacion">
-              {/* Botón para mostrar el pop-up */}
-              {/* <Button
-                variant="primary"
-                className="boton-popup"
-                onClick={() => {
-                  handleActivarAutenticacion2F();
-                  setShowPopup(true);
-                }}
-                text="Activar Verificación en 2 pasos"
-              /> */}
-            </div>
+            {/* Botón para mostrar el pop-up */}
+            {/* <Button
+              variant="primary"
+              className="boton-popup"
+              onClick={() => {
+                handleActivarAutenticacion2F();
+                setShowPopup(true);
+              }}
+              text="Activar Verificación en 2 pasos"
+            /> */}
+          </div>
 
-            <div className="link-autenticacion">
-              <Link
-                to="#"
-                className="boton-popup"
-                onClick={(e) => {
-                  e.preventDefault(); // Evita la navegación predeterminada
-                  handleActivarAutenticacion2F();
-                  setShowPopup(true);
-                }}
-              >
-                Activar Verificación en 2 pasos
-              </Link>
-            </div>
+          <div className="link-autenticacion">
+            <Link
+              to="#"
+              className="boton-popup"
+              onClick={(e) => {
+                e.preventDefault(); // Evita la navegación predeterminada
+                handleActivarAutenticacion2F();
+                setShowPopup(true);
+              }}
+            >
+              Activar Verificación en 2 pasos
+            </Link>
+          </div>
+          </>)}
 
         </div>
       </div>
