@@ -52,17 +52,19 @@ table {
 
 }
 
-table th,
-table td {
+
+#roles table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid black;
   color: white; 
 }
 
-table th {
+#roles table th {
   background-color: #181D23; 
-  border-radius: 25px;
+  color: #ffcc00;
+  padding: 10px;
+  text-align: center;
 }
 
 .celda-botones button {

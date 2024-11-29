@@ -149,7 +149,7 @@ const Infracciones = () => {
                   <td>{infraccion.titulo}</td>
                   <td>{`₡${infraccion.monto}`}</td>
                   <td>
-                    <Button variant="secondary" size="small" text="Editar" onClick={() => abrirModal(infraccion)} />
+                    <Button variant="primary" size="small" text="Editar" onClick={() => abrirModal(infraccion)} />
                   </td>
                 </tr>
               ))}

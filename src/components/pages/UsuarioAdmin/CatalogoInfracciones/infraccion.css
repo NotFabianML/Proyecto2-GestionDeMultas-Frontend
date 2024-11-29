@@ -45,12 +45,19 @@
   margin: 0 auto;
 }
 
-.lista-infracciones th,
 .lista-infracciones td {
   padding: 15px;
   text-align: center;
   border-bottom: 2px solid rgb(5, 4, 4);
 }
+
+.lista-infracciones th {
+  color: #ffcc00;
+  padding-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid rgb(5, 4, 4);
+}
+
 
 .botones-infraccion {
   display: flex;
