@@ -11,6 +11,8 @@ import MapPopup from "../MapPopUp.jsx";
 import { useUserContext } from "../../../contexts/UserContext.jsx";
 import { formatId } from '../../../utils/idFormatUtils.js';
 import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { sendEmail } from '../../../services/authService.js';
+import { getUsuarioPorCedula } from '../../../services/usuarioService.js';
 
 const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dosBotones = true,  textoBotonPrimario, textoBotonSecundario,   soloLectura = false,   multa,  onGuardarCambios, onEliminarMulta, placaImagen}) => {
 
@@ -176,7 +178,8 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
         for (const idInfraccion of nuevaMulta.infracciones) {
           await asignarInfraccionAMulta(multaId, idInfraccion);
         }
-  
+         // Enviar correo al infractor
+      await enviarCorreoInfractor({ ...multaData, idMulta: multaId, infracciones: selectedOptions });
          limpiarFormulario();
         alert("Multa creada con éxito");
       } catch (error) {
@@ -190,7 +193,47 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
       }
     }
   };
+// Función para enviar correo al infractor
+const enviarCorreoInfractor = async (multa) => {
+  try {
+    // Obtener los datos del infractor por su cédula
+    const infractor = await getUsuarioPorCedula(multa.cedulaInfractor);
+    const email = infractor.email;
 
+    if (!email) {
+      console.error("No se encontró un correo asociado a la cédula:", multa.cedulaInfractor);
+      return;
+    }
+
+    // Crear el mensaje del correo
+    const emailMessage = `
+      Estimado/a,
+
+      Se le ha registrado una nueva multa en el sistema. Aquí están los detalles de la misma:
+      - Número de Placa: ${multa.numeroPlaca}
+      - Fecha y Hora: ${multa.fechaHora}
+      - Ubicación: ${multa.latitud}, ${multa.longitud}
+      - Infracciones:
+      ${multa.infracciones
+        .map(
+          (infraccion) =>
+            `  - ${infraccion.value.titulo}: ${infraccion.value.descripcion} (${infraccion.value.monto.toFixed(2)} colones)`
+        )
+        .join("\n")}
+      
+      Por favor, regularice su situación lo antes posible. Si tiene alguna consulta, póngase en contacto con nuestras oficinas.
+
+      Atentamente,
+      Equipo de Gestión de Multas
+    `;
+
+    // Enviar el correo
+    await sendEmail(email, emailMessage);
+    console.log(`Correo enviado exitosamente a ${email}`);
+  } catch (error) {
+    console.error("Error al enviar correo al infractor:", error);
+  }
+};
   const handleSecondaryClick = async (e) => {
     e.preventDefault();
     if (onEliminarMulta) {
