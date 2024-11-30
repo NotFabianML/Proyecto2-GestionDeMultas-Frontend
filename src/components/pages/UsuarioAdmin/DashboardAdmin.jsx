@@ -172,21 +172,13 @@ const DashboardAdmin = () => {
                     />
                     <input
                         type="date"
-                        value={
-                            filtroFechaInicioMulta
-                                ? format(new Date(filtroFechaInicioMulta.split('-').reverse().join('-')), 'yyyy-MM-dd')
-                                : ''
-                        }
+                        value={filtroFechaInicioMulta || ''}
                         onChange={handleFechaInicioChange}
                         id="filtro-fecha-inicio-multa"
                     />
                     <input
                         type="date"
-                        value={
-                            filtroFechaFinMulta
-                                ? format(new Date(filtroFechaFinMulta.split('-').reverse().join('-')), 'yyyy-MM-dd')
-                                : ''
-                        }
+                        value={filtroFechaFinMulta || ''}
                         onChange={handleFechaFinChange}
                         id="filtro-fecha-fin-multa"
                     />
