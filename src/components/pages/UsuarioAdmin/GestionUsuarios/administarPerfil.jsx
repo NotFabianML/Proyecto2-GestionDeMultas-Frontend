@@ -217,6 +217,7 @@ import { uploadImageToCloudinary } from "../../../../services/cloudinaryService"
 import Button from "../../../atoms/Button";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { formatFechaNacimiento } from "../../../../utils/dateUtils";
+import { sendEmail } from "../../../../services/authService";
 
 const Perfil = () => {
   const { userId } = useUserContext();
@@ -283,6 +284,25 @@ const Perfil = () => {
       await updateUsuario(usuario.idUsuario, updatedData);
       setUsuario(updatedData);
       setEditMode(false);
+      const emailMessage = `
+      Estimado/a ${formData.nombre} ${formData.apellido1} ${formData.apellido2},
+      
+      Su perfil ha sido actualizado correctamente con la siguiente información:
+      - Nombre: ${formData.nombre}
+      - Apellido 1: ${formData.apellido1}
+      - Apellido 2: ${formData.apellido2}
+      - Cédula: ${usuario.cedula}
+      - Teléfono: ${formData.telefono}
+      - Fecha de Nacimiento: ${formatFechaNacimiento(formData.fechaNacimiento)}
+      - Estado: ${usuario.estado}
+      
+      Si no solicitó esta actualización, por favor póngase en contacto con el soporte.
+      
+      Atentamente,
+      Equipo de Soporte
+    `;
+
+    await sendEmail(formData.email, emailMessage);
       alert("Perfil actualizado exitosamente");
     } catch (error) {
       console.error("Error al guardar el perfil:", error);
