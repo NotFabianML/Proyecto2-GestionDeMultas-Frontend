@@ -61,7 +61,7 @@ const InicioSesion = () => {
         setError("Error al obtener la información de usuario.");
       }
     } catch (err) {
-      setError("Credenciales incorrectas");
+      setError("Credenciales incorrectas o Usuario inactivo");
     } finally {
       setIsSubmitting(false);
     }
