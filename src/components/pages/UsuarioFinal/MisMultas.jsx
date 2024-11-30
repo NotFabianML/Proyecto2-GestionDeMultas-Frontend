@@ -14,6 +14,7 @@ import Checkout from './Checkout';
 import { formatId } from '../../../utils/idFormatUtils.js';
 import { set } from 'date-fns';
 import { formatCurrency } from '../../../utils/formatCurrency.js';
+import { sendEmail } from '../../../services/authService.js';
 
 const initialOptions = {
   "client-id": "Adoww9KeExfepE0evtSMzMHBZqgFYTOitCqUjfQaLt1Np1V7gY9P-v-kPO-FzrBeMt4IsCDw0qC9tzqQ",
@@ -108,8 +109,23 @@ const MisMultas = () => {
         createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(async () => {
             alert('Disputa presentada exitosamente');
             await cambiarEstadoMulta(multa.idMulta, 2);
+            console.log(userData.email);
+            const oficialData = await getUsuarioById(multa.usuarioIdOficial);
+            console.log(oficialData.email);
+            const emailMessage = `
+        Se ha presentado una disputa para la multa con ID ${formatId(multa.idMulta)}.
+        Por favor, revise la disputa y resuelva el problema lo antes posible. Espere a que el Juez resuelva la disputa.
+        Si no solicitó esta actualización, por favor póngase en contacto con el soporte.
+      
+      Atentamente,
+      Equipo de Soporte
+    `;
+
+    await sendEmail(userData.email, emailMessage);
+    await sendEmail(oficialData.email, emailMessage);
+
             closePopup();
-            window.location.reload();
+            //window.location.reload();
         }).catch((error) => {
             alert('Hubo un error al presentar la disputa: ' + error.message);
         });

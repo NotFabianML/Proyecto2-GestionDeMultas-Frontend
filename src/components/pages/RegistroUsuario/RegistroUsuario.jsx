@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { validateEmail, validatePassword } from '../../../utils/validationUtils.js';
 import { convertToBase64 } from '../../../utils/fileUtils.js';
 import { formatFechaNacimiento } from '../../../utils/dateUtils.js';
+import { sendEmail } from '../../../services/authService.js';
 
 const RegistroUsuario = () => {
     const [nombre, setNombre] = useState('');
@@ -98,8 +99,27 @@ const RegistroUsuario = () => {
         };
 
         try {
-            await register(newUser);
-            alert("Registro exitoso. Redirigiendo a la página de inicio de sesión.");
+        await register(newUser);
+                // Enviar notificación al correo
+        const emailMessage = `
+        Estimado/a ${nombre} ${apellido1} ${apellido2 || ""},
+
+        Su registro en nuestro sistema se ha completado exitosamente. Aquí están los datos asociados a su cuenta:
+        - Nombre: ${nombre}
+        - Apellido 1: ${apellido1}
+        - Apellido 2: ${apellido2 || "No proporcionado"}
+        - Cédula: ${cedulaTexto}
+        - Teléfono: ${telefono}
+        - Fecha de Nacimiento: ${formatFechaNacimiento(fechaNacimiento)}
+
+        Si encuentra algún error en la información proporcionada, por favor contáctenos para realizar las correcciones necesarias.
+
+        Atentamente,
+        Equipo de Soporte
+    `;
+
+    await sendEmail(correo, emailMessage);
+            alert("Registro exitoso. Redirigiendo a la página de inicio de sesión. Bienvenido" + correo);
             navigate('/inicio-sesion');
         } catch (error) {
             console.error("Error al registrar usuario:", error);
