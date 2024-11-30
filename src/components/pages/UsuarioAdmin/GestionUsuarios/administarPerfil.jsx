@@ -303,7 +303,7 @@ const Perfil = () => {
     `;
 
     await sendEmail(formData.email, emailMessage);
-      alert("Perfil actualizado exitosamente");
+      alert("Perfil actualizado y correo enviado exitosamente");
     } catch (error) {
       console.error("Error al guardar el perfil:", error);
       alert("Hubo un error al actualizar el perfil");
