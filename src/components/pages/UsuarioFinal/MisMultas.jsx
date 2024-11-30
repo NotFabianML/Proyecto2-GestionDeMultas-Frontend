@@ -3,7 +3,7 @@ import './MisMultas.css';
 import UsuarioNavbar from '../../layouts/Navbar/UsuarioNavbar.jsx';
 import Footer from '../../layouts/Footer.jsx';
 import Button from '../../atoms/Button.jsx';
-import { getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
+import { cambiarEstadoMulta, getMultasPorCedulaUsuario } from '../../../services/multaServices.js';
 import { getUsuarioById } from '../../../services/usuarioService.js';
 import { isoToDateFormatter } from '../../../utils/dateUtils.js';   
 import { useUserContext } from '../../../contexts/UserContext.jsx';
@@ -102,11 +102,12 @@ const MisMultas = () => {
         };
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
         console.log(disputeDataRef.current);
-        createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(() => {
+        createDisputa({ ...disputeDataRef.current, numeroPlaca: multa.numeroPlaca}).then(async () => {
             alert('Disputa presentada exitosamente');
+            await cambiarEstadoMulta(multa.idMulta, 2);
             closePopup();
             window.location.reload();
         }).catch((error) => {

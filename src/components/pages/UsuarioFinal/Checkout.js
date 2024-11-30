@@ -47,7 +47,7 @@ const Checkout = ({ multa, user }) => {
         return actions.order.capture().then(async (details) => {
             const name = details.payer.name.given_name;
             try {
-                await cambiarEstadoMulta(multaId, 2);
+                await cambiarEstadoMulta(multaId, 3);
                 alert(`Transacción completada exitosamente por ${name}.`);
                 navigate(`/Factura`, { state: { multa, user } });
             } catch (error) {

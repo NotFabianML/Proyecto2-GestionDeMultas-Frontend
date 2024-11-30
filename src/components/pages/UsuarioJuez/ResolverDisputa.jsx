@@ -65,7 +65,7 @@ const ResolverDisputa = () => {
       await updateDisputa(idDisputa, disputaData);
       alert(`La disputa ha sido ${estado === 2 ? "aceptada" : "rechazada"}.`);
       if (estado === 2){
-        cambiarEstadoMulta(multaId, 2)}; // Cambiar estado de la multa a "Pagado"
+        cambiarEstadoMulta(multaId, 3)}; // Cambiar estado de la multa a "Pagado"
 
       navigate("/disputas-juez"); // Redirigir a la página de disputas
     } catch (error) {
