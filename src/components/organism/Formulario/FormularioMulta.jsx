@@ -120,16 +120,40 @@ const FormularioMulta = ({  mostrarNumMulta = true,  mostrarBotones = true,  dos
 
   const handlePrimaryClick = async (e) => {
     e.preventDefault();
+    
     if (textoBotonPrimario === "Guardar cambios") {
-      // Lógica para actualizar la multa
       try {
-          await onGuardarCambios(nuevaMulta);
-          limpiarFormulario();
-          alert("Cambios realizados con éxito"); // Mensaje limpio
+        // Construir manualmente el payload esperado
+        const updatedData = {
+          idMulta: nuevaMulta.idMulta,
+          numeroPlaca: nuevaMulta.numeroPlaca,
+          cedulaInfractor: nuevaMulta.cedulaInfractor,
+          usuarioIdOficial: nuevaMulta.usuarioIdOficial,
+          fechaHora: nuevaMulta.fechaHora,
+          latitud: nuevaMulta.latitud,
+          longitud: nuevaMulta.longitud,
+          comentario: nuevaMulta.comentario,
+          fotoPlaca: nuevaMulta.fotoPlaca || null,
+          estado: nuevaMulta.estado,
+          montoTotal: montoTotal,
+          infracciones: selectedOptions.map((infraccion) => ({
+            idInfraccion: infraccion.value.idInfraccion,
+            articulo: infraccion.value.articulo || "",
+            titulo: infraccion.value.titulo || "",
+            monto: infraccion.value.monto || 0,
+            descripcion: infraccion.value.descripcion || "",
+            estado: infraccion.value.estado || true,
+          })),
+        };
+  
+        // Llamar al método de actualización
+        await onGuardarCambios(updatedData);
+        limpiarFormulario();
+        alert("Cambios realizados con éxito");
       } catch (error) {
-          console.error("Error al actualizar la multa:", error);
-          alert("Hubo un error al actualizar la multa.");
-      }
+        console.error("Error al actualizar la multa:", error);
+        alert("Hubo un error al actualizar la multa.");
+      }  
     } else {
       if (!validateForm()) return;
 

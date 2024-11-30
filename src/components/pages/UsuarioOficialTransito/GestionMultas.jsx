@@ -52,7 +52,7 @@ const GestionMultas = () => {
 
     const handleActualizarMulta = async (multaActualizada) => {
         try {
-            console.log(multaActualizada);
+            console.log("entro a handle actualizar", multaActualizada);
             await updateMulta(multaActualizada.idMulta, multaActualizada);
             // Actualizar el listado de multas si quieres reflejar el cambio en el select
             const data = await getMultasPorOficialId(userId);
