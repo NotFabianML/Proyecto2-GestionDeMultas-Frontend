@@ -6,6 +6,7 @@ import "./Factura.css";
 import { useLocation } from 'react-router-dom';
 import Button from "../../atoms/Button";
 import { useNavigate } from 'react-router-dom';
+import { sendEmail } from "../../../services/authService";
 
 const Factura = () => {
     const location = useLocation();
@@ -109,6 +110,30 @@ const Factura = () => {
 
         URL.revokeObjectURL(url);
     };
+    const enviarFacturaPorCorreo = async () => {
+        try {
+            const pdfUrl = generarPDF();
+            const xmlUrl = generarXML();
+
+            const mensaje = `
+                Estimado(a) ${facturaData.nombreUsuario},<br/>
+                Se adjunta la información de su factura electrónica.<br/>
+                <ul>
+                    <li><a href="${pdfUrl}" target="_blank">Descargar PDF</a></li>
+                    <li><a href="${xmlUrl}" target="_blank">Descargar XML</a></li>
+                </ul>
+                <br/>
+                Saludos cordiales,<br/>
+                Sistema de Gestión de Multas.
+            `;
+
+            await sendEmail(facturaData.email, mensaje);
+            alert("Factura enviada por correo con éxito.");
+        } catch (error) {
+            console.error("Error al enviar la factura por correo:", error);
+            alert("Hubo un error al enviar la factura por correo.");
+        }
+    };
 
     const handleClose = () => {
         navigate("/mis-multas");
@@ -167,6 +192,7 @@ const Factura = () => {
 
                 <Button onClick={generarPDF} variant="outline" text="Descargar PDF" />
                 <Button onClick={generarXML} variant="primary" text="Descargar XML" />
+                <Button onClick={enviarFacturaPorCorreo} variant="primary" text="Enviar Factura por Correo" />
                 <Button onClick={handleClose} variant="danger" text="Cerrar" />
             </div>
         </div>
